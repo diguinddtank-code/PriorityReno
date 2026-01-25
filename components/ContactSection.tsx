@@ -6,13 +6,38 @@ import { createPortal } from 'react-dom';
 const ContactSection: React.FC = () => {
   const [formStatus, setFormStatus] = useState<'idle' | 'submitting' | 'success'>('idle');
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setFormStatus('submitting');
-    // Simulate API call
-    setTimeout(() => {
-      setFormStatus('success');
-    }, 1500);
+    
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+
+    // FormSubmit Configuration
+    formData.append('_subject', 'New Contact Inquiry');
+    formData.append('_captcha', 'false');
+    formData.append('_template', 'table');
+
+    try {
+        const response = await fetch("https://formsubmit.co/priorityrenovationsatl@gmail.com", {
+            method: "POST",
+            body: formData,
+            headers: {
+                'Accept': 'application/json'
+            }
+        });
+
+        if (response.ok) {
+            setFormStatus('success');
+            form.reset();
+        } else {
+            alert("There was an issue sending your message. Please try again.");
+            setFormStatus('idle');
+        }
+    } catch (error) {
+        alert("Network error. Please try again.");
+        setFormStatus('idle');
+    }
   };
 
   const locations = [
@@ -128,22 +153,22 @@ const ContactSection: React.FC = () => {
                              <div className="grid grid-cols-2 gap-4">
                                 <div>
                                     <label className="block text-xs font-bold text-slate-700 uppercase mb-1 ml-1">First Name</label>
-                                    <input required type="text" className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-slate-900 focus:border-brand-orange focus:bg-white outline-none transition-all focus:ring-2 focus:ring-brand-orange/20" placeholder="John" />
+                                    <input required type="text" name="name" className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-slate-900 focus:border-brand-orange focus:bg-white outline-none transition-all focus:ring-2 focus:ring-brand-orange/20" placeholder="John" />
                                 </div>
                                 <div>
                                     <label className="block text-xs font-bold text-slate-700 uppercase mb-1 ml-1">Phone</label>
-                                    <input required type="tel" className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-slate-900 focus:border-brand-orange focus:bg-white outline-none transition-all focus:ring-2 focus:ring-brand-orange/20" placeholder="(555) 000-0000" />
+                                    <input required type="tel" name="phone" className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-slate-900 focus:border-brand-orange focus:bg-white outline-none transition-all focus:ring-2 focus:ring-brand-orange/20" placeholder="(555) 000-0000" />
                                 </div>
                              </div>
 
                              <div>
                                 <label className="block text-xs font-bold text-slate-700 uppercase mb-1 ml-1">Email Address</label>
-                                <input required type="email" className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-slate-900 focus:border-brand-orange focus:bg-white outline-none transition-all focus:ring-2 focus:ring-brand-orange/20" placeholder="john@example.com" />
+                                <input required type="email" name="email" className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-slate-900 focus:border-brand-orange focus:bg-white outline-none transition-all focus:ring-2 focus:ring-brand-orange/20" placeholder="john@example.com" />
                              </div>
 
                              <div>
                                 <label className="block text-xs font-bold text-slate-700 uppercase mb-1 ml-1">Project Details</label>
-                                <textarea className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-slate-900 focus:border-brand-orange focus:bg-white outline-none transition-all focus:ring-2 focus:ring-brand-orange/20 h-32 resize-none" placeholder="I'm interested in quartz countertops for my kitchen..."></textarea>
+                                <textarea name="message" className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-slate-900 focus:border-brand-orange focus:bg-white outline-none transition-all focus:ring-2 focus:ring-brand-orange/20 h-32 resize-none" placeholder="I'm interested in quartz countertops for my kitchen..."></textarea>
                              </div>
 
                              <Button 

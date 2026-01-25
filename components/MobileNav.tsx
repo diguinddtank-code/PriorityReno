@@ -51,7 +51,7 @@ const MobileNav: React.FC = () => {
 
   return (
     <div 
-      className="fixed bottom-4 left-1/2 -translate-x-1/2 z-[90] w-[90%] max-w-[380px] transition-all duration-300"
+      className="fixed bottom-4 left-1/2 -translate-x-1/2 z-[90] w-[90%] max-w-[380px] transition-all duration-300 md:hidden"
     >
       <nav className="flex items-center justify-between px-2 py-1.5 bg-slate-900/95 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl shadow-black/60 ring-1 ring-white/5">
         

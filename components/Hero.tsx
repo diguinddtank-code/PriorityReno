@@ -28,12 +28,38 @@ const Hero: React.FC = () => {
     };
   }, []);
 
-  const handleHeroSubmit = (e: React.FormEvent) => {
+  const handleHeroSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setFormStatus('submitting');
-    setTimeout(() => {
-      setFormStatus('success');
-    }, 1500);
+    
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+
+    // FormSubmit Configuration
+    formData.append('_subject', 'New Quote Request (Hero Section)');
+    formData.append('_captcha', 'false'); // Disable captcha for smoother experience
+    formData.append('_template', 'table'); // Better email formatting
+
+    try {
+        const response = await fetch("https://formsubmit.co/priorityrenovationsatl@gmail.com", {
+            method: "POST",
+            body: formData,
+            headers: {
+                'Accept': 'application/json'
+            }
+        });
+
+        if (response.ok) {
+            setFormStatus('success');
+            form.reset(); // Clear the form
+        } else {
+            alert("There was an issue sending your request. Please try again.");
+            setFormStatus('idle');
+        }
+    } catch (error) {
+        alert("Network error. Please try again.");
+        setFormStatus('idle');
+    }
   };
 
   const marqueeItems = [
@@ -196,16 +222,16 @@ const Hero: React.FC = () => {
                         <form className="space-y-4 relative z-10" onSubmit={handleHeroSubmit}>
                             <div className="space-y-4">
                                 <div>
-                                    <input required type="text" placeholder="Name" className="w-full bg-slate-950 border border-slate-700 rounded-lg px-4 py-3.5 text-white placeholder-slate-500 focus:border-brand-orange outline-none text-sm transition-all focus:ring-1 focus:ring-brand-orange" />
+                                    <input required type="text" name="name" placeholder="Name" className="w-full bg-slate-950 border border-slate-700 rounded-lg px-4 py-3.5 text-white placeholder-slate-500 focus:border-brand-orange outline-none text-sm transition-all focus:ring-1 focus:ring-brand-orange" />
                                 </div>
                                 <div>
-                                    <input required type="tel" placeholder="Phone Number" className="w-full bg-slate-950 border border-slate-700 rounded-lg px-4 py-3.5 text-white placeholder-slate-500 focus:border-brand-orange outline-none text-sm transition-all focus:ring-1 focus:ring-brand-orange" />
+                                    <input required type="tel" name="phone" placeholder="Phone Number" className="w-full bg-slate-950 border border-slate-700 rounded-lg px-4 py-3.5 text-white placeholder-slate-500 focus:border-brand-orange outline-none text-sm transition-all focus:ring-1 focus:ring-brand-orange" />
                                 </div>
                                 <div>
-                                    <input required type="email" placeholder="Email Address" className="w-full bg-slate-950 border border-slate-700 rounded-lg px-4 py-3.5 text-white placeholder-slate-500 focus:border-brand-orange outline-none text-sm transition-all focus:ring-1 focus:ring-brand-orange" />
+                                    <input required type="email" name="email" placeholder="Email Address" className="w-full bg-slate-950 border border-slate-700 rounded-lg px-4 py-3.5 text-white placeholder-slate-500 focus:border-brand-orange outline-none text-sm transition-all focus:ring-1 focus:ring-brand-orange" />
                                 </div>
                                 <div className="relative">
-                                    <select required className="w-full bg-slate-950 border border-slate-700 rounded-lg px-4 py-3.5 text-white focus:border-brand-orange outline-none text-sm transition-all focus:ring-1 focus:ring-brand-orange appearance-none cursor-pointer">
+                                    <select required name="projectType" className="w-full bg-slate-950 border border-slate-700 rounded-lg px-4 py-3.5 text-white focus:border-brand-orange outline-none text-sm transition-all focus:ring-1 focus:ring-brand-orange appearance-none cursor-pointer">
                                         <option value="" disabled selected className="text-slate-500">Select Project Type</option>
                                         <option value="countertops">Countertops Installation</option>
                                         <option value="cabinets">Cabinet Refacing</option>
