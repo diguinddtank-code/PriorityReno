@@ -7,6 +7,7 @@ import Testimonials from './components/Testimonials';
 import Materials from './components/Materials'; 
 import WhyChooseUs from './components/WhyChooseUs';
 import Gallery from './components/Gallery';
+import ContactSection from './components/ContactSection';
 import Footer from './components/Footer';
 import FloatingCTA from './components/FloatingCTA';
 import Transformation from './components/Transformation';
@@ -48,7 +49,13 @@ function App() {
 
             {/* Gallery */}
             <Gallery />
+
+            {/* Contact Form & Map (Moved here for high contrast) */}
+            <Reveal width="100%">
+              <ContactSection />
+            </Reveal>
           </main>
+          
           <Footer />
           <MobileNav />
           <FloatingCTA />

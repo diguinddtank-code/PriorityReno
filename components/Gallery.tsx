@@ -91,7 +91,8 @@ const Gallery: React.FC = () => {
     }
   ];
 
-  const handleScrollToQuote = () => {
+  const handleScrollToQuote = (e: React.MouseEvent) => {
+    e.stopPropagation(); // Prevent card click
     setSelectedImage(null);
     setTimeout(() => {
         const form = document.getElementById('quote-form');
@@ -100,13 +101,16 @@ const Gallery: React.FC = () => {
   };
 
   return (
-    <section id="locations" className="py-16 md:py-24 bg-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="locations" className="py-16 md:py-24 bg-slate-950 relative overflow-hidden">
+      {/* Ambient Lighting */}
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-brand-orange/5 rounded-full blur-[100px] pointer-events-none"></div>
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="flex flex-col md:flex-row justify-between items-end mb-12">
           <div className="max-w-2xl">
             <span className="text-brand-orange font-bold uppercase tracking-widest text-xs md:text-sm">Local Projects</span>
-            <h2 className="text-3xl md:text-5xl font-serif text-slate-900 mt-3">Installations Near You</h2>
-            <p className="text-slate-500 mt-4 max-w-xl">
+            <h2 className="text-3xl md:text-5xl font-serif text-white mt-3">Installations Near You</h2>
+            <p className="text-slate-400 mt-4 max-w-xl">
               See our recent work. From quartz countertop installation in Alpharetta to cabinet refacing in Buckhead, we serve the entire Metro Atlanta area.
             </p>
           </div>
@@ -115,26 +119,26 @@ const Gallery: React.FC = () => {
         {/* Project Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {galleryItems.map((item) => (
-             <div key={item.id} className="bg-white rounded-2xl overflow-hidden shadow-lg border border-slate-100 group hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 flex flex-col h-full">
+             <div key={item.id} className="bg-slate-900 rounded-2xl overflow-hidden shadow-xl border border-slate-800 group hover:border-brand-orange/60 transition-all duration-500 hover:-translate-y-2 flex flex-col h-full hover:shadow-2xl hover:shadow-brand-orange/10">
                  
                  {/* Image Container with Placeholder BG */}
-                 <div className="relative h-64 overflow-hidden cursor-pointer bg-slate-200" onClick={() => setSelectedImage(item)}>
+                 <div className="relative h-64 overflow-hidden cursor-pointer bg-slate-800" onClick={() => setSelectedImage(item)}>
                     <img 
                       src={item.src} 
                       alt={item.title} 
                       loading="lazy"
-                      className="w-full h-full object-cover transition-transform duration-700 ease-out-expo group-hover:scale-110"
+                      className="w-full h-full object-cover transition-transform duration-700 ease-out-expo group-hover:scale-110 opacity-90 group-hover:opacity-100"
                     />
                     
                     {/* Location Badge */}
-                    <div className="absolute top-4 left-4 bg-slate-900/80 backdrop-blur-md text-white text-xs font-bold px-3 py-1.5 rounded-full flex items-center gap-1.5 z-10">
+                    <div className="absolute top-4 left-4 bg-slate-950/80 backdrop-blur-md text-white text-xs font-bold px-3 py-1.5 rounded-full flex items-center gap-1.5 z-10 border border-white/10 shadow-lg">
                       <MapPin size={12} className="text-brand-orange" />
                       {item.location.toUpperCase()}
                     </div>
 
                     {/* Hover Overlay */}
-                    <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                        <div className="bg-white/90 backdrop-blur p-3 rounded-full text-slate-900 shadow-lg transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+                    <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                        <div className="bg-white/10 backdrop-blur-md border border-white/20 p-3 rounded-full text-white shadow-lg transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
                             <Maximize2 size={20} />
                         </div>
                     </div>
@@ -145,30 +149,31 @@ const Gallery: React.FC = () => {
                     <span className="text-brand-orange text-[10px] md:text-xs font-bold tracking-widest uppercase mb-2">
                         {item.category}
                     </span>
-                    <h3 className="text-2xl font-serif text-slate-900 mb-6 group-hover:text-brand-orange transition-colors cursor-pointer" onClick={() => setSelectedImage(item)}>
+                    <h3 className="text-2xl font-serif text-white mb-6 group-hover:text-brand-orange transition-colors cursor-pointer" onClick={() => setSelectedImage(item)}>
                         {item.title}
                     </h3>
 
-                    {/* Specs Box */}
-                    <div className="bg-slate-50 rounded-xl p-4 flex items-start gap-4 md:gap-6 mb-6 border border-slate-100">
+                    {/* Specs Box - ADDED ORANGE BORDER */}
+                    <div className="bg-slate-950/30 rounded-xl p-4 flex items-start gap-4 md:gap-6 mb-6 border border-brand-orange/20 hover:border-brand-orange/40 transition-colors">
                         <div className="flex-1">
-                            <div className="flex items-center gap-2 text-slate-400 text-[10px] font-bold uppercase tracking-wider mb-1">
+                            <div className="flex items-center gap-2 text-slate-500 text-[10px] font-bold uppercase tracking-wider mb-1">
                                 <Layers size={12} /> Material
                             </div>
-                            <p className="text-slate-900 font-medium text-sm leading-tight line-clamp-2">{item.material}</p>
+                            <p className="text-slate-200 font-medium text-sm leading-tight line-clamp-2">{item.material}</p>
                         </div>
-                        <div className="w-px h-10 bg-slate-200"></div>
+                        <div className="w-px h-10 bg-white/10"></div>
                         <div className="flex-1">
-                             <div className="flex items-center gap-2 text-slate-400 text-[10px] font-bold uppercase tracking-wider mb-1">
+                             <div className="flex items-center gap-2 text-slate-500 text-[10px] font-bold uppercase tracking-wider mb-1">
                                 <Box size={12} /> Scope
                             </div>
-                            <p className="text-slate-900 font-medium text-sm leading-tight line-clamp-2">{item.scope}</p>
+                            <p className="text-slate-200 font-medium text-sm leading-tight line-clamp-2">{item.scope}</p>
                         </div>
                     </div>
 
+                    {/* Button - UPDATED TO ORANGE FILLED */}
                     <button 
                         onClick={handleScrollToQuote}
-                        className="w-full bg-slate-900 text-white py-4 rounded-lg text-xs md:text-sm font-bold uppercase tracking-widest hover:bg-brand-orange transition-colors flex items-center justify-center gap-2 group/btn mt-auto"
+                        className="w-full bg-brand-orange text-white py-4 rounded-lg text-xs md:text-sm font-bold uppercase tracking-widest hover:bg-orange-600 shadow-lg shadow-orange-500/20 transition-all flex items-center justify-center gap-2 group/btn mt-auto transform active:scale-95"
                     >
                         Quote This Project
                         <ArrowRight size={16} className="group-hover/btn:translate-x-1 transition-transform" />
@@ -178,13 +183,13 @@ const Gallery: React.FC = () => {
           ))}
         </div>
 
-        {/* NEW RESPONSIVE MODAL - FULL SCREEN ON MOBILE, SPLIT ON DESKTOP */}
+        {/* RESPONSIVE MODAL - DARK THEME */}
         {selectedImage && createPortal(
         <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-slate-950/95 backdrop-blur-xl animate-fade-in md:p-12 overflow-hidden">
             
             {/* Modal Container */}
             <div 
-                className="w-full h-full md:h-auto md:max-h-[90vh] md:max-w-6xl md:rounded-3xl bg-slate-900 overflow-hidden flex flex-col md:flex-row shadow-2xl animate-scale-in border-none md:border border-white/5 relative" 
+                className="w-full h-full md:h-auto md:max-h-[90vh] md:max-w-6xl md:rounded-3xl bg-slate-900 overflow-hidden flex flex-col md:flex-row shadow-2xl animate-scale-in border-none md:border border-white/10 relative" 
                 onClick={(e) => e.stopPropagation()}
             >
                 
@@ -256,7 +261,7 @@ const Gallery: React.FC = () => {
                         <Button 
                             fullWidth 
                             onClick={handleScrollToQuote} 
-                            className="shadow-xl shadow-brand-orange/20 py-4"
+                            className="shadow-xl shadow-brand-orange/20 py-4 bg-brand-orange text-white border-transparent"
                         >
                             Get a Quote Like This <ArrowRight className="ml-2 w-4 h-4" />
                         </Button>

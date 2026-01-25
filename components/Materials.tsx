@@ -39,15 +39,18 @@ const Materials: React.FC = () => {
   const [selectedMaterial, setSelectedMaterial] = useState(materialsDB["Quartz"][0]);
 
   return (
-    <section id="materials" className="py-16 md:py-24 bg-slate-50 overflow-hidden">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="materials" className="py-16 md:py-24 bg-slate-950 overflow-hidden relative">
+      {/* Ambient Lighting Background */}
+      <div className="absolute top-0 left-0 w-[500px] h-[500px] bg-brand-orange/5 rounded-full blur-[100px] pointer-events-none -translate-x-1/2 -translate-y-1/2"></div>
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <Reveal width="100%" variant="left">
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
             <div>
               <span className="text-brand-orange font-bold uppercase tracking-widest text-xs">Stone Inventory</span>
-              <h2 className="text-3xl md:text-4xl font-serif text-slate-900 mt-2">Browse Granite & Quartz Slabs</h2>
+              <h2 className="text-3xl md:text-4xl font-serif text-white mt-2">Browse Granite & Quartz Slabs</h2>
             </div>
-            <div className="hidden md:block text-slate-500 text-sm">
+            <div className="hidden md:block text-slate-400 text-sm">
                 Inventory updated weekly. Fabrication & Installation available.
             </div>
           </div>
@@ -67,10 +70,10 @@ const Materials: React.FC = () => {
                                   setActiveCategory(cat);
                                   setSelectedMaterial(materialsDB[cat][0]);
                               }}
-                              className={`whitespace-nowrap px-6 py-2.5 rounded-full text-sm font-bold transition-all duration-300 ${
+                              className={`whitespace-nowrap px-6 py-2.5 rounded-full text-sm font-bold transition-all duration-300 border ${
                                   activeCategory === cat 
-                                  ? 'bg-slate-900 text-white shadow-lg scale-105' 
-                                  : 'bg-white text-slate-500 border border-slate-200 hover:border-slate-400 hover:scale-105'
+                                  ? 'bg-white text-slate-900 border-white shadow-lg scale-105' 
+                                  : 'bg-transparent text-slate-400 border-slate-800 hover:border-slate-600 hover:text-white hover:scale-105'
                               }`}
                           >
                               {cat}
@@ -88,12 +91,12 @@ const Materials: React.FC = () => {
                               className={`relative aspect-square rounded-xl overflow-hidden cursor-pointer border-2 transition-all duration-300 ${
                                   selectedMaterial.name === mat.name 
                                   ? 'border-brand-orange ring-2 ring-brand-orange/20 scale-95' 
-                                  : 'border-transparent hover:border-slate-300 hover:scale-105'
+                                  : 'border-transparent hover:border-slate-700 hover:scale-105'
                               }`}
                           >
                               <img src={mat.img} alt={mat.name} className="w-full h-full object-cover" />
                               <div className="absolute inset-0 bg-black/40 flex flex-col justify-end p-2 md:p-3">
-                                  <span className="text-white text-[10px] md:text-xs font-bold leading-tight line-clamp-2">{mat.name}</span>
+                                  <span className="text-white text-[10px] md:text-xs font-bold leading-tight line-clamp-2 drop-shadow-md">{mat.name}</span>
                                   {selectedMaterial.name === mat.name && (
                                       <div className="absolute top-2 right-2 bg-brand-orange rounded-full p-1 text-white animate-scale-in">
                                           <Check size={10} strokeWidth={4} />
@@ -109,7 +112,7 @@ const Materials: React.FC = () => {
             {/* Right: Live Preview (Sticky on Desktop) */}
             <div className="w-full lg:w-1/2 order-first lg:order-last">
                 <Reveal width="100%" delay={200} variant="right">
-                  <div className="bg-white rounded-2xl p-2 shadow-2xl border border-slate-100 h-64 md:h-full md:min-h-[400px] relative overflow-hidden group">
+                  <div className="bg-slate-900 rounded-2xl p-2 shadow-2xl border border-slate-800 h-64 md:h-full md:min-h-[400px] relative overflow-hidden group">
                       <img 
                           src={selectedMaterial.img} 
                           alt={selectedMaterial.name} 
@@ -117,20 +120,23 @@ const Materials: React.FC = () => {
                           key={selectedMaterial.name} // Key forces re-render for nice fade
                       />
                       
+                      {/* Gradient for text legibility on bottom */}
+                      <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent opacity-60"></div>
+
                       {/* Floating Info Card */}
-                      <div className="absolute bottom-4 left-4 right-4 md:bottom-6 md:left-6 md:right-6 bg-white/95 backdrop-blur-md p-4 md:p-5 rounded-xl shadow-lg border border-slate-100 animate-slide-up-fade">
+                      <div className="absolute bottom-4 left-4 right-4 md:bottom-6 md:left-6 md:right-6 bg-slate-900/90 backdrop-blur-md p-4 md:p-5 rounded-xl shadow-2xl border border-white/10 animate-slide-up-fade">
                           <div className="flex justify-between items-start mb-2">
                               <div>
-                                  <span className="inline-block px-2 py-1 bg-slate-100 text-slate-600 rounded text-[10px] font-bold uppercase tracking-wider mb-2">
+                                  <span className="inline-block px-2 py-1 bg-white/10 text-white rounded text-[10px] font-bold uppercase tracking-wider mb-2 border border-white/10">
                                       {selectedMaterial.tag} Collection
                                   </span>
-                                  <h3 className="text-xl md:text-2xl font-serif text-slate-900">{selectedMaterial.name}</h3>
+                                  <h3 className="text-xl md:text-2xl font-serif text-white">{selectedMaterial.name}</h3>
                               </div>
-                              <div className="bg-slate-900 text-white rounded-full p-2 hidden md:block">
+                              <div className="bg-white/10 text-white rounded-full p-2 hidden md:block hover:bg-white/20 transition-colors">
                                   <Info size={20} />
                               </div>
                           </div>
-                          <p className="text-slate-500 text-sm mb-4 hidden md:block">
+                          <p className="text-slate-400 text-sm mb-4 hidden md:block">
                               Premium {activeCategory} surface suitable for kitchen islands, vanities, and high-traffic areas.
                           </p>
                           <button 
