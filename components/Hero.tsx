@@ -14,14 +14,15 @@ const Hero: React.FC = () => {
     const handleScroll = () => {
       const scrolled = window.scrollY;
       if (videoRef.current) {
-        videoRef.current.style.transform = `translateY(${scrolled * 0.5}px) scale(1.1)`;
+        // Optimized transform update
+        videoRef.current.style.transform = `translate3d(0, ${scrolled * 0.5}px, 0) scale(1.1)`;
       }
       if (contentRef.current) {
         contentRef.current.style.opacity = `${1 - scrolled / 900}`;
       }
     };
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => {
         window.removeEventListener('scroll', handleScroll);
     };
@@ -55,7 +56,7 @@ const Hero: React.FC = () => {
           loop 
           muted 
           playsInline
-          className="w-full h-full object-cover opacity-80 transition-transform duration-75 ease-out scale-110"
+          className="w-full h-full object-cover opacity-80 transition-transform duration-75 ease-out scale-110 will-change-transform"
           poster="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=2070&auto=format&fit=crop"
         >
           <source src="https://videos.pexels.com/video-files/7578552/7578552-uhd_2560_1440_30fps.mp4" type="video/mp4" />

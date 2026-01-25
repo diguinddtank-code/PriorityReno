@@ -38,18 +38,14 @@ const Transformation: React.FC = () => {
     const handleGlobalUp = () => setIsDragging(false);
 
     if (isDragging) {
-      // Prevent scrolling while dragging on mobile
-      document.body.style.overflow = 'hidden';
+      // NOTE: Removed document.body.style.overflow = 'hidden' to prevent scroll locking on mobile
       window.addEventListener('mousemove', handleGlobalMove);
       window.addEventListener('mouseup', handleGlobalUp);
       window.addEventListener('touchmove', handleGlobalMove);
       window.addEventListener('touchend', handleGlobalUp);
-    } else {
-      document.body.style.overflow = 'unset';
     }
 
     return () => {
-      document.body.style.overflow = 'unset';
       window.removeEventListener('mousemove', handleGlobalMove);
       window.removeEventListener('mouseup', handleGlobalUp);
       window.removeEventListener('touchmove', handleGlobalMove);
@@ -77,12 +73,13 @@ const Transformation: React.FC = () => {
         </Reveal>
 
         <Reveal width="100%" variant="scale">
-          <div className="relative max-w-5xl mx-auto rounded-3xl overflow-hidden shadow-2xl border border-white/10 select-none group touch-none ring-1 ring-white/5">
+          <div className="relative max-w-5xl mx-auto rounded-3xl overflow-hidden shadow-2xl border border-white/10 select-none group ring-1 ring-white/5">
             
             {/* Aspect Ratio Container */}
+            {/* Added 'touch-pan-y' to allow vertical scrolling while touching this area */}
             <div 
               ref={containerRef}
-              className="relative aspect-[4/3] md:aspect-[16/9] w-full cursor-col-resize touch-none"
+              className="relative aspect-[4/3] md:aspect-[16/9] w-full cursor-col-resize touch-pan-y"
               onMouseDown={handleMouseDown}
               onTouchStart={handleMouseDown}
             >

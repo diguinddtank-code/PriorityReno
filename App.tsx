@@ -15,12 +15,12 @@ import { Reveal } from './components/Reveal';
 
 function App() {
   return (
-    // Outer wrapper strict overflow handling
-    <div className="relative w-full max-w-[100vw] overflow-x-hidden">
+    // Simplified wrapper to allow native scroll behavior
+    <div className="relative w-full">
         {/* Increased pb-20 to pb-32 to account for floating nav + margin */}
         <div className="min-h-screen bg-slate-50 font-sans pb-32 md:pb-0">
           <Navbar />
-          <main className="w-full overflow-x-hidden">
+          <main className="w-full">
             {/* Hero Section */}
             <Hero />
 
