@@ -9,7 +9,7 @@ import WhyChooseUs from './components/WhyChooseUs';
 import Gallery from './components/Gallery';
 import Footer from './components/Footer';
 import FloatingCTA from './components/FloatingCTA';
-import Transformation from './components/Transformation'; // New Interactive Component
+import Transformation from './components/Transformation';
 import { Reveal } from './components/Reveal';
 
 function App() {
@@ -18,7 +18,7 @@ function App() {
     <div className="min-h-screen bg-slate-50 font-sans pb-32 md:pb-0">
       <Navbar />
       <main>
-        {/* Hero Section - Removed Reveal for better LCP/SEO performance */}
+        {/* Hero Section */}
         <Hero />
 
         {/* Features/Services Section */}
@@ -26,8 +26,13 @@ function App() {
           <Features />
         </Reveal>
 
-        {/* NEW: Interactive Before/After Section - High Conversion Factor */}
+        {/* 1. Interactive Before/After Section (Visual Proof) */}
         <Transformation />
+
+        {/* 2. Testimonials (Social Proof) - Moved here as requested */}
+        <Reveal width="100%">
+          <Testimonials />
+        </Reveal>
 
         {/* Materials Section */}
         <Reveal width="100%">
@@ -39,12 +44,7 @@ function App() {
           <WhyChooseUs />
         </Reveal>
 
-        {/* Testimonials - Moved down slightly to flow after "Why Choose Us" logic */}
-        <Reveal width="100%">
-          <Testimonials />
-        </Reveal>
-
-        {/* Gallery - Removed Reveal wrapper to ensure visibility */}
+        {/* Gallery */}
         <Gallery />
       </main>
       <Footer />

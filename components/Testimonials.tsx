@@ -95,28 +95,28 @@ const Testimonials: React.FC = () => {
   const marqueeReviews = [...reviews, ...reviews, ...reviews, ...reviews];
 
   return (
-    <section id="testimonials" className="py-20 md:py-28 bg-slate-900 relative overflow-hidden text-white border-t border-white/5">
-       <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-white/5 to-transparent pointer-events-none z-10"></div>
-       <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-brand-orange/10 rounded-full blur-[120px] pointer-events-none"></div>
+    <section id="testimonials" className="py-20 md:py-28 bg-white relative overflow-hidden">
+       {/* Ambient Lighting Background - Adjusted for Light Mode */}
+       <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-brand-orange/5 rounded-full blur-[120px] pointer-events-none"></div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="grid lg:grid-cols-2 gap-12 items-center mb-16 md:mb-20">
             <Reveal width="100%" variant="left">
                 <div>
                     <div className="flex items-center gap-2 mb-4">
-                         <div className="flex bg-white/10 px-3 py-1 rounded-full items-center gap-2 backdrop-blur-md border border-white/10">
+                         <div className="flex bg-slate-50 px-3 py-1 rounded-full items-center gap-2 border border-slate-200 shadow-sm">
                             <div className="flex gap-0.5">
                                 {[1,2,3,4,5].map(i => <Star key={i} size={12} className="text-brand-orange fill-current" />)}
                             </div>
-                            <span className="text-xs font-bold">5.0</span>
+                            <span className="text-xs font-bold text-slate-900">5.0</span>
                          </div>
-                         <span className="text-slate-400 text-xs uppercase tracking-wider font-bold">Verified Local Reviews</span>
+                         <span className="text-slate-500 text-xs uppercase tracking-wider font-bold">Verified Local Reviews</span>
                     </div>
-                    <h2 className="text-4xl md:text-6xl font-serif leading-tight mb-6">
+                    <h2 className="text-4xl md:text-6xl font-serif leading-tight mb-6 text-slate-900">
                         Atlanta's Most <br/>
-                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-orange to-orange-400">Trusted Installers</span>
+                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-orange to-orange-600">Trusted Installers</span>
                     </h2>
-                    <p className="text-slate-400 text-lg max-w-lg leading-relaxed">
+                    <p className="text-slate-600 text-lg max-w-lg leading-relaxed">
                         We don't just build kitchens; we build reputation. Join hundreds of satisfied homeowners who chose quality contractors over big box stores.
                     </p>
                 </div>
@@ -125,11 +125,11 @@ const Testimonials: React.FC = () => {
             <div className="grid grid-cols-3 gap-4">
                 {stats.map((stat, i) => (
                     <Reveal key={i} delay={i * 150} variant="scale" width="100%">
-                        <div className="bg-white/5 border border-white/10 p-4 md:p-6 rounded-2xl text-center backdrop-blur-sm hover:bg-white/10 transition-colors group">
-                            <div className="text-3xl md:text-5xl font-bold text-white mb-2 font-serif group-hover:text-brand-orange transition-colors duration-300">
+                        <div className="bg-slate-50 border border-slate-200 p-4 md:p-6 rounded-2xl text-center hover:shadow-lg transition-all duration-300 group hover:-translate-y-1">
+                            <div className="text-3xl md:text-5xl font-bold text-slate-900 mb-2 font-serif group-hover:text-brand-orange transition-colors duration-300">
                                 <Counter end={stat.value} />
                             </div>
-                            <div className="text-slate-400 text-[10px] md:text-xs uppercase tracking-widest font-bold">{stat.label}</div>
+                            <div className="text-slate-500 text-[10px] md:text-xs uppercase tracking-widest font-bold">{stat.label}</div>
                         </div>
                     </Reveal>
                 ))}
@@ -139,27 +139,28 @@ const Testimonials: React.FC = () => {
 
       {/* FAST MARQUEE (Responsive Speed) */}
       <div className="relative w-full overflow-hidden pb-8">
-        <div className="absolute top-0 left-0 bottom-8 w-12 md:w-32 bg-gradient-to-r from-slate-900 to-transparent z-20 pointer-events-none"></div>
-        <div className="absolute top-0 right-0 bottom-8 w-12 md:w-32 bg-gradient-to-l from-slate-900 to-transparent z-20 pointer-events-none"></div>
+        {/* Gradients to hide edges - match bg-white */}
+        <div className="absolute top-0 left-0 bottom-8 w-12 md:w-32 bg-gradient-to-r from-white to-transparent z-20 pointer-events-none"></div>
+        <div className="absolute top-0 right-0 bottom-8 w-12 md:w-32 bg-gradient-to-l from-white to-transparent z-20 pointer-events-none"></div>
 
         <div className="flex animate-[marquee_10s_linear_infinite] hover:[animation-play-state:paused]">
             {marqueeReviews.map((review, i) => (
                 <div key={i} className="flex-shrink-0 w-[280px] md:w-[400px] mx-3 md:mx-4">
-                    <div className="bg-gradient-to-b from-white/10 to-white/5 border border-white/10 p-6 md:p-8 rounded-2xl h-full flex flex-col relative group hover:border-brand-orange/50 transition-colors duration-300 hover:bg-white/10">
-                        <Quote className="text-brand-orange w-6 h-6 md:w-8 md:h-8 mb-4 md:mb-6 opacity-50 group-hover:opacity-100 transition-opacity" />
-                        <p className="text-slate-200 text-sm md:text-base leading-relaxed italic mb-6 md:mb-8 flex-grow line-clamp-4">
+                    <div className="bg-white border border-slate-100 shadow-xl shadow-slate-200/50 p-6 md:p-8 rounded-2xl h-full flex flex-col relative group hover:border-brand-orange/30 transition-all duration-300 hover:-translate-y-1">
+                        <Quote className="text-brand-orange w-6 h-6 md:w-8 md:h-8 mb-4 md:mb-6 opacity-20 group-hover:opacity-100 transition-opacity" />
+                        <p className="text-slate-600 text-sm md:text-base leading-relaxed italic mb-6 md:mb-8 flex-grow line-clamp-4">
                             "{review.text}"
                         </p>
-                        <div className="flex items-center gap-4 border-t border-white/10 pt-4 md:pt-6 mt-auto">
-                            <div className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-brand-orange flex items-center justify-center font-bold text-white shrink-0 text-sm md:text-base">
+                        <div className="flex items-center gap-4 border-t border-slate-100 pt-4 md:pt-6 mt-auto">
+                            <div className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-slate-900 text-white flex items-center justify-center font-bold shrink-0 text-sm md:text-base shadow-md">
                                 {review.author.charAt(0)}
                             </div>
                             <div>
-                                <h4 className="font-bold text-white text-sm">{review.author}</h4>
-                                <div className="flex items-center gap-2 text-[10px] md:text-xs text-slate-400">
+                                <h4 className="font-bold text-slate-900 text-sm">{review.author}</h4>
+                                <div className="flex items-center gap-2 text-[10px] md:text-xs text-slate-500">
                                     <span>{review.location}</span>
-                                    <span className="hidden md:inline w-1 h-1 rounded-full bg-slate-500"></span>
-                                    <span className="text-brand-orange block md:inline">{review.badge}</span>
+                                    <span className="hidden md:inline w-1 h-1 rounded-full bg-slate-300"></span>
+                                    <span className="text-brand-orange block md:inline font-semibold">{review.badge}</span>
                                 </div>
                             </div>
                         </div>

@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { MoveHorizontal, CheckCircle2, TrendingUp } from 'lucide-react';
+import { MoveHorizontal, CheckCircle2, TrendingUp, Sparkles } from 'lucide-react';
 import { Reveal } from './Reveal';
 import Button from './Button';
 
@@ -8,9 +8,9 @@ const Transformation: React.FC = () => {
   const [isDragging, setIsDragging] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
-  // Before/After Images - High quality kitchen contrast
-  const beforeImage = "https://images.unsplash.com/photo-1556228453-efd6c1ff04f6?q=80&w=2070&auto=format&fit=crop"; // Slightly darker/older looking kitchen
-  const afterImage = "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=2070&auto=format&fit=crop"; // Bright luxury kitchen
+  // Before/After Images - Dramatic Contrast
+  const beforeImage = "https://images.unsplash.com/photo-1556228453-efd6c1ff04f6?q=80&w=2070&auto=format&fit=crop"; 
+  const afterImage = "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=2070&auto=format&fit=crop"; 
 
   const handleMove = (event: React.MouseEvent | React.TouchEvent | MouseEvent | TouchEvent) => {
     if (!containerRef.current) return;
@@ -38,13 +38,18 @@ const Transformation: React.FC = () => {
     const handleGlobalUp = () => setIsDragging(false);
 
     if (isDragging) {
+      // Prevent scrolling while dragging on mobile
+      document.body.style.overflow = 'hidden';
       window.addEventListener('mousemove', handleGlobalMove);
       window.addEventListener('mouseup', handleGlobalUp);
       window.addEventListener('touchmove', handleGlobalMove);
       window.addEventListener('touchend', handleGlobalUp);
+    } else {
+      document.body.style.overflow = 'unset';
     }
 
     return () => {
+      document.body.style.overflow = 'unset';
       window.removeEventListener('mousemove', handleGlobalMove);
       window.removeEventListener('mouseup', handleGlobalUp);
       window.removeEventListener('touchmove', handleGlobalMove);
@@ -53,28 +58,31 @@ const Transformation: React.FC = () => {
   }, [isDragging]);
 
   return (
-    <section id="transformation" className="py-20 md:py-28 bg-slate-900 overflow-hidden relative">
+    <section id="transformation" className="py-20 md:py-28 bg-slate-900 overflow-hidden relative border-t border-white/5">
       {/* Ambient Lighting Background */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-brand-orange/5 rounded-full blur-[120px] pointer-events-none"></div>
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-brand-orange/5 rounded-full blur-[100px] pointer-events-none"></div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <Reveal width="100%" variant="up">
-          <div className="text-center mb-12">
-            <span className="text-brand-orange font-bold uppercase tracking-widest text-xs">Real Results</span>
-            <h2 className="text-3xl md:text-5xl font-serif text-white mt-3 mb-6">See The Difference Quality Makes</h2>
+          <div className="text-center mb-10 md:mb-16">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-orange/10 border border-brand-orange/20 text-brand-orange text-[10px] font-bold uppercase tracking-widest mb-4">
+                <Sparkles size={12} />
+                <span>Real Transformation</span>
+            </div>
+            <h2 className="text-3xl md:text-5xl font-serif text-white mb-6">See The Difference Quality Makes</h2>
             <p className="text-slate-400 max-w-2xl mx-auto text-base leading-relaxed">
-              Don't imagine the potential—see it. Slide to reveal how we transform outdated spaces into high-value, luxury environments in under a week.
+              Don't imagine the potential—see it. Slide to reveal how we transform outdated spaces into high-value, luxury environments in just days.
             </p>
           </div>
         </Reveal>
 
         <Reveal width="100%" variant="scale">
-          <div className="relative max-w-5xl mx-auto rounded-3xl overflow-hidden shadow-2xl border border-white/10 select-none group touch-none">
+          <div className="relative max-w-5xl mx-auto rounded-3xl overflow-hidden shadow-2xl border border-white/10 select-none group touch-none ring-1 ring-white/5">
             
             {/* Aspect Ratio Container */}
             <div 
               ref={containerRef}
-              className="relative aspect-[4/3] md:aspect-[16/9] w-full cursor-col-resize"
+              className="relative aspect-[4/3] md:aspect-[16/9] w-full cursor-col-resize touch-none"
               onMouseDown={handleMouseDown}
               onTouchStart={handleMouseDown}
             >
@@ -90,14 +98,14 @@ const Transformation: React.FC = () => {
                 After
               </div>
 
-              {/* Overlays on After Image (Hotspots) */}
-              <div className="absolute bottom-12 right-12 hidden md:block animate-fade-in delay-500">
-                 <div className="bg-slate-900/80 backdrop-blur-md p-4 rounded-xl border border-white/10 shadow-xl max-w-xs">
-                    <h4 className="text-brand-orange font-bold text-xs uppercase mb-2 flex items-center gap-2">
-                        <TrendingUp size={14} /> ROI Increase
+              {/* ROI Badge */}
+              <div className="absolute bottom-6 right-6 hidden md:block animate-fade-in delay-500 z-10">
+                 <div className="bg-slate-900/90 backdrop-blur-md p-4 rounded-xl border border-white/10 shadow-xl max-w-xs transform hover:scale-105 transition-transform duration-300">
+                    <h4 className="text-brand-orange font-bold text-xs uppercase mb-1 flex items-center gap-2">
+                        <TrendingUp size={14} /> Property Value
                     </h4>
-                    <p className="text-white text-sm">
-                        This kitchen remodel increased the home's appraisal value by an estimated <span className="font-bold text-green-400">18%</span>.
+                    <p className="text-white text-sm font-medium">
+                        Renovations like this typically yield a <span className="font-bold text-green-400">70-80% ROI</span> at resale.
                     </p>
                  </div>
               </div>
@@ -110,7 +118,7 @@ const Transformation: React.FC = () => {
                 <img 
                   src={beforeImage} 
                   alt="Before Renovation" 
-                  className="absolute inset-0 w-full h-full object-cover filter sepia-[.3] brightness-75 grayscale-[.5]" 
+                  className="absolute inset-0 w-full h-full object-cover filter sepia-[.3] brightness-75 grayscale-[.3]" 
                   draggable="false"
                 />
                 <div className="absolute top-6 left-6 bg-black/60 backdrop-blur-md text-white px-4 py-1.5 rounded-full font-bold text-xs uppercase tracking-widest border border-white/10">
@@ -123,7 +131,7 @@ const Transformation: React.FC = () => {
                 className="absolute top-0 bottom-0 w-1 bg-white cursor-col-resize z-20 shadow-[0_0_20px_rgba(0,0,0,0.5)]"
                 style={{ left: `${sliderPosition}%` }}
               >
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-xl border-4 border-slate-900 group-hover:scale-110 transition-transform">
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-xl border-4 border-slate-900 hover:scale-110 transition-transform">
                   <MoveHorizontal className="text-slate-900 w-6 h-6" />
                 </div>
               </div>
@@ -136,14 +144,14 @@ const Transformation: React.FC = () => {
                     <CheckCircle2 className="text-brand-orange shrink-0 mt-1" />
                     <div>
                         <h4 className="text-white font-bold">Quartz Installation</h4>
-                        <p className="text-slate-400 text-sm">Replaced laminate with Calacatta Gold Quartz.</p>
+                        <p className="text-slate-400 text-sm">Calacatta Gold with Mitered Edge.</p>
                     </div>
                 </div>
                 <div className="flex items-start gap-3">
                     <CheckCircle2 className="text-brand-orange shrink-0 mt-1" />
                     <div>
                         <h4 className="text-white font-bold">Cabinet Refacing</h4>
-                        <p className="text-slate-400 text-sm">New shaker doors & soft-close hardware.</p>
+                        <p className="text-slate-400 text-sm">Modern shaker style in Pure White.</p>
                     </div>
                 </div>
                 <div className="flex items-center justify-end">
