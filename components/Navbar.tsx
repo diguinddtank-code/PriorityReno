@@ -57,6 +57,9 @@ const Navbar: React.FC = () => {
                  <img 
                   src="https://i.imgur.com/VBoJH82.png" 
                   alt="Priority Renovations Logo" 
+                  width="56"
+                  height="56"
+                  fetchPriority="high"
                   className={`h-10 w-auto md:h-14 object-contain transition-all duration-300`}
                 />
               </div>

@@ -34,6 +34,9 @@ const Footer: React.FC = () => {
                  <img 
                   src="https://i.imgur.com/VBoJH82.png" 
                   alt="Priority Renovations Logo" 
+                  loading="lazy"
+                  width="40"
+                  height="40"
                   className="h-8 md:h-10 w-auto object-contain"
                 />
               </div>
