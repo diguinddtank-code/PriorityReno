@@ -56,12 +56,12 @@ const ContactSection: React.FC = () => {
                         </div>
                         <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 flex flex-col gap-4">
                              <div className="bg-brand-orange/10 w-12 h-12 rounded-full flex items-center justify-center text-brand-orange">
-                                <Phone size={24} />
+                                <Mail size={24} />
                              </div>
                              <div>
-                                 <h4 className="font-bold text-slate-900 mb-1">Call for Estimate</h4>
-                                 <a href="tel:4703804785" className="text-slate-600 text-sm hover:text-brand-orange transition-colors">+1 (470) 380-4785</a>
-                                 <p className="text-xs text-slate-400 mt-1">Mon-Sat: 8am - 6pm</p>
+                                 <h4 className="font-bold text-slate-900 mb-1">Email Us</h4>
+                                 <a href="mailto:priorityrenovationsatl@gmail.com" className="text-slate-600 text-sm hover:text-brand-orange transition-colors break-all">priorityrenovationsatl@gmail.com</a>
+                                 <p className="text-xs text-slate-400 mt-1">24/7 Online Support</p>
                              </div>
                         </div>
                     </div>
