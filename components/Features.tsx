@@ -12,7 +12,7 @@ const Features: React.FC = () => {
       badge: 'Best Seller',
       badgeColor: 'bg-brand-orange text-white', 
       desc: 'Expert granite & quartz countertop installers.',
-      img: 'https://images.unsplash.com/photo-1595515106969-1ce29566ff1c?q=80&w=2070&auto=format&fit=crop',
+      img: 'https://builderssurplusyeehaa.com/wp-content/uploads/2025/08/countertop-styles-granite-countertops.jpg',
       longDesc: "Looking for countertop installers near you? We provide precision fabrication and installation of Granite, Quartz, and Marble. We are the direct stone source in Atlanta, eliminating the middleman to give you the best price per square foot.",
       details: {
         materials: ['Quartz Install', 'Granite Slabs', 'Marble', 'Quartzite'],
@@ -26,7 +26,7 @@ const Features: React.FC = () => {
       badge: 'High Value',
       badgeColor: 'bg-blue-600 text-white', 
       desc: 'Custom cabinet refacing & door replacement.',
-      img: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=2053&auto=format&fit=crop',
+      img: 'https://cabinetcurestriangle.com/wp-content/uploads/2021/10/kitchen-cabinet-refacing-raleigh.jpg',
       longDesc: "Don't tear out your kitchen; upgrade it. Our cabinet refacing services in Atlanta transform your existing boxes with new solid wood doors, veneers, and soft-close hardware. It's the fastest way to get a custom look for less.",
       details: {
         materials: ['Solid Wood Doors', 'Custom Veneers', 'New Hardware'],
@@ -40,7 +40,7 @@ const Features: React.FC = () => {
       badge: 'Full Service',
       badgeColor: 'bg-slate-900 text-white border border-slate-700', 
       desc: 'Fast-track kitchen renovation contractors.',
-      img: 'https://images.unsplash.com/photo-1556911220-e15b29be8c8f?q=80&w=2070&auto=format&fit=crop',
+      img: 'https://iconcustombuilders.com/wp-content/uploads/2024/05/DS77374-Final-web-copy-scaled-1.webp',
       longDesc: "We are full-service kitchen remodeling contractors handling everything from demolition to plumbing and electrical. If you need a complete layout change or a turnkey kitchen makeover, our local team manages the entire project efficiently.",
       details: {
         materials: ['Full Design', 'Flooring', 'Plumbing & Electric'],
@@ -54,7 +54,7 @@ const Features: React.FC = () => {
       badge: 'Luxury',
       badgeColor: 'bg-[#D4AF37] text-white', 
       desc: 'Stone vanity tops & bathroom remodeling.',
-      img: 'https://images.unsplash.com/photo-1620626012053-93f268326996?q=80&w=2070&auto=format&fit=crop',
+      img: 'https://images.ctfassets.net/79nimht05j33/OIrqW3haWkPOz5ZLzBs6S/b1faaa0f56fed3982b982275740d43ea/bathroom_vanity_cabinets.jpg?w=1300&h=729&fl=progressive&q=70&fm=jpg&bg=transparent',
       longDesc: "Upgrade your master bath with custom stone vanity tops and shower surrounds. We fabricate remnants and full slabs for bathroom projects, offering a luxury spa feel with professional waterproofing and tile installation.",
       details: {
         materials: ['Vanity Tops', 'Shower Tile', 'Frameless Glass'],
@@ -117,6 +117,8 @@ const Features: React.FC = () => {
                 <img 
                   src={service.img} 
                   alt={service.title} 
+                  loading="lazy"
+                  decoding="async"
                   className="w-full h-full object-cover transition-transform duration-700 ease-out-expo group-hover:scale-110"
                 />
                 

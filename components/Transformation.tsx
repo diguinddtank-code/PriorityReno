@@ -9,8 +9,8 @@ const Transformation: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
 
   // Before/After Images - Dramatic Contrast
-  const beforeImage = "https://images.unsplash.com/photo-1556228453-efd6c1ff04f6?q=80&w=2070&auto=format&fit=crop"; 
-  const afterImage = "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=2070&auto=format&fit=crop"; 
+  const beforeImage = "https://i.imgur.com/EWnnkrO.png"; 
+  const afterImage = "https://i.imgur.com/nI4AulC.png"; 
 
   const handleMove = (event: React.MouseEvent | React.TouchEvent | MouseEvent | TouchEvent) => {
     if (!containerRef.current) return;
@@ -88,6 +88,8 @@ const Transformation: React.FC = () => {
               <img 
                 src={afterImage} 
                 alt="After Renovation" 
+                loading="lazy"
+                decoding="async"
                 className="absolute inset-0 w-full h-full object-cover"
                 draggable="false"
               />
@@ -115,6 +117,8 @@ const Transformation: React.FC = () => {
                 <img 
                   src={beforeImage} 
                   alt="Before Renovation" 
+                  loading="lazy"
+                  decoding="async"
                   className="absolute inset-0 w-full h-full object-cover filter sepia-[.3] brightness-75 grayscale-[.3]" 
                   draggable="false"
                 />

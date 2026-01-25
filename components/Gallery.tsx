@@ -19,7 +19,7 @@ const Gallery: React.FC = () => {
   const galleryItems = [
     {
       id: 'buckhead',
-      src: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=2070&auto=format&fit=crop",
+      src: "https://cdn.msisurfaces.com/images/roomscenes/medium/calacatta-gold-marble-a.jpg",
       category: "FULL KITCHEN REMODEL",
       title: "Buckhead Kitchen Makeover",
       location: "Buckhead, Atlanta",
@@ -31,7 +31,7 @@ const Gallery: React.FC = () => {
     },
     {
       id: 'alpharetta',
-      src: "https://images.unsplash.com/photo-1556911220-e15b29be8c8f?q=80&w=2070&auto=format&fit=crop",
+      src: "https://kbfhomeimprovement.com/cdn/shop/files/PureWhite_3.jpg?v=1757073801&width=1445",
       category: "COUNTERTOP INSTALLATION",
       title: "Quartz Countertops Installation",
       location: "Alpharetta, GA",
@@ -43,7 +43,7 @@ const Gallery: React.FC = () => {
     },
     {
       id: 'marietta',
-      src: "https://images.unsplash.com/photo-1620626012053-93f268326996?q=80&w=2070&auto=format&fit=crop",
+      src: "https://stonesuperior.com/wp-content/uploads/2018/12/Blue_Savoie_Honed_1.jpg",
       category: "MASTER BATHROOM",
       title: "Granite Vanity Installation",
       location: "Marietta, GA",
@@ -55,7 +55,7 @@ const Gallery: React.FC = () => {
     },
     {
       id: 'johnscreek',
-      src: "https://images.unsplash.com/photo-1596238638979-99411963625d?q=80&w=2069&auto=format&fit=crop",
+      src: "https://s.alicdn.com/@sc04/kf/H76062a0a741c4272bd8cd29484dd0906M.jpg",
       category: "OUTDOOR KITCHEN",
       title: "Johns Creek Outdoor Living",
       location: "Johns Creek, GA",
@@ -67,7 +67,7 @@ const Gallery: React.FC = () => {
     },
     {
       id: 'roswell',
-      src: "https://images.unsplash.com/photo-1542718610-a1d656d1884c?q=80&w=2070&auto=format&fit=crop",
+      src: "https://www.marbletrend.com/wp-content/uploads/2021/02/Statuario-Venato-Fireplace-1.jpg",
       category: "FIREPLACE SURROUND",
       title: "Modern Fireplace Cladding",
       location: "Roswell, GA",
@@ -79,7 +79,7 @@ const Gallery: React.FC = () => {
     },
     {
       id: 'dunwoody',
-      src: "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?q=80&w=2070&auto=format&fit=crop",
+      src: "https://www.fuleistone.com/wp-content/uploads/2020/07/backlit-onyx-for-island-top.jpg",
       category: "BASEMENT BAR",
       title: "Dunwoody Wet Bar",
       location: "Dunwoody, GA",
@@ -127,6 +127,7 @@ const Gallery: React.FC = () => {
                       src={item.src} 
                       alt={item.title} 
                       loading="lazy"
+                      decoding="async"
                       className="w-full h-full object-cover transition-transform duration-700 ease-out-expo group-hover:scale-110 opacity-90 group-hover:opacity-100"
                     />
                     

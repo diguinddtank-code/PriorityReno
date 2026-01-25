@@ -1,39 +1,35 @@
 import React, { useState } from 'react';
-import { Check, ChevronRight, Info } from 'lucide-react';
+import { Check, ChevronRight, Info, MapPin, Phone } from 'lucide-react';
 import { Reveal } from './Reveal';
 
 const Materials: React.FC = () => {
-  const categories = ["Quartz", "Granite", "Marble", "Porcelain"];
+  // Removed "Porcelain" from categories
+  const categories = ["Quartz", "Granite", "Marble"];
   const [activeCategory, setActiveCategory] = useState("Quartz");
 
   const materialsDB: Record<string, any[]> = {
     "Quartz": [
-        { name: "Calacatta Gold", img: "https://images.unsplash.com/photo-1596489360817-f55a156cb2f6?q=80&w=600&auto=format&fit=crop", tag: "Popular" },
-        { name: "Pure White", img: "https://images.unsplash.com/photo-1587317768567-9388df6554b7?q=80&w=600&auto=format&fit=crop", tag: "Modern" },
-        { name: "Carrara Mist", img: "https://images.unsplash.com/photo-1616422285623-13ff0162193c?q=80&w=600&auto=format&fit=crop", tag: "Classic" },
-        { name: "Midnight Grey", img: "https://images.unsplash.com/photo-1629815598696-9f796695245f?q=80&w=600&auto=format&fit=crop", tag: "Bold" },
-        { name: "Statutario Nuvo", img: "https://images.unsplash.com/photo-1599692461877-a87f4c78119c?q=80&w=600&auto=format&fit=crop", tag: "Premium" },
-        { name: "Concrete Matte", img: "https://images.unsplash.com/photo-1628198758804-9842af564c76?q=80&w=600&auto=format&fit=crop", tag: "Industrial" },
+        { name: "Calacatta Gold", img: "https://marinamarmores.com.br/wp-content/uploads/2019/07/marmore_Calacatta-Oro.jpg", tag: "Popular" },
+        { name: "Pure White", img: "https://marinamarmores.com.br/wp-content/uploads/2019/08/quartzo-1141-Pure-White-Caesarstone.jpg", tag: "Modern" },
+        { name: "Carrara Mist", img: "https://fabquartz.com/cdn/shop/files/Carrara-Mist-Primary-Web-Image-HiResJPG.jpg?v=1691535877&width=1946", tag: "Classic" },
+        { name: "Midnight Grey", img: "https://marble.com/uploads/materials/2370/1280X720/quartz_Midnight-Mist-Honed-Pental-Quartz_NZQMuk3QMR5GiLcUxElw.jpg", tag: "Bold" },
+        { name: "Statutario Nuvo", img: "https://studio.caesarstoneus.com/wp-content/uploads/2020/12/5111_Statuario-Nuvo_5111_Full_Slab_1920x890px-1.jpg", tag: "Premium" },
+        { name: "Concrete Matte", img: "https://www.wk.com.au/productdata/productimages/Concrete-Matte-slab.jpg", tag: "Industrial" },
     ],
     "Granite": [
-        { name: "Black Galaxy", img: "https://images.unsplash.com/photo-1628198758804-9842af564c76?q=80&w=600&auto=format&fit=crop", tag: "Durable" },
-        { name: "Blue Savoie", img: "https://images.unsplash.com/photo-1617855073387-573523293838?q=80&w=600&auto=format&fit=crop", tag: "Exotic" },
-        { name: "Colonial White", img: "https://images.unsplash.com/photo-1550920404-585802523f46?q=80&w=600&auto=format&fit=crop", tag: "Value" },
-        { name: "Titanium Black", img: "https://images.unsplash.com/photo-1616422285623-13ff0162193c?q=80&w=600&auto=format&fit=crop", tag: "Luxury" },
-        { name: "Alaska White", img: "https://images.unsplash.com/photo-1574488421008-8df0db378615?q=80&w=600&auto=format&fit=crop", tag: "Popular" },
+        { name: "Black Galaxy", img: "https://marinamarmores.com.br/wp-content/uploads/2019/08/granito-Black-Galaxy.jpg", tag: "Durable" },
+        { name: "Blue Savoie", img: "https://d1eukw5if3dy4m.cloudfront.net/storage/post/zec0PLKic3E4v7aafUsz9fvTcx2v0ejBfvivXTlj.jpg", tag: "Exotic" },
+        { name: "Colonial White", img: "https://marinamarmores.com.br/wp-content/uploads/2019/08/granito-Colonial-White.jpg", tag: "Value" },
+        { name: "Titanium Black", img: "https://marinamarmores.com.br/wp-content/uploads/2019/08/granito-Titanium-Black1.jpg", tag: "Luxury" },
+        { name: "Alaska White", img: "https://www.alicante.com.br/wp-content/uploads/2021/07/Granito-Branco-Alasca-1000x2000-1.png", tag: "Popular" },
     ],
     "Marble": [
-        { name: "Carrara White", img: "https://images.unsplash.com/photo-1574488421008-8df0db378615?q=80&w=600&auto=format&fit=crop", tag: "Timeless" },
-        { name: "Emperador", img: "https://images.unsplash.com/photo-1610443721703-9b8764a7c06c?q=80&w=600&auto=format&fit=crop", tag: "Luxury" },
-        { name: "Calacatta Viola", img: "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?q=80&w=600&auto=format&fit=crop", tag: "Statement" },
-        { name: "Nero Marquina", img: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=600&auto=format&fit=crop", tag: "Bold" },
-    ],
-    "Porcelain": [
-        { name: "Statuario", img: "https://images.unsplash.com/photo-1599692461877-a87f4c78119c?q=80&w=600&auto=format&fit=crop", tag: "New" },
-        { name: "Cement Look", img: "https://images.unsplash.com/photo-1596489360817-f55a156cb2f6?q=80&w=600&auto=format&fit=crop", tag: "Industrial" },
-        { name: "Onyx Effect", img: "https://images.unsplash.com/photo-1610443721703-9b8764a7c06c?q=80&w=600&auto=format&fit=crop", tag: "Backlit" },
-        { name: "Iron Corten", img: "https://images.unsplash.com/photo-1629815598696-9f796695245f?q=80&w=600&auto=format&fit=crop", tag: "Rustic" },
+        { name: "Carrara White", img: "https://marble.com/uploads/materials/1075/1280X720/marble_White-Carrara_fWF1kmDGuRZJavjUsERa.jpg", tag: "Timeless" },
+        { name: "Emperador", img: "https://marmialberti.it/wp-content/uploads/2025/02/Emperador-dark.jpg", tag: "Luxury" },
+        { name: "Calacatta Viola", img: "https://marble.com/uploads/materials/3092/1280X720/marble_Calacatta-Viola-Rq-Marble_Kv8jws0qFeq0gpwfK9hR.jpg", tag: "Statement" },
+        { name: "Nero Marquina", img: "https://www.fiorantina.com/wp-content/uploads/2023/03/FORMATO-PATTERN-14.jpg", tag: "Bold" },
     ]
+    // Removed Porcelain data
   };
 
   const [selectedMaterial, setSelectedMaterial] = useState(materialsDB["Quartz"][0]);
@@ -83,18 +79,25 @@ const Materials: React.FC = () => {
                 </Reveal>
 
                 {/* Material Grid */}
+                {/* Ensure aspect-square is present to keep all items exactly the same size */}
                 <div className="grid grid-cols-3 gap-3 md:gap-4 mt-4 max-h-[300px] md:max-h-[400px] overflow-y-auto pr-2 custom-scrollbar">
                     {materialsDB[activeCategory]?.map((mat, idx) => (
                         <Reveal key={idx} width="100%" delay={idx * 50} variant="scale">
                           <div 
                               onClick={() => setSelectedMaterial(mat)}
-                              className={`relative aspect-square rounded-xl overflow-hidden cursor-pointer border-2 transition-all duration-300 ${
+                              className={`relative aspect-square rounded-xl overflow-hidden cursor-pointer border-2 transition-all duration-300 bg-slate-900 ${
                                   selectedMaterial.name === mat.name 
                                   ? 'border-brand-orange ring-2 ring-brand-orange/20 scale-95' 
                                   : 'border-transparent hover:border-slate-700 hover:scale-105'
                               }`}
                           >
-                              <img src={mat.img} alt={mat.name} className="w-full h-full object-cover" />
+                              <img 
+                                src={mat.img} 
+                                alt={mat.name} 
+                                loading="lazy" 
+                                decoding="async"
+                                className="w-full h-full object-cover" 
+                              />
                               <div className="absolute inset-0 bg-black/40 flex flex-col justify-end p-2 md:p-3">
                                   <span className="text-white text-[10px] md:text-xs font-bold leading-tight line-clamp-2 drop-shadow-md">{mat.name}</span>
                                   {selectedMaterial.name === mat.name && (
@@ -107,6 +110,35 @@ const Materials: React.FC = () => {
                         </Reveal>
                     ))}
                 </div>
+
+                {/* Showroom CTA Banner */}
+                <Reveal width="100%" delay={300} variant="up">
+                  <div className="mt-6 bg-gradient-to-br from-slate-900 to-slate-800 border border-white/10 rounded-xl p-5 md:p-6 text-center relative overflow-hidden group shadow-lg">
+                      <div className="absolute inset-0 bg-brand-orange/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                      
+                      <h3 className="text-white font-serif text-xl mb-2 relative z-10">Don't see what you're looking for?</h3>
+                      <p className="text-slate-400 text-sm mb-5 max-w-sm mx-auto relative z-10 leading-relaxed">
+                          Visit our showroom to view over <span className="text-white font-bold">200+ full-size slabs</span> in person.
+                      </p>
+                      
+                      <div className="flex flex-col sm:flex-row items-center justify-center gap-3 relative z-10">
+                          <a 
+                              href="tel:4703804785"
+                              className="flex items-center justify-center gap-2 bg-white text-slate-900 px-6 py-3 rounded-lg text-sm font-bold uppercase tracking-wide hover:bg-slate-200 transition-colors w-full sm:w-auto shadow-lg"
+                          >
+                              <Phone size={16} className="text-brand-orange fill-brand-orange" />
+                              Call Showroom
+                          </a>
+                          <button 
+                              onClick={() => document.getElementById('quote-form')?.scrollIntoView({behavior: 'smooth'})} 
+                              className="flex items-center justify-center gap-2 border border-slate-600 text-slate-300 px-6 py-3 rounded-lg text-sm font-bold uppercase tracking-wide hover:border-white hover:text-white transition-colors w-full sm:w-auto hover:bg-white/5"
+                          >
+                              <MapPin size={16} />
+                              Get Directions
+                          </button>
+                      </div>
+                  </div>
+                </Reveal>
             </div>
 
             {/* Right: Live Preview (Sticky on Desktop) */}
@@ -116,6 +148,8 @@ const Materials: React.FC = () => {
                       <img 
                           src={selectedMaterial.img} 
                           alt={selectedMaterial.name} 
+                          loading="lazy"
+                          decoding="async"
                           className="w-full h-full object-cover rounded-xl transition-transform duration-700 ease-out-expo group-hover:scale-105"
                           key={selectedMaterial.name} // Key forces re-render for nice fade
                       />

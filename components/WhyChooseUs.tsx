@@ -12,7 +12,7 @@ const WhyChooseUs: React.FC = () => {
       title: "Expert Stone Installers",
       subtitle: "15+ Years Experience",
       desc: "Our granite and quartz installers are factory-trained artisans. We use digital laser templating for 100% accurate countertop installation and seamless fits.",
-      image: "https://images.unsplash.com/photo-1581094794329-c8112a89af12?q=80&w=2070&auto=format&fit=crop"
+      image: "https://www.usmarble.com/wp-content/uploads/2025/01/professional-stone-installation.jpeg"
     },
     {
       id: 2,
@@ -20,7 +20,7 @@ const WhyChooseUs: React.FC = () => {
       title: "Direct Granite Sourcing",
       subtitle: "No Middleman",
       desc: "We import slabs directly, making us the most affordable stone supplier in Atlanta. Get premium Grade-A materials without big-box retailer markups.",
-      image: "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?q=80&w=2000&auto=format&fit=crop"
+      image: "https://graniteshop1.com/wp-content/uploads/2023/02/buffalo-custom-countertops-inventory-display.jpg"
     },
     {
       id: 3,
@@ -28,7 +28,7 @@ const WhyChooseUs: React.FC = () => {
       title: "3-5 Day Installation",
       subtitle: "Fast Turnaround",
       desc: "Need countertops installed fast? Once templates are taken, our local fabrication shop cuts your stone in record time. We don't leave you without a kitchen.",
-      image: "https://images.unsplash.com/photo-1556911220-e15b29be8c8f?q=80&w=2070&auto=format&fit=crop"
+      image: "https://www.rachtr.com/storage/images/47243e9f-aa7f-47a6-afdd-92a111aa33e0.webp"
     },
     {
       id: 4,
@@ -36,7 +36,7 @@ const WhyChooseUs: React.FC = () => {
       title: "Clean Installation",
       subtitle: "Dust-Free Process",
       desc: "We are professional contractors who respect your home. Our installation team uses industrial air scrubbers and protective coverings to leave your space spotless.",
-      image: "https://images.unsplash.com/photo-1600566752355-35792bedcfe1?q=80&w=2070&auto=format&fit=crop"
+      image: "https://ootwc.com/wp-content/uploads/2023/05/Countertop-Installation-3-1-scaled.webp"
     }
   ];
 
@@ -66,7 +66,13 @@ const WhyChooseUs: React.FC = () => {
                         <div className="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow flex flex-row h-32 items-stretch group">
                             {/* Mobile Image Left */}
                             <div className="w-1/3 relative shrink-0 overflow-hidden">
-                                <img src={feature.image} alt={feature.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                                <img 
+                                    src={feature.image} 
+                                    alt={feature.title} 
+                                    loading="lazy"
+                                    decoding="async"
+                                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
+                                />
                                 <div className="absolute inset-0 bg-slate-900/10"></div>
                             </div>
                             
@@ -133,7 +139,13 @@ const WhyChooseUs: React.FC = () => {
                             key={idx}
                             className={`absolute inset-0 transition-opacity duration-700 ease-in-out ${activeIndex === idx ? 'opacity-100 z-10' : 'opacity-0 z-0'}`}
                         >
-                            <img src={feature.image} alt={feature.title} className="w-full h-full object-cover transform scale-105" />
+                            <img 
+                                src={feature.image} 
+                                alt={feature.title} 
+                                loading="lazy"
+                                decoding="async"
+                                className="w-full h-full object-cover transform scale-105" 
+                            />
                             
                             {/* Dark gradient ONLY on image to make white text readable */}
                             <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/20 to-transparent opacity-80"></div>
