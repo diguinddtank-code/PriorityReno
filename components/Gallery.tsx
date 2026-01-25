@@ -234,6 +234,7 @@ const Gallery: React.FC = () => {
         </div>,
         document.body
       )}
+      </div>
     </section>
   );
 };
