@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Phone, Mail, MapPin, ShieldCheck, CheckCircle2 } from 'lucide-react';
+import { Phone, Mail, MapPin, ShieldCheck, CheckCircle2, Navigation } from 'lucide-react';
 import Button from './Button';
 import { createPortal } from 'react-dom';
 
@@ -67,18 +67,32 @@ const ContactSection: React.FC = () => {
                     </div>
 
                     {/* Map Container - Light Theme */}
-                    <div className="h-[300px] w-full bg-slate-200 rounded-2xl overflow-hidden border border-slate-300 relative shadow-md">
+                    <div className="h-[350px] w-full bg-slate-200 rounded-2xl overflow-hidden border border-slate-300 relative shadow-md group">
                         <iframe 
                             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3309.467862416393!2d-84.17515392429464!3d34.03241512401831!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x88f598b04618779b%3A0x629555085440669!2s4579%20Abbotts%20Bridge%20Rd%2C%20Duluth%2C%20GA%2030097!5e0!3m2!1sen!2sus!4v1716300000000!5m2!1sen!2sus" 
                             width="100%" 
                             height="100%" 
-                            style={{ border: 0, filter: 'grayscale(100%)' }} 
+                            style={{ border: 0 }} 
                             allowFullScreen={true} 
                             loading="lazy" 
                             referrerPolicy="no-referrer-when-downgrade"
+                            className="w-full h-full"
                         ></iframe>
-                        <div className="absolute bottom-4 left-4 bg-white px-4 py-2 rounded-lg border border-slate-200 text-xs shadow-lg">
-                            <p className="font-bold text-slate-900">Priority Renovations HQ</p>
+                        
+                        {/* Get Directions Overlay */}
+                        <div className="absolute bottom-4 left-4 right-4 md:right-auto md:w-auto bg-white/95 backdrop-blur-md p-4 rounded-xl border border-slate-200 shadow-xl flex flex-col md:flex-row items-center gap-4 transition-transform duration-300 md:group-hover:scale-105">
+                            <div className="text-center md:text-left">
+                                <p className="font-bold text-slate-900 text-sm">Priority Renovations HQ</p>
+                                <p className="text-xs text-slate-500">4579 Abbotts Bridge Rd, Duluth</p>
+                            </div>
+                            <a 
+                                href="https://www.google.com/maps/dir/?api=1&destination=4579+Abbotts+Bridge+Rd,+Duluth,+GA+30097" 
+                                target="_blank" 
+                                rel="noopener noreferrer"
+                                className="w-full md:w-auto bg-brand-orange text-white text-xs font-bold px-5 py-2.5 rounded-lg hover:bg-orange-600 transition-colors shadow-lg shadow-orange-500/20 flex items-center justify-center gap-2"
+                            >
+                                <Navigation size={14} /> Get Directions
+                            </a>
                         </div>
                     </div>
                     

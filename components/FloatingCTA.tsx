@@ -1,22 +1,29 @@
 import React, { useState, useEffect } from 'react';
-import { X, Phone } from 'lucide-react';
+import { X, Phone, MessageSquare } from 'lucide-react';
 
 const FloatingCTA: React.FC = () => {
   const [isChatOpen, setIsChatOpen] = useState(false);
   const [hasUnreadMessage, setHasUnreadMessage] = useState(false);
+  const [isTyping, setIsTyping] = useState(false);
 
   useEffect(() => {
-    // Auto-open chat prompt after 2.5 seconds just once
-    const timer = setTimeout(() => {
+    // 1. Open chat and start typing animation
+    const openTimer = setTimeout(() => {
         setIsChatOpen(true);
-    }, 2500);
+        setIsTyping(true);
+        
+        // 2. Stop typing and show message after delay
+        setTimeout(() => {
+            setIsTyping(false);
+        }, 1500); // 1.5 seconds of "typing"
 
-    return () => clearTimeout(timer);
+    }, 2500); // Start process after 2.5s
+
+    return () => clearTimeout(openTimer);
   }, []);
 
   const handleCloseChat = () => {
       setIsChatOpen(false);
-      // Show notification dot when closed
       setHasUnreadMessage(true);
   };
 
@@ -33,7 +40,7 @@ const FloatingCTA: React.FC = () => {
       {/* Main Floating Button */}
       <button 
          onClick={handleOpenChat}
-         className="relative w-14 h-14 md:w-16 md:h-16 rounded-full bg-white shadow-2xl border-2 border-white flex items-center justify-center hover:scale-105 transition-transform duration-300"
+         className="relative w-14 h-14 md:w-16 md:h-16 rounded-full bg-white shadow-2xl border-2 border-white flex items-center justify-center hover:scale-105 transition-transform duration-300 group"
       >
          <div className="w-full h-full rounded-full overflow-hidden">
             <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=200&auto=format&fit=crop" alt="Specialist" className="w-full h-full object-cover" />
@@ -50,7 +57,7 @@ const FloatingCTA: React.FC = () => {
          
          {/* Label Tooltip */}
          {!isChatOpen && (
-            <div className="absolute right-full mr-3 top-1/2 -translate-y-1/2 bg-slate-900 text-white text-[10px] font-bold px-2 py-1 rounded-md uppercase tracking-wider whitespace-nowrap shadow-lg hidden md:block">
+            <div className="absolute right-full mr-3 top-1/2 -translate-y-1/2 bg-slate-900 text-white text-[10px] font-bold px-3 py-1.5 rounded-lg uppercase tracking-wider whitespace-nowrap shadow-lg hidden md:block opacity-0 group-hover:opacity-100 transition-opacity">
                 Chat Online
             </div>
          )}
@@ -80,11 +87,22 @@ const FloatingCTA: React.FC = () => {
 
          {/* Body */}
          <div className="p-5">
-            <div className="bg-slate-100 rounded-2xl rounded-tl-none p-3 mb-4 text-sm text-slate-700 leading-relaxed shadow-sm">
-                Hi! 👋 I see you're looking for a renovation. I can help you get a <strong>Fast Quote</strong> or schedule a <strong>Free In-Home Estimate</strong>.
+            {/* Chat Bubble with Typewriter Effect */}
+            <div className="bg-slate-100 rounded-2xl rounded-tl-none p-4 mb-4 text-sm text-slate-700 leading-relaxed shadow-sm min-h-[60px] flex items-center">
+                {isTyping ? (
+                    <div className="flex gap-1.5 h-4 items-center px-2">
+                        <span className="w-1.5 h-1.5 bg-slate-400 rounded-full animate-bounce [animation-delay:-0.3s]"></span>
+                        <span className="w-1.5 h-1.5 bg-slate-400 rounded-full animate-bounce [animation-delay:-0.15s]"></span>
+                        <span className="w-1.5 h-1.5 bg-slate-400 rounded-full animate-bounce"></span>
+                    </div>
+                ) : (
+                    <div className="animate-fade-in">
+                        Hi! 👋 I see you're looking for a renovation. I can help you get a <strong>Fast Quote</strong> or schedule a <strong>Free In-Home Estimate</strong>.
+                    </div>
+                )}
             </div>
             
-            <div className="grid grid-cols-1 gap-2">
+            <div className={`grid grid-cols-1 gap-2 transition-opacity duration-500 ${isTyping ? 'opacity-0' : 'opacity-100'}`}>
                 <button 
                     onClick={() => {
                         document.getElementById('quote-form')?.scrollIntoView({behavior: 'smooth'});
