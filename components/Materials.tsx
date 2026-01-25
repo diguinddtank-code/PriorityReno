@@ -12,19 +12,27 @@ const Materials: React.FC = () => {
         { name: "Pure White", img: "https://images.unsplash.com/photo-1587317768567-9388df6554b7?q=80&w=600&auto=format&fit=crop", tag: "Modern" },
         { name: "Carrara Mist", img: "https://images.unsplash.com/photo-1616422285623-13ff0162193c?q=80&w=600&auto=format&fit=crop", tag: "Classic" },
         { name: "Midnight Grey", img: "https://images.unsplash.com/photo-1629815598696-9f796695245f?q=80&w=600&auto=format&fit=crop", tag: "Bold" },
+        { name: "Statutario Nuvo", img: "https://images.unsplash.com/photo-1599692461877-a87f4c78119c?q=80&w=600&auto=format&fit=crop", tag: "Premium" },
+        { name: "Concrete Matte", img: "https://images.unsplash.com/photo-1628198758804-9842af564c76?q=80&w=600&auto=format&fit=crop", tag: "Industrial" },
     ],
     "Granite": [
         { name: "Black Galaxy", img: "https://images.unsplash.com/photo-1628198758804-9842af564c76?q=80&w=600&auto=format&fit=crop", tag: "Durable" },
         { name: "Blue Savoie", img: "https://images.unsplash.com/photo-1617855073387-573523293838?q=80&w=600&auto=format&fit=crop", tag: "Exotic" },
         { name: "Colonial White", img: "https://images.unsplash.com/photo-1550920404-585802523f46?q=80&w=600&auto=format&fit=crop", tag: "Value" },
+        { name: "Titanium Black", img: "https://images.unsplash.com/photo-1616422285623-13ff0162193c?q=80&w=600&auto=format&fit=crop", tag: "Luxury" },
+        { name: "Alaska White", img: "https://images.unsplash.com/photo-1574488421008-8df0db378615?q=80&w=600&auto=format&fit=crop", tag: "Popular" },
     ],
     "Marble": [
         { name: "Carrara White", img: "https://images.unsplash.com/photo-1574488421008-8df0db378615?q=80&w=600&auto=format&fit=crop", tag: "Timeless" },
         { name: "Emperador", img: "https://images.unsplash.com/photo-1610443721703-9b8764a7c06c?q=80&w=600&auto=format&fit=crop", tag: "Luxury" },
+        { name: "Calacatta Viola", img: "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?q=80&w=600&auto=format&fit=crop", tag: "Statement" },
+        { name: "Nero Marquina", img: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=600&auto=format&fit=crop", tag: "Bold" },
     ],
     "Porcelain": [
         { name: "Statuario", img: "https://images.unsplash.com/photo-1599692461877-a87f4c78119c?q=80&w=600&auto=format&fit=crop", tag: "New" },
         { name: "Cement Look", img: "https://images.unsplash.com/photo-1596489360817-f55a156cb2f6?q=80&w=600&auto=format&fit=crop", tag: "Industrial" },
+        { name: "Onyx Effect", img: "https://images.unsplash.com/photo-1610443721703-9b8764a7c06c?q=80&w=600&auto=format&fit=crop", tag: "Backlit" },
+        { name: "Iron Corten", img: "https://images.unsplash.com/photo-1629815598696-9f796695245f?q=80&w=600&auto=format&fit=crop", tag: "Rustic" },
     ]
   };
 

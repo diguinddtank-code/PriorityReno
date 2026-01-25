@@ -17,7 +17,7 @@ const Features: React.FC = () => {
       details: {
         materials: ['Quartz Install', 'Granite Slabs', 'Marble', 'Quartzite'],
         benefits: ['Scratch Resistant', 'Factory Direct Price', 'Pro Installation'],
-        duration: '3-5 Days Install'
+        duration: '2-4 Days Install'
       }
     },
     {
@@ -31,7 +31,7 @@ const Features: React.FC = () => {
       details: {
         materials: ['Solid Wood Doors', 'Custom Veneers', 'New Hardware'],
         benefits: ['Cost Effective', 'Fast Turnaround', 'Soft-Close Hinges'],
-        duration: '2-4 Weeks'
+        duration: '5-7 Days'
       }
     },
     {
@@ -39,13 +39,13 @@ const Features: React.FC = () => {
       title: 'Kitchen Remodeling',
       badge: 'Full Service',
       badgeColor: 'bg-slate-900 text-white border border-slate-700', 
-      desc: 'Full-service kitchen renovation contractors.',
+      desc: 'Fast-track kitchen renovation contractors.',
       img: 'https://images.unsplash.com/photo-1556911220-e15b29be8c8f?q=80&w=2070&auto=format&fit=crop',
-      longDesc: "We are full-service kitchen remodeling contractors handling everything from demolition to plumbing and electrical. If you need a complete layout change or a turnkey kitchen makeover, our local team manages the entire project.",
+      longDesc: "We are full-service kitchen remodeling contractors handling everything from demolition to plumbing and electrical. If you need a complete layout change or a turnkey kitchen makeover, our local team manages the entire project efficiently.",
       details: {
         materials: ['Full Design', 'Flooring', 'Plumbing & Electric'],
         benefits: ['Project Management', 'Turnkey Service', 'Warranty Included'],
-        duration: '4-8 Weeks'
+        duration: '12-15 Days'
       }
     },
     {
@@ -59,7 +59,7 @@ const Features: React.FC = () => {
       details: {
         materials: ['Vanity Tops', 'Shower Tile', 'Frameless Glass'],
         benefits: ['Waterproofing', 'Spa Design', 'Value Add'],
-        duration: '3-6 Weeks'
+        duration: '3-5 Days'
       }
     }
   ];

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
-import { X, ArrowRight, MapPin, Calendar, Box, Layers, ArrowUpRight, Maximize2 } from 'lucide-react';
-import { Reveal } from './Reveal';
+import { X, ArrowRight, MapPin, Layers, Box, Maximize2 } from 'lucide-react';
 import Button from './Button';
 
 const Gallery: React.FC = () => {
@@ -53,6 +52,42 @@ const Gallery: React.FC = () => {
       scope: "85 Sq. Ft. Vanity & Shower",
       description: "We transformed this Marietta master bath with honed Blue Savoie Granite vanity tops. Our team handled the floating cabinet installation and full tile work for the shower, demonstrating our capability as full-service bathroom remodelers near you.",
       tags: ["#BathroomRemodel", "#GraniteVanity", "#SpaBathroom", "#TileWork"]
+    },
+    {
+      id: 'johnscreek',
+      src: "https://images.unsplash.com/photo-1596238638979-99411963625d?q=80&w=2069&auto=format&fit=crop",
+      category: "OUTDOOR KITCHEN",
+      title: "Johns Creek Outdoor Living",
+      location: "Johns Creek, GA",
+      date: "November 2024",
+      material: "Leathered Black Granite",
+      scope: "Custom BBQ Station & Bar",
+      description: "This outdoor kitchen project required durable materials to withstand Atlanta weather. We installed leathered Black Granite countertops which provide excellent grip and resistance to elements, paired with stacked stone veneer for the cabinet structure.",
+      tags: ["#OutdoorKitchen", "#Granite", "#PatioDesign", "#BBQStation"]
+    },
+    {
+      id: 'roswell',
+      src: "https://images.unsplash.com/photo-1542718610-a1d656d1884c?q=80&w=2070&auto=format&fit=crop",
+      category: "FIREPLACE SURROUND",
+      title: "Modern Fireplace Cladding",
+      location: "Roswell, GA",
+      date: "December 2024",
+      material: "Statuary White Marble",
+      scope: "Floor-to-Ceiling Stone Cladding",
+      description: "We transformed a standard fireplace into a stunning focal point using large-format Statuary White Marble slabs. The veins were carefully matched to flow continuously from the floor to the ceiling, creating a seamless piece of art in this living room.",
+      tags: ["#FireplaceDesign", "#MarbleCladding", "#LivingRoom", "#InteriorDesign"]
+    },
+    {
+      id: 'dunwoody',
+      src: "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?q=80&w=2070&auto=format&fit=crop",
+      category: "BASEMENT BAR",
+      title: "Dunwoody Wet Bar",
+      location: "Dunwoody, GA",
+      date: "January 2025",
+      material: "Backlit Onyx Quartz",
+      scope: "Full Bar Fabrication",
+      description: "For this high-end basement entertainment area, we installed a custom wet bar featuring semi-translucent Quartzite with integrated LED backlighting. The result is a moody, sophisticated atmosphere perfect for hosting guests.",
+      tags: ["#WetBar", "#BasementRemodel", "#BacklitStone", "#Entertainment"]
     }
   ];
 
@@ -67,29 +102,27 @@ const Gallery: React.FC = () => {
   return (
     <section id="locations" className="py-16 md:py-24 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <Reveal width="100%">
-          <div className="flex flex-col md:flex-row justify-between items-end mb-12">
-            <div className="max-w-2xl">
-              <span className="text-brand-orange font-bold uppercase tracking-widest text-xs md:text-sm">Local Projects</span>
-              <h2 className="text-3xl md:text-5xl font-serif text-slate-900 mt-3">Installations Near You</h2>
-              <p className="text-slate-500 mt-4 max-w-xl">
-                See our recent work. From quartz countertop installation in Alpharetta to cabinet refacing in Buckhead, we serve the entire Metro Atlanta area.
-              </p>
-            </div>
+        <div className="flex flex-col md:flex-row justify-between items-end mb-12">
+          <div className="max-w-2xl">
+            <span className="text-brand-orange font-bold uppercase tracking-widest text-xs md:text-sm">Local Projects</span>
+            <h2 className="text-3xl md:text-5xl font-serif text-slate-900 mt-3">Installations Near You</h2>
+            <p className="text-slate-500 mt-4 max-w-xl">
+              See our recent work. From quartz countertop installation in Alpharetta to cabinet refacing in Buckhead, we serve the entire Metro Atlanta area.
+            </p>
           </div>
-        </Reveal>
+        </div>
 
         {/* Project Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {galleryItems.map((item, index) => (
-             <Reveal key={item.id} width="100%" delay={index * 150} variant="up">
-               <div className="bg-white rounded-2xl overflow-hidden shadow-lg border border-slate-100 group hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 flex flex-col h-full">
+          {galleryItems.map((item) => (
+             <div key={item.id} className="bg-white rounded-2xl overflow-hidden shadow-lg border border-slate-100 group hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 flex flex-col h-full">
                  
-                 {/* Image Container */}
-                 <div className="relative h-64 overflow-hidden cursor-pointer" onClick={() => setSelectedImage(item)}>
+                 {/* Image Container with Placeholder BG */}
+                 <div className="relative h-64 overflow-hidden cursor-pointer bg-slate-200" onClick={() => setSelectedImage(item)}>
                     <img 
                       src={item.src} 
                       alt={item.title} 
+                      loading="lazy"
                       className="w-full h-full object-cover transition-transform duration-700 ease-out-expo group-hover:scale-110"
                     />
                     
@@ -142,7 +175,6 @@ const Gallery: React.FC = () => {
                     </button>
                  </div>
                </div>
-             </Reveal>
           ))}
         </div>
 

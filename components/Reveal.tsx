@@ -6,7 +6,7 @@ export interface RevealProps {
   className?: string;
   delay?: number;
   duration?: number;
-  variant?: "up" | "down" | "left" | "right" | "scale" | "fade";
+  variant?: "up" | "left" | "right" | "static"; // Simplified variants for this style
   threshold?: number;
 }
 
@@ -15,14 +15,26 @@ export const Reveal: React.FC<RevealProps> = ({
   width = "fit-content", 
   className = "", 
   delay = 0,
-  duration = 800,
+  duration = 1000, // 1s duration for that heavy, premium feel
   variant = "up",
-  threshold = 0.2
+  threshold = 0.1
 }) => {
   const ref = useRef<HTMLDivElement>(null);
   const [isVisible, setIsVisible] = useState(false);
+  const [shouldAnimate, setShouldAnimate] = useState(true);
 
   useEffect(() => {
+    // Accessibility check: Disable animation if user prefers reduced motion
+    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    if (mediaQuery.matches) {
+      setShouldAnimate(false);
+      setIsVisible(true);
+      return;
+    }
+
+    const element = ref.current;
+    if (!element) return;
+
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
@@ -30,29 +42,37 @@ export const Reveal: React.FC<RevealProps> = ({
           observer.disconnect();
         }
       },
-      { threshold, rootMargin: "0px 0px -50px 0px" } 
+      { 
+        threshold,
+        rootMargin: "0px 0px -10% 0px" // Trigger slightly before element is fully in view
+      } 
     );
 
-    if (ref.current) {
-      observer.observe(ref.current);
-    }
+    observer.observe(element);
 
     return () => observer.disconnect();
   }, [threshold]);
 
+  // --- "3D Perspective Glide" Logic ---
+  // This mimics physical objects landing in a 3D space.
   const getTransform = () => {
-    if (!isVisible) {
-      switch (variant) {
-        case 'up': return 'translateY(40px)';
-        case 'down': return 'translateY(-40px)';
-        case 'left': return 'translateX(-40px)';
-        case 'right': return 'translateX(40px)';
-        case 'scale': return 'scale(0.95)';
-        case 'fade': return 'translate(0,0)';
-        default: return 'translateY(40px)';
-      }
+    if (!shouldAnimate) return 'none';
+    if (isVisible) return 'perspective(1200px) translate3d(0, 0, 0) scale(1) rotateX(0)';
+
+    // Initial States based on variant
+    switch (variant) {
+      case 'up': 
+        // Starts lower, tilted back 15deg, and scaled down (95%)
+        return 'perspective(1200px) translate3d(0, 80px, 0) scale(0.95) rotateX(15deg)';
+      case 'left': 
+        return 'perspective(1200px) translate3d(-60px, 0, 0) scale(0.95) rotateY(-10deg)';
+      case 'right': 
+        return 'perspective(1200px) translate3d(60px, 0, 0) scale(0.95) rotateY(10deg)';
+      case 'static':
+        return 'perspective(1200px) translate3d(0, 40px, 0) scale(0.98)';
+      default: 
+        return 'perspective(1200px) translate3d(0, 80px, 0) scale(0.95) rotateX(15deg)';
     }
-    return variant === 'scale' ? 'scale(1)' : 'translate(0,0)';
   };
 
   return (
@@ -61,10 +81,16 @@ export const Reveal: React.FC<RevealProps> = ({
       className={`${className}`}
       style={{
         width,
-        opacity: isVisible ? 1 : 0,
+        opacity: isVisible || !shouldAnimate ? 1 : 0,
         transform: getTransform(),
-        transition: `opacity ${duration}ms cubic-bezier(0.16, 1, 0.3, 1) ${delay}ms, transform ${duration}ms cubic-bezier(0.16, 1, 0.3, 1) ${delay}ms`,
-        willChange: 'opacity, transform'
+        // Ease Out Expo: Starts fast, lands very gently. Feels expensive.
+        transition: shouldAnimate 
+          ? `opacity ${duration}ms cubic-bezier(0.19, 1, 0.22, 1) ${delay}ms, 
+             transform ${duration}ms cubic-bezier(0.19, 1, 0.22, 1) ${delay}ms`
+          : 'none',
+        willChange: 'opacity, transform',
+        transformStyle: 'preserve-3d', // Ensures children render correctly in 3D space
+        backfaceVisibility: 'hidden'   // Performance boost
       }}
     >
       {children}
