@@ -14,42 +14,45 @@ import { Reveal } from './components/Reveal';
 
 function App() {
   return (
-    // Increased pb-20 to pb-32 to account for floating nav + margin
-    <div className="min-h-screen bg-slate-50 font-sans pb-32 md:pb-0">
-      <Navbar />
-      <main>
-        {/* Hero Section */}
-        <Hero />
+    // Outer wrapper strict overflow handling
+    <div className="relative w-full max-w-[100vw] overflow-x-hidden">
+        {/* Increased pb-20 to pb-32 to account for floating nav + margin */}
+        <div className="min-h-screen bg-slate-50 font-sans pb-32 md:pb-0">
+          <Navbar />
+          <main className="w-full overflow-x-hidden">
+            {/* Hero Section */}
+            <Hero />
 
-        {/* Features/Services Section */}
-        <Reveal width="100%">
-          <Features />
-        </Reveal>
+            {/* Features/Services Section */}
+            <Reveal width="100%">
+              <Features />
+            </Reveal>
 
-        {/* 1. Interactive Before/After Section (Visual Proof) */}
-        <Transformation />
+            {/* 1. Interactive Before/After Section (Visual Proof) */}
+            <Transformation />
 
-        {/* 2. Testimonials (Social Proof) - Moved here as requested */}
-        <Reveal width="100%">
-          <Testimonials />
-        </Reveal>
+            {/* 2. Testimonials (Social Proof) */}
+            <Reveal width="100%">
+              <Testimonials />
+            </Reveal>
 
-        {/* Materials Section */}
-        <Reveal width="100%">
-          <Materials />
-        </Reveal>
+            {/* Materials Section */}
+            <Reveal width="100%">
+              <Materials />
+            </Reveal>
 
-        {/* Why Choose Us */}
-        <Reveal width="100%">
-          <WhyChooseUs />
-        </Reveal>
+            {/* Why Choose Us */}
+            <Reveal width="100%">
+              <WhyChooseUs />
+            </Reveal>
 
-        {/* Gallery */}
-        <Gallery />
-      </main>
-      <Footer />
-      <MobileNav />
-      <FloatingCTA />
+            {/* Gallery */}
+            <Gallery />
+          </main>
+          <Footer />
+          <MobileNav />
+          <FloatingCTA />
+        </div>
     </div>
   );
 }

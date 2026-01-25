@@ -6,7 +6,7 @@ export interface RevealProps {
   className?: string;
   delay?: number;
   duration?: number;
-  variant?: "up" | "left" | "right" | "static"; // Simplified variants for this style
+  variant?: "up" | "left" | "right" | "down" | "scale" | "static"; 
   threshold?: number;
 }
 
@@ -15,7 +15,7 @@ export const Reveal: React.FC<RevealProps> = ({
   width = "fit-content", 
   className = "", 
   delay = 0,
-  duration = 1000, // 1s duration for that heavy, premium feel
+  duration = 1000, 
   variant = "up",
   threshold = 0.1
 }) => {
@@ -24,7 +24,7 @@ export const Reveal: React.FC<RevealProps> = ({
   const [shouldAnimate, setShouldAnimate] = useState(true);
 
   useEffect(() => {
-    // Accessibility check: Disable animation if user prefers reduced motion
+    // Accessibility check
     const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
     if (mediaQuery.matches) {
       setShouldAnimate(false);
@@ -44,7 +44,7 @@ export const Reveal: React.FC<RevealProps> = ({
       },
       { 
         threshold,
-        rootMargin: "0px 0px -10% 0px" // Trigger slightly before element is fully in view
+        rootMargin: "0px 0px -10% 0px"
       } 
     );
 
@@ -53,25 +53,29 @@ export const Reveal: React.FC<RevealProps> = ({
     return () => observer.disconnect();
   }, [threshold]);
 
-  // --- "3D Perspective Glide" Logic ---
-  // This mimics physical objects landing in a 3D space.
+  // --- Safe 3D Transforms ---
+  // Reduced offsets (20px-40px) to preventing overflow on mobile
   const getTransform = () => {
     if (!shouldAnimate) return 'none';
     if (isVisible) return 'perspective(1200px) translate3d(0, 0, 0) scale(1) rotateX(0)';
 
-    // Initial States based on variant
     switch (variant) {
       case 'up': 
-        // Starts lower, tilted back 15deg, and scaled down (95%)
-        return 'perspective(1200px) translate3d(0, 80px, 0) scale(0.95) rotateX(15deg)';
+        return 'perspective(1200px) translate3d(0, 40px, 0) scale(0.98) rotateX(5deg)';
+      case 'down': 
+        return 'perspective(1200px) translate3d(0, -40px, 0) scale(0.98)';
       case 'left': 
-        return 'perspective(1200px) translate3d(-60px, 0, 0) scale(0.95) rotateY(-10deg)';
+        // Very subtle side motion to avoid X-overflow
+        return 'perspective(1200px) translate3d(-20px, 0, 0) scale(0.98)';
       case 'right': 
-        return 'perspective(1200px) translate3d(60px, 0, 0) scale(0.95) rotateY(10deg)';
+        // Very subtle side motion to avoid X-overflow
+        return 'perspective(1200px) translate3d(20px, 0, 0) scale(0.98)';
+      case 'scale':
+        return 'perspective(1200px) scale(0.9)';
       case 'static':
-        return 'perspective(1200px) translate3d(0, 40px, 0) scale(0.98)';
+        return 'perspective(1200px) translate3d(0, 20px, 0)';
       default: 
-        return 'perspective(1200px) translate3d(0, 80px, 0) scale(0.95) rotateX(15deg)';
+        return 'perspective(1200px) translate3d(0, 40px, 0) scale(0.98)';
     }
   };
 
@@ -83,14 +87,13 @@ export const Reveal: React.FC<RevealProps> = ({
         width,
         opacity: isVisible || !shouldAnimate ? 1 : 0,
         transform: getTransform(),
-        // Ease Out Expo: Starts fast, lands very gently. Feels expensive.
         transition: shouldAnimate 
           ? `opacity ${duration}ms cubic-bezier(0.19, 1, 0.22, 1) ${delay}ms, 
              transform ${duration}ms cubic-bezier(0.19, 1, 0.22, 1) ${delay}ms`
           : 'none',
         willChange: 'opacity, transform',
-        transformStyle: 'preserve-3d', // Ensures children render correctly in 3D space
-        backfaceVisibility: 'hidden'   // Performance boost
+        transformStyle: 'preserve-3d', 
+        backfaceVisibility: 'hidden' 
       }}
     >
       {children}

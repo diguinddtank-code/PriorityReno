@@ -56,7 +56,8 @@ const WhyChooseUs: React.FC = () => {
             {/* --- MOBILE LAYOUT (Compact Stack) --- */}
             <div className="flex flex-col gap-4 md:hidden">
                 {features.map((feature, idx) => (
-                    <Reveal key={idx} width="100%" delay={idx * 100} variant="right">
+                    // Changed variant="right" to "up" to prevent horizontal overflow on mobile
+                    <Reveal key={idx} width="100%" delay={idx * 100} variant="up">
                         <div className="bg-slate-900 border border-slate-800 rounded-xl overflow-hidden shadow-lg flex flex-row h-32 items-stretch">
                             {/* Mobile Image Left */}
                             <div className="w-1/3 relative shrink-0">
