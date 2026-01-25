@@ -53,22 +53,22 @@ const Navbar: React.FC = () => {
             {/* Logo Area */}
             <div className="relative z-50 flex items-center gap-3 md:gap-4 cursor-pointer group" onClick={() => window.scrollTo(0, 0)}>
               {/* Logo Container */}
-              <div className={`relative transition-all duration-300`}>
+              <div className={`relative transition-all duration-300 drop-shadow-md`}>
                  <img 
                   src="https://i.imgur.com/VBoJH82.png" 
                   alt="Priority Renovations Logo" 
-                  width="56"
-                  height="56"
+                  width="64"
+                  height="64"
                   fetchPriority="high"
-                  className={`h-10 w-auto md:h-14 object-contain transition-all duration-300`}
+                  className={`h-12 w-auto md:h-16 object-contain transition-all duration-300`}
                 />
               </div>
               
-              <div className={`flex flex-col ${isScrolled ? 'opacity-100' : 'opacity-0 md:opacity-100'} transition-opacity duration-300`}>
-                <span className={`text-base md:text-lg font-serif font-bold tracking-tight leading-none ${isScrolled ? 'text-slate-900' : 'text-white'}`}>
+              <div className={`flex flex-col ${isScrolled ? 'opacity-100' : 'opacity-0 md:opacity-100'} transition-opacity duration-300 ${!isScrolled && 'drop-shadow-md'}`}>
+                <span className={`text-xl md:text-2xl font-serif font-bold tracking-tight leading-none ${isScrolled ? 'text-slate-900' : 'text-white'}`}>
                   PRIORITY
                 </span>
-                <span className={`text-[8px] md:text-[10px] font-bold tracking-[0.2em] uppercase ${isScrolled ? 'text-brand-orange' : 'text-slate-200'}`}>
+                <span className={`text-[10px] md:text-xs font-bold tracking-[0.2em] uppercase ${isScrolled ? 'text-brand-orange' : 'text-slate-100'}`}>
                   RENOVATIONS
                 </span>
               </div>
@@ -80,8 +80,8 @@ const Navbar: React.FC = () => {
                 <a
                   key={link.name}
                   href={link.href}
-                  className={`text-sm font-medium tracking-wide transition-all duration-300 relative group ${
-                    isScrolled ? 'text-slate-600 hover:text-brand-orange' : 'text-slate-200 hover:text-white'
+                  className={`text-sm font-medium tracking-wide transition-all duration-300 relative group drop-shadow-sm ${
+                    isScrolled ? 'text-slate-600 hover:text-brand-orange shadow-none' : 'text-slate-100 hover:text-white'
                   }`}
                 >
                   {link.name}
@@ -91,7 +91,7 @@ const Navbar: React.FC = () => {
               
               <div className={`h-6 w-px ${isScrolled ? 'bg-slate-200' : 'bg-white/20'}`}></div>
 
-              <a href="tel:4703804785" className={`flex items-center gap-2 text-sm font-bold ${isScrolled ? 'text-slate-900' : 'text-white'}`}>
+              <a href="tel:4703804785" className={`flex items-center gap-2 text-sm font-bold drop-shadow-sm ${isScrolled ? 'text-slate-900 shadow-none' : 'text-white'}`}>
                 <Phone size={16} className="text-brand-orange" />
                 +1 (470) 380-4785
               </a>
