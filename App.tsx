@@ -11,6 +11,7 @@ import ContactSection from './components/ContactSection';
 import Footer from './components/Footer';
 import FloatingCTA from './components/FloatingCTA';
 import Transformation from './components/Transformation';
+import ExitPopup from './components/ExitPopup';
 import { Reveal } from './components/Reveal';
 
 function App() {
@@ -59,6 +60,7 @@ function App() {
           <Footer />
           <MobileNav />
           <FloatingCTA />
+          <ExitPopup />
         </div>
     </div>
   );
