@@ -65,11 +65,14 @@ const Hero: React.FC = () => {
 
         if (response.ok) {
             setFormStatus('success');
-            // Optional: Conversion tracking trigger here
+            
+            // --- CONVERSION TRACKING TRIGGER ---
+            // Explicitly fire Google Ads conversion on successful submission
             // @ts-ignore
             if (typeof window.gtag_report_conversion === 'function') {
                  // @ts-ignore
                  window.gtag_report_conversion();
+                 console.log("Conversion Event Fired: Form Submit (Hero)");
             }
         } else {
             setFormStatus('error');
