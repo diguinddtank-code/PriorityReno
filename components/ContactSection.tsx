@@ -120,9 +120,11 @@ const ContactSection: React.FC = () => {
                             method="POST"
                          >
                             {/* FormSubmit Configuration */}
-                            <input type="hidden" name="_subject" value="New Bottom Contact Inquiry" />
+                            <input type="hidden" name="_subject" value="New Bottom Contact Inquiry (Footer Section)" />
                             <input type="hidden" name="_captcha" value="false" />
                             <input type="hidden" name="_template" value="table" />
+                            {/* Honeypot for spam protection */}
+                            <input type="text" name="_honey" style={{display: 'none'}} />
                             
                              <div className="grid grid-cols-2 gap-4">
                                 <div>

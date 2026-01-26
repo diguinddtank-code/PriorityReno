@@ -200,10 +200,11 @@ const Hero: React.FC = () => {
                             method="POST"
                         >
                             {/* FormSubmit Configuration */}
-                            <input type="hidden" name="_subject" value="New Hero Quote Request" />
+                            <input type="hidden" name="_subject" value="New Hero Quote Request (Top of Page)" />
                             <input type="hidden" name="_captcha" value="false" />
                             <input type="hidden" name="_template" value="table" />
-                            {/* Remove _next to show FormSubmit's success/activation page to ensure delivery */}
+                            {/* Honeypot for spam protection */}
+                            <input type="text" name="_honey" style={{display: 'none'}} />
                             
                             <div className="space-y-4">
                                 <div>
