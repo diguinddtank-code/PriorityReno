@@ -2,6 +2,15 @@ import React from 'react';
 import { Phone, Mail, MapPin, Instagram, Facebook, Linkedin, ArrowUp } from 'lucide-react';
 
 const Footer: React.FC = () => {
+  const handlePhoneClick = (e: React.MouseEvent) => {
+    // @ts-ignore
+    if (typeof window.gtag_report_conversion === 'function') {
+        e.preventDefault();
+        // @ts-ignore
+        window.gtag_report_conversion('tel:4703804785');
+    }
+  };
+
   return (
     <footer className="bg-slate-950 text-white pt-16 pb-8 border-t border-slate-900 relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -49,7 +58,7 @@ const Footer: React.FC = () => {
               </div>
               <div className="flex items-center gap-3 text-slate-400 text-sm">
                   <Phone className="text-brand-orange shrink-0" size={16} />
-                  <a href="tel:4703804785" className="hover:text-white transition-colors">+1 (470) 380-4785</a>
+                  <a href="tel:4703804785" onClick={handlePhoneClick} className="hover:text-white transition-colors">+1 (470) 380-4785</a>
               </div>
               <div className="flex items-center gap-3 text-slate-400 text-sm">
                   <Mail className="text-brand-orange shrink-0" size={16} />

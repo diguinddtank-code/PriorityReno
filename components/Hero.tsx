@@ -6,7 +6,6 @@ import Button from './Button';
 const Hero: React.FC = () => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
-  const [formStatus, setFormStatus] = useState<'idle' | 'submitting' | 'success'>('idle');
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -28,40 +27,6 @@ const Hero: React.FC = () => {
     };
   }, []);
 
-  const handleHeroSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setFormStatus('submitting');
-    
-    const form = e.currentTarget;
-    const formData = new FormData(form);
-
-    // FormSubmit Configuration
-    formData.append('_subject', 'New Quote Request (Hero Section)');
-    formData.append('_captcha', 'false'); // Disable captcha for smoother experience
-    formData.append('_template', 'table'); // Better email formatting
-
-    try {
-        const response = await fetch("https://formsubmit.co/priorityrenovationsatl@gmail.com", {
-            method: "POST",
-            body: formData,
-            headers: {
-                'Accept': 'application/json'
-            }
-        });
-
-        if (response.ok) {
-            setFormStatus('success');
-            form.reset(); // Clear the form
-        } else {
-            alert("There was an issue sending your request. Please try again.");
-            setFormStatus('idle');
-        }
-    } catch (error) {
-        alert("Network error. Please try again.");
-        setFormStatus('idle');
-    }
-  };
-
   const marqueeItems = [
     { icon: Ruler, text: "Free In-Home Estimates" },
     { icon: Zap, text: "3-5 Day Installation Turnaround" },
@@ -70,6 +35,15 @@ const Hero: React.FC = () => {
     { icon: ShieldCheck, text: "Licensed & Insured Contractors" },
     { icon: Star, text: "#1 Rated in Atlanta" },
   ];
+
+  const handlePhoneClick = (e: React.MouseEvent) => {
+    // @ts-ignore
+    if (typeof window.gtag_report_conversion === 'function') {
+        e.preventDefault();
+        // @ts-ignore
+        window.gtag_report_conversion('tel:4703804785');
+    }
+  };
 
   return (
     <section className="relative min-h-[100dvh] flex items-center justify-center overflow-hidden bg-slate-900 pt-24 pb-20 md:pt-0 md:pb-0">
@@ -148,6 +122,7 @@ const Hero: React.FC = () => {
                     </Button>
                     <a 
                         href="tel:4703804785"
+                        onClick={handlePhoneClick}
                         className="w-full bg-slate-900/60 backdrop-blur-md border border-white/20 text-white h-14 rounded-xl flex items-center justify-center gap-2 font-bold uppercase tracking-wider text-sm hover:bg-slate-900/80 transition-all shadow-lg active:scale-[0.98]"
                     >
                         <Phone size={18} className="text-brand-orange" /> Call Installers Now
@@ -219,7 +194,17 @@ const Hero: React.FC = () => {
                         <h3 className="text-2xl font-serif text-white mb-2">Get Your Free Estimate</h3>
                         <p className="text-slate-400 text-sm mb-6">Lock in special pricing. No obligation.</p>
 
-                        <form className="space-y-4 relative z-10" onSubmit={handleHeroSubmit}>
+                        <form 
+                            className="space-y-4 relative z-10" 
+                            action="https://formsubmit.co/priorityrenovationsatl@gmail.com"
+                            method="POST"
+                        >
+                            {/* FormSubmit Configuration */}
+                            <input type="hidden" name="_subject" value="New Hero Quote Request" />
+                            <input type="hidden" name="_captcha" value="false" />
+                            <input type="hidden" name="_template" value="table" />
+                            {/* Remove _next to show FormSubmit's success/activation page to ensure delivery */}
+                            
                             <div className="space-y-4">
                                 <div>
                                     <input required type="text" name="name" placeholder="Name" className="w-full bg-slate-950 border border-slate-700 rounded-lg px-4 py-3.5 text-white placeholder-slate-500 focus:border-brand-orange outline-none text-sm transition-all focus:ring-1 focus:ring-brand-orange" />
@@ -245,10 +230,10 @@ const Hero: React.FC = () => {
                             <Button 
                                 variant="primary" 
                                 fullWidth 
-                                disabled={formStatus === 'submitting'}
+                                type="submit"
                                 className="font-bold tracking-wide shadow-lg shadow-orange-500/20 mt-2 py-4 text-base"
                             >
-                                {formStatus === 'submitting' ? "Sending..." : "Check Availability Near Me"}
+                                Check Availability Near Me
                             </Button>
                             <p className="text-center text-[10px] text-slate-500 flex items-center justify-center gap-1">
                                 <ShieldCheck size={10} /> Your privacy is our priority.
@@ -274,26 +259,6 @@ const Hero: React.FC = () => {
             </div>
         </div>
       </div>
-
-        {/* SUCCESS MODAL PORTAL */}
-        {mounted && formStatus === 'success' && createPortal(
-            <div className="fixed inset-0 z-[99999] flex items-center justify-center p-4">
-                <div className="absolute inset-0 bg-slate-900/80 backdrop-blur-sm animate-fade-in" onClick={() => setFormStatus('idle')}></div>
-                <div className="bg-white rounded-2xl p-8 max-w-md w-full relative z-10 shadow-2xl animate-scale-in text-center">
-                    <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                        <CheckCircle2 size={32} className="text-green-600" />
-                    </div>
-                    <h3 className="text-2xl font-serif text-slate-900 mb-2">Quote Request Received!</h3>
-                    <p className="text-slate-500 mb-6">
-                        Thank you for contacting Priority Renovations. One of our specialists will review your details and contact you shortly.
-                    </p>
-                    <Button fullWidth onClick={() => setFormStatus('idle')}>
-                        Close
-                    </Button>
-                </div>
-            </div>,
-            document.body
-        )}
 
     </section>
   );

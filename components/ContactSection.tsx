@@ -4,41 +4,6 @@ import Button from './Button';
 import { createPortal } from 'react-dom';
 
 const ContactSection: React.FC = () => {
-  const [formStatus, setFormStatus] = useState<'idle' | 'submitting' | 'success'>('idle');
-
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setFormStatus('submitting');
-    
-    const form = e.currentTarget;
-    const formData = new FormData(form);
-
-    // FormSubmit Configuration
-    formData.append('_subject', 'New Contact Inquiry');
-    formData.append('_captcha', 'false');
-    formData.append('_template', 'table');
-
-    try {
-        const response = await fetch("https://formsubmit.co/priorityrenovationsatl@gmail.com", {
-            method: "POST",
-            body: formData,
-            headers: {
-                'Accept': 'application/json'
-            }
-        });
-
-        if (response.ok) {
-            setFormStatus('success');
-            form.reset();
-        } else {
-            alert("There was an issue sending your message. Please try again.");
-            setFormStatus('idle');
-        }
-    } catch (error) {
-        alert("Network error. Please try again.");
-        setFormStatus('idle');
-    }
-  };
 
   const locations = [
     "Duluth", "Johns Creek", "Alpharetta", "Buckhead", "Suwanee", 
@@ -149,7 +114,16 @@ const ContactSection: React.FC = () => {
                             <p className="text-slate-500 mt-2 text-sm">Lock in today's material pricing. No obligation.</p>
                          </div>
 
-                         <form className="space-y-4" onSubmit={handleSubmit}>
+                         <form 
+                            className="space-y-4" 
+                            action="https://formsubmit.co/priorityrenovationsatl@gmail.com"
+                            method="POST"
+                         >
+                            {/* FormSubmit Configuration */}
+                            <input type="hidden" name="_subject" value="New Bottom Contact Inquiry" />
+                            <input type="hidden" name="_captcha" value="false" />
+                            <input type="hidden" name="_template" value="table" />
+                            
                              <div className="grid grid-cols-2 gap-4">
                                 <div>
                                     <label className="block text-xs font-bold text-slate-700 uppercase mb-1 ml-1">First Name</label>
@@ -174,10 +148,10 @@ const ContactSection: React.FC = () => {
                              <Button 
                                 variant="primary" 
                                 fullWidth 
-                                disabled={formStatus === 'submitting'}
+                                type="submit"
                                 className="mt-2 py-4 text-base shadow-xl shadow-brand-orange/30 hover:shadow-brand-orange/50"
                              >
-                                {formStatus === 'submitting' ? "Sending..." : "Check Availability & Price"}
+                                Check Availability & Price
                              </Button>
 
                              <p className="text-center text-[10px] text-slate-400 mt-4 flex items-center justify-center gap-1">
@@ -190,26 +164,6 @@ const ContactSection: React.FC = () => {
             </div>
 
         </div>
-
-        {/* SUCCESS MODAL PORTAL */}
-        {formStatus === 'success' && createPortal(
-            <div className="fixed inset-0 z-[99999] flex items-center justify-center p-4">
-                <div className="absolute inset-0 bg-slate-900/80 backdrop-blur-sm animate-fade-in" onClick={() => setFormStatus('idle')}></div>
-                <div className="bg-white rounded-2xl p-8 max-w-md w-full relative z-10 shadow-2xl animate-scale-in text-center">
-                    <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                        <CheckCircle2 size={32} className="text-green-600" />
-                    </div>
-                    <h3 className="text-2xl font-serif text-slate-900 mb-2">Quote Request Received!</h3>
-                    <p className="text-slate-500 mb-6">
-                        Thank you for contacting Priority Renovations. One of our specialists will review your details and contact you shortly.
-                    </p>
-                    <Button fullWidth onClick={() => setFormStatus('idle')}>
-                        Close
-                    </Button>
-                </div>
-            </div>,
-            document.body
-        )}
     </section>
   );
 };

@@ -34,6 +34,15 @@ const Materials: React.FC = () => {
 
   const [selectedMaterial, setSelectedMaterial] = useState(materialsDB["Quartz"][0]);
 
+  const handlePhoneClick = (e: React.MouseEvent) => {
+    // @ts-ignore
+    if (typeof window.gtag_report_conversion === 'function') {
+        e.preventDefault();
+        // @ts-ignore
+        window.gtag_report_conversion('tel:4703804785');
+    }
+  };
+
   return (
     <section id="materials" className="py-16 md:py-24 bg-slate-950 overflow-hidden relative">
       {/* Ambient Lighting Background */}
@@ -124,6 +133,7 @@ const Materials: React.FC = () => {
                       <div className="flex flex-col sm:flex-row items-center justify-center gap-3 relative z-10">
                           <a 
                               href="tel:4703804785"
+                              onClick={handlePhoneClick}
                               className="flex items-center justify-center gap-2 bg-white text-slate-900 px-6 py-3 rounded-lg text-sm font-bold uppercase tracking-wide hover:bg-slate-200 transition-colors w-full sm:w-auto shadow-lg"
                           >
                               <Phone size={16} className="text-brand-orange fill-brand-orange" />

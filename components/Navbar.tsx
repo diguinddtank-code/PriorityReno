@@ -38,6 +38,15 @@ const Navbar: React.FC = () => {
     setIsMobileMenuOpen(false);
   };
 
+  const handlePhoneClick = (e: React.MouseEvent) => {
+    // @ts-ignore
+    if (typeof window.gtag_report_conversion === 'function') {
+        e.preventDefault();
+        // @ts-ignore
+        window.gtag_report_conversion('tel:4703804785');
+    }
+  };
+
   return (
     <>
       <nav 
@@ -51,20 +60,14 @@ const Navbar: React.FC = () => {
           <div className="flex items-center justify-between">
             
             {/* Logo Area */}
-            <div className="relative z-50 flex items-center gap-3 md:gap-4 cursor-pointer group" onClick={() => window.scrollTo(0, 0)}>
-              {/* Logo Container */}
-              <div className={`relative transition-all duration-300 drop-shadow-md`}>
-                 <img 
+            <div className="relative z-50 flex items-center gap-3 cursor-pointer group" onClick={() => window.scrollTo(0, 0)}>
+              <img 
                   src="https://i.imgur.com/VBoJH82.png" 
                   alt="Priority Renovations Logo" 
-                  width="64"
-                  height="64"
-                  fetchPriority="high"
-                  className={`h-12 w-auto md:h-16 object-contain transition-all duration-300`}
-                />
-              </div>
+                  className="h-10 md:h-12 w-auto object-contain drop-shadow-md"
+              />
               
-              <div className={`flex flex-col ${isScrolled ? 'opacity-100' : 'opacity-0 md:opacity-100'} transition-opacity duration-300 ${!isScrolled && 'drop-shadow-md'}`}>
+              <div className={`flex flex-col ${isScrolled ? 'opacity-100' : 'opacity-100'} transition-opacity duration-300 ${!isScrolled && 'drop-shadow-md'}`}>
                 <span className={`text-xl md:text-2xl font-serif font-bold tracking-tight leading-none ${isScrolled ? 'text-slate-900' : 'text-white'}`}>
                   PRIORITY
                 </span>
@@ -91,7 +94,11 @@ const Navbar: React.FC = () => {
               
               <div className={`h-6 w-px ${isScrolled ? 'bg-slate-200' : 'bg-white/20'}`}></div>
 
-              <a href="tel:4703804785" className={`flex items-center gap-2 text-sm font-bold drop-shadow-sm ${isScrolled ? 'text-slate-900 shadow-none' : 'text-white'}`}>
+              <a 
+                href="tel:4703804785" 
+                onClick={handlePhoneClick}
+                className={`flex items-center gap-2 text-sm font-bold drop-shadow-sm ${isScrolled ? 'text-slate-900 shadow-none' : 'text-white'}`}
+              >
                 <Phone size={16} className="text-brand-orange" />
                 +1 (470) 380-4785
               </a>

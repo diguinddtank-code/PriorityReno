@@ -49,6 +49,15 @@ const MobileNav: React.FC = () => {
     }
   };
 
+  const handlePhoneClick = (e: React.MouseEvent) => {
+    // @ts-ignore
+    if (typeof window.gtag_report_conversion === 'function') {
+        e.preventDefault();
+        // @ts-ignore
+        window.gtag_report_conversion('tel:4703804785');
+    }
+  };
+
   return (
     <div 
       className="fixed bottom-4 left-1/2 -translate-x-1/2 z-[90] w-[90%] max-w-[380px] transition-all duration-300 md:hidden"
@@ -89,6 +98,7 @@ const MobileNav: React.FC = () => {
         {/* Action Button - ONLY PHONE (Primary Style - Orange) */}
         <a 
           href="tel:4703804785"
+          onClick={handlePhoneClick}
           className="flex items-center justify-center w-10 h-10 bg-brand-orange text-white rounded-lg shadow-lg shadow-orange-500/20 active:scale-95 transition-all hover:bg-orange-600 shrink-0"
           aria-label="Call Now"
         >

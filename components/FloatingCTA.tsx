@@ -43,6 +43,15 @@ const FloatingCTA: React.FC = () => {
       }
   };
 
+  const handlePhoneClick = (e: React.MouseEvent) => {
+    // @ts-ignore
+    if (typeof window.gtag_report_conversion === 'function') {
+        e.preventDefault();
+        // @ts-ignore
+        window.gtag_report_conversion('tel:4703804785');
+    }
+  };
+
   return (
     <div className="fixed bottom-20 right-4 md:bottom-8 md:right-8 z-[60] flex flex-col items-end pointer-events-auto">
       
@@ -127,6 +136,7 @@ const FloatingCTA: React.FC = () => {
                 </button>
                 <a 
                     href="tel:4703804785"
+                    onClick={handlePhoneClick}
                     className="w-full bg-white text-slate-900 py-3 rounded-lg text-xs md:text-sm font-bold uppercase tracking-wider hover:bg-slate-50 transition-colors flex items-center justify-center gap-2 border border-slate-200"
                 >
                     <Phone size={14} /> Call Specialist
