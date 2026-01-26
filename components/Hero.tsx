@@ -1,12 +1,15 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
-import { ArrowRight, Star, ShieldCheck, Hammer, BadgeCheck, Zap, Ruler, CheckCircle2, Phone, Tag, Users, ChevronDown } from 'lucide-react';
+import { ArrowRight, Star, ShieldCheck, Hammer, BadgeCheck, Zap, Ruler, CheckCircle2, Phone, Tag, Users, ChevronDown, Loader2 } from 'lucide-react';
 import Button from './Button';
 
 const Hero: React.FC = () => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
   const [mounted, setMounted] = useState(false);
+  
+  // Form State
+  const [formStatus, setFormStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
 
   useEffect(() => {
     setMounted(true);
@@ -42,6 +45,37 @@ const Hero: React.FC = () => {
         e.preventDefault();
         // @ts-ignore
         window.gtag_report_conversion('tel:4703804785');
+    }
+  };
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setFormStatus('submitting');
+
+    const formData = new FormData(e.currentTarget);
+    
+    try {
+        const response = await fetch("https://formsubmit.co/ajax/priorityrenovationsatl@gmail.com", {
+            method: "POST",
+            body: formData,
+            headers: { 
+                'Accept': 'application/json'
+            }
+        });
+
+        if (response.ok) {
+            setFormStatus('success');
+            // Optional: Conversion tracking trigger here
+            // @ts-ignore
+            if (typeof window.gtag_report_conversion === 'function') {
+                 // @ts-ignore
+                 window.gtag_report_conversion();
+            }
+        } else {
+            setFormStatus('error');
+        }
+    } catch (error) {
+        setFormStatus('error');
     }
   };
 
@@ -189,57 +223,86 @@ const Hero: React.FC = () => {
                      </div>
 
                      {/* SOLID FORM CONTAINER */}
-                     <div className="bg-slate-900 p-8 rounded-2xl border border-slate-700 shadow-2xl relative overflow-hidden group">
+                     <div className="bg-slate-900 p-8 rounded-2xl border border-slate-700 shadow-2xl relative overflow-hidden group min-h-[460px] flex flex-col justify-center">
                         
-                        <h3 className="text-2xl font-serif text-white mb-2">Get Your Free Estimate</h3>
-                        <p className="text-slate-400 text-sm mb-6">Lock in special pricing. No obligation.</p>
-
-                        <form 
-                            className="space-y-4 relative z-10" 
-                            action="https://formsubmit.co/priorityrenovationsatl@gmail.com"
-                            method="POST"
-                        >
-                            {/* FormSubmit Configuration */}
-                            <input type="hidden" name="_subject" value="New Hero Quote Request (Top of Page)" />
-                            <input type="hidden" name="_captcha" value="false" />
-                            <input type="hidden" name="_template" value="table" />
-                            {/* Honeypot for spam protection */}
-                            <input type="text" name="_honey" style={{display: 'none'}} />
-                            
-                            <div className="space-y-4">
-                                <div>
-                                    <input required type="text" name="name" placeholder="Name" className="w-full bg-slate-950 border border-slate-700 rounded-lg px-4 py-3.5 text-white placeholder-slate-500 focus:border-brand-orange outline-none text-sm transition-all focus:ring-1 focus:ring-brand-orange" />
+                        {formStatus === 'success' ? (
+                            <div className="text-center animate-fade-in py-10">
+                                <div className="inline-flex items-center justify-center w-20 h-20 bg-green-500 rounded-full text-slate-900 mb-6 shadow-lg shadow-green-500/30">
+                                    <CheckCircle2 size={40} />
                                 </div>
-                                <div>
-                                    <input required type="tel" name="phone" placeholder="Phone Number" className="w-full bg-slate-950 border border-slate-700 rounded-lg px-4 py-3.5 text-white placeholder-slate-500 focus:border-brand-orange outline-none text-sm transition-all focus:ring-1 focus:ring-brand-orange" />
-                                </div>
-                                <div>
-                                    <input required type="email" name="email" placeholder="Email Address" className="w-full bg-slate-950 border border-slate-700 rounded-lg px-4 py-3.5 text-white placeholder-slate-500 focus:border-brand-orange outline-none text-sm transition-all focus:ring-1 focus:ring-brand-orange" />
-                                </div>
-                                <div className="relative">
-                                    <select required name="projectType" className="w-full bg-slate-950 border border-slate-700 rounded-lg px-4 py-3.5 text-white focus:border-brand-orange outline-none text-sm transition-all focus:ring-1 focus:ring-brand-orange appearance-none cursor-pointer">
-                                        <option value="" disabled selected className="text-slate-500">Select Project Type</option>
-                                        <option value="countertops">Countertops Installation</option>
-                                        <option value="cabinets">Cabinet Refacing</option>
-                                        <option value="kitchen">Full Kitchen Remodel</option>
-                                        <option value="bathroom">Bathroom Vanity Install</option>
-                                    </select>
-                                    <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-500 pointer-events-none" size={16} />
-                                </div>
+                                <h3 className="text-3xl font-serif text-white mb-4">Request Received!</h3>
+                                <p className="text-slate-400 mb-6 max-w-xs mx-auto">
+                                    Thank you. One of our specialists will call you shortly to discuss your project.
+                                </p>
+                                <Button 
+                                    variant="outline" 
+                                    className="!border-slate-700 !text-slate-300 hover:!bg-slate-800 hover:!border-slate-600"
+                                    onClick={() => setFormStatus('idle')}
+                                >
+                                    Send Another Request
+                                </Button>
                             </div>
-                            
-                            <Button 
-                                variant="primary" 
-                                fullWidth 
-                                type="submit"
-                                className="font-bold tracking-wide shadow-lg shadow-orange-500/20 mt-2 py-4 text-base"
-                            >
-                                Check Availability Near Me
-                            </Button>
-                            <p className="text-center text-[10px] text-slate-500 flex items-center justify-center gap-1">
-                                <ShieldCheck size={10} /> Your privacy is our priority.
-                            </p>
-                        </form>
+                        ) : (
+                            <>
+                                <h3 className="text-2xl font-serif text-white mb-2">Get Your Free Estimate</h3>
+                                <p className="text-slate-400 text-sm mb-6">Lock in special pricing. No obligation.</p>
+
+                                <form 
+                                    className="space-y-4 relative z-10" 
+                                    onSubmit={handleSubmit}
+                                >
+                                    {/* FormSubmit Configuration Hidden Fields */}
+                                    <input type="hidden" name="_subject" value="New Hero Quote Request (Top of Page)" />
+                                    <input type="hidden" name="_captcha" value="false" />
+                                    <input type="hidden" name="_template" value="table" />
+                                    <input type="text" name="_honey" style={{display: 'none'}} />
+                                    
+                                    <div className="space-y-4">
+                                        <div>
+                                            <input required type="text" name="name" placeholder="Name" className="w-full bg-slate-950 border border-slate-700 rounded-lg px-4 py-3.5 text-white placeholder-slate-500 focus:border-brand-orange outline-none text-sm transition-all focus:ring-1 focus:ring-brand-orange" />
+                                        </div>
+                                        <div>
+                                            <input required type="tel" name="phone" placeholder="Phone Number" className="w-full bg-slate-950 border border-slate-700 rounded-lg px-4 py-3.5 text-white placeholder-slate-500 focus:border-brand-orange outline-none text-sm transition-all focus:ring-1 focus:ring-brand-orange" />
+                                        </div>
+                                        <div>
+                                            <input required type="email" name="email" placeholder="Email Address" className="w-full bg-slate-950 border border-slate-700 rounded-lg px-4 py-3.5 text-white placeholder-slate-500 focus:border-brand-orange outline-none text-sm transition-all focus:ring-1 focus:ring-brand-orange" />
+                                        </div>
+                                        <div className="relative">
+                                            <select required name="projectType" className="w-full bg-slate-950 border border-slate-700 rounded-lg px-4 py-3.5 text-white focus:border-brand-orange outline-none text-sm transition-all focus:ring-1 focus:ring-brand-orange appearance-none cursor-pointer">
+                                                <option value="" disabled selected className="text-slate-500">Select Project Type</option>
+                                                <option value="countertops">Countertops Installation</option>
+                                                <option value="cabinets">Cabinet Refacing</option>
+                                                <option value="kitchen">Full Kitchen Remodel</option>
+                                                <option value="bathroom">Bathroom Vanity Install</option>
+                                            </select>
+                                            <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-500 pointer-events-none" size={16} />
+                                        </div>
+                                    </div>
+                                    
+                                    <Button 
+                                        variant="primary" 
+                                        fullWidth 
+                                        type="submit"
+                                        disabled={formStatus === 'submitting'}
+                                        className="font-bold tracking-wide shadow-lg shadow-orange-500/20 mt-2 py-4 text-base flex items-center justify-center gap-2"
+                                    >
+                                        {formStatus === 'submitting' ? (
+                                            <><Loader2 className="animate-spin" size={20} /> Sending...</>
+                                        ) : (
+                                            "Check Availability Near Me"
+                                        )}
+                                    </Button>
+                                    
+                                    {formStatus === 'error' && (
+                                        <p className="text-red-400 text-xs text-center mt-2">Something went wrong. Please try again or call us.</p>
+                                    )}
+
+                                    <p className="text-center text-[10px] text-slate-500 flex items-center justify-center gap-1">
+                                        <ShieldCheck size={10} /> Your privacy is our priority.
+                                    </p>
+                                </form>
+                            </>
+                        )}
                     </div>
                 </div>
             </div>

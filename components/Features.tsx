@@ -19,7 +19,7 @@ const Features: React.FC = () => {
         materials: ['Quartz Install', 'Granite Slabs', 'Marble', 'Quartzite'],
         benefits: ['Scratch Resistant', 'Factory Direct Price', 'Pro Installation'],
         duration: '2-4 Days',
-        warranty: 'Lifetime Labor'
+        warranty: '1-Year Labor'
       }
     },
     {
@@ -35,7 +35,7 @@ const Features: React.FC = () => {
         materials: ['Solid Wood Doors', 'Custom Veneers', 'New Hardware'],
         benefits: ['Cost Effective', 'Fast Turnaround', 'Soft-Close Hinges'],
         duration: '5-7 Days',
-        warranty: '5-Year Finish'
+        warranty: '1-Year Finish'
       }
     },
     {
@@ -51,7 +51,7 @@ const Features: React.FC = () => {
         materials: ['Full Design', 'Flooring', 'Plumbing & Electric'],
         benefits: ['Project Management', 'Turnkey Service', 'Warranty Included'],
         duration: '12-15 Days',
-        warranty: 'Full Service'
+        warranty: '1-Year Labor'
       }
     },
     {
@@ -67,7 +67,7 @@ const Features: React.FC = () => {
         materials: ['Vanity Tops', 'Shower Tile', 'Frameless Glass'],
         benefits: ['Waterproofing', 'Spa Design', 'Value Add'],
         duration: '3-5 Days',
-        warranty: 'Waterproof'
+        warranty: '1-Year Labor'
       }
     },
     {
@@ -83,7 +83,7 @@ const Features: React.FC = () => {
         materials: ['Composite (Trex)', 'Pressure Treated', 'Cedar', 'Railings'],
         benefits: ['Rot Resistant', 'Custom Design', 'Permit Handling'],
         duration: '5-10 Days',
-        warranty: 'Structural'
+        warranty: '1-Year Labor'
       }
     },
     {
@@ -99,7 +99,7 @@ const Features: React.FC = () => {
         materials: ['Porcelain', 'Ceramic', 'Glass Mosaic', 'Natural Stone'],
         benefits: ['Waterproof Systems', 'Laser Leveling', 'Custom Niches'],
         duration: '2-5 Days',
-        warranty: '2-Year Labor'
+        warranty: '1-Year Labor'
       }
     },
     {
@@ -115,7 +115,7 @@ const Features: React.FC = () => {
         materials: ['LVP (Waterproof)', 'Engineered Wood', 'Hardwood Refinish'],
         benefits: ['Scratch Resistant', 'Moisture Proof', 'Sound Dampening'],
         duration: '1-3 Days',
-        warranty: 'Install Guarantee'
+        warranty: '1-Year Labor'
       }
     }
   ];
@@ -210,7 +210,7 @@ const Features: React.FC = () => {
                         <BadgeCheck className="text-brand-orange" size={18} /> Licensed Contractor
                     </h4>
                     <p className="text-xs text-slate-500 leading-relaxed">
-                        We are fully insured and licensed in the state of Georgia. All installations come with a labor warranty.
+                        We are fully insured and licensed in the state of Georgia. All installations come with a 1-year labor warranty.
                     </p>
                 </div>
             </div>

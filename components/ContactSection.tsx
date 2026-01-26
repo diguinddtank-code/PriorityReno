@@ -1,15 +1,47 @@
 import React, { useState } from 'react';
-import { Phone, Mail, MapPin, ShieldCheck, CheckCircle2, Navigation } from 'lucide-react';
+import { Phone, Mail, MapPin, ShieldCheck, CheckCircle2, Navigation, Loader2 } from 'lucide-react';
 import Button from './Button';
 import { createPortal } from 'react-dom';
 
 const ContactSection: React.FC = () => {
+  const [formStatus, setFormStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
 
   const locations = [
     "Duluth", "Johns Creek", "Alpharetta", "Buckhead", "Suwanee", 
     "Milton", "Roswell", "Sandy Springs", "Dunwoody", "Brookhaven", 
     "Marietta", "Cumming", "Norcross", "Peachtree Corners", "Decatur"
   ];
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setFormStatus('submitting');
+
+    const formData = new FormData(e.currentTarget);
+    
+    try {
+        const response = await fetch("https://formsubmit.co/ajax/priorityrenovationsatl@gmail.com", {
+            method: "POST",
+            body: formData,
+            headers: { 
+                'Accept': 'application/json'
+            }
+        });
+
+        if (response.ok) {
+            setFormStatus('success');
+            // Optional: Conversion tracking trigger here
+            // @ts-ignore
+            if (typeof window.gtag_report_conversion === 'function') {
+                 // @ts-ignore
+                 window.gtag_report_conversion();
+            }
+        } else {
+            setFormStatus('error');
+        }
+    } catch (error) {
+        setFormStatus('error');
+    }
+  };
 
   return (
     <section className="py-16 md:py-24 bg-slate-50 border-t border-slate-200 relative overflow-hidden">
@@ -101,65 +133,93 @@ const ContactSection: React.FC = () => {
 
                 {/* RIGHT COLUMN: HIGH CONVERSION FORM (STICKY) */}
                 <div className="lg:col-span-5 order-1 lg:order-2">
-                    <div id="quote-form" className="bg-white p-8 rounded-3xl border border-slate-200 shadow-2xl shadow-slate-200/50 relative overflow-hidden group scroll-mt-28">
+                    <div id="quote-form" className="bg-white p-8 rounded-3xl border border-slate-200 shadow-2xl shadow-slate-200/50 relative overflow-hidden group scroll-mt-28 min-h-[500px] flex flex-col justify-center">
                          
                          {/* Orange Top Accent */}
                          <div className="absolute top-0 left-0 right-0 h-2 bg-brand-orange"></div>
 
-                         <div className="mb-6">
-                            <div className="inline-flex items-center gap-2 text-brand-orange font-bold text-xs uppercase tracking-widest mb-2 bg-brand-orange/5 px-3 py-1 rounded-md">
-                                <ShieldCheck size={14} /> Price Match Guarantee
+                         {formStatus === 'success' ? (
+                            <div className="text-center animate-fade-in py-12">
+                                <div className="inline-flex items-center justify-center w-20 h-20 bg-green-100 rounded-full text-green-600 mb-6 shadow-sm">
+                                    <CheckCircle2 size={40} />
+                                </div>
+                                <h3 className="text-3xl font-serif text-slate-900 mb-4">Message Sent!</h3>
+                                <p className="text-slate-500 mb-6 max-w-xs mx-auto text-sm">
+                                    Thanks for contacting Priority Renovations. We will be in touch shortly with your quote details.
+                                </p>
+                                <Button 
+                                    variant="outline" 
+                                    className="border-slate-200 text-slate-600 hover:bg-slate-50"
+                                    onClick={() => setFormStatus('idle')}
+                                >
+                                    Send Another Request
+                                </Button>
                             </div>
-                            <h3 className="text-3xl font-serif text-slate-900">Get Your Free Quote</h3>
-                            <p className="text-slate-500 mt-2 text-sm">Lock in today's material pricing. No obligation.</p>
-                         </div>
-
-                         <form 
-                            className="space-y-4" 
-                            action="https://formsubmit.co/priorityrenovationsatl@gmail.com"
-                            method="POST"
-                         >
-                            {/* FormSubmit Configuration */}
-                            <input type="hidden" name="_subject" value="New Bottom Contact Inquiry (Footer Section)" />
-                            <input type="hidden" name="_captcha" value="false" />
-                            <input type="hidden" name="_template" value="table" />
-                            {/* Honeypot for spam protection */}
-                            <input type="text" name="_honey" style={{display: 'none'}} />
-                            
-                             <div className="grid grid-cols-2 gap-4">
-                                <div>
-                                    <label className="block text-xs font-bold text-slate-700 uppercase mb-1 ml-1">First Name</label>
-                                    <input required type="text" name="name" className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-slate-900 focus:border-brand-orange focus:bg-white outline-none transition-all focus:ring-2 focus:ring-brand-orange/20" placeholder="John" />
+                         ) : (
+                             <>
+                                <div className="mb-6">
+                                    <div className="inline-flex items-center gap-2 text-brand-orange font-bold text-xs uppercase tracking-widest mb-2 bg-brand-orange/5 px-3 py-1 rounded-md">
+                                        <ShieldCheck size={14} /> Price Match Guarantee
+                                    </div>
+                                    <h3 className="text-3xl font-serif text-slate-900">Get Your Free Quote</h3>
+                                    <p className="text-slate-500 mt-2 text-sm">Lock in today's material pricing. No obligation.</p>
                                 </div>
-                                <div>
-                                    <label className="block text-xs font-bold text-slate-700 uppercase mb-1 ml-1">Phone</label>
-                                    <input required type="tel" name="phone" className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-slate-900 focus:border-brand-orange focus:bg-white outline-none transition-all focus:ring-2 focus:ring-brand-orange/20" placeholder="(555) 000-0000" />
-                                </div>
-                             </div>
 
-                             <div>
-                                <label className="block text-xs font-bold text-slate-700 uppercase mb-1 ml-1">Email Address</label>
-                                <input required type="email" name="email" className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-slate-900 focus:border-brand-orange focus:bg-white outline-none transition-all focus:ring-2 focus:ring-brand-orange/20" placeholder="john@example.com" />
-                             </div>
+                                <form 
+                                    className="space-y-4" 
+                                    onSubmit={handleSubmit}
+                                >
+                                    {/* FormSubmit Configuration Hidden Fields */}
+                                    <input type="hidden" name="_subject" value="New Bottom Contact Inquiry (Footer Section)" />
+                                    <input type="hidden" name="_captcha" value="false" />
+                                    <input type="hidden" name="_template" value="table" />
+                                    <input type="text" name="_honey" style={{display: 'none'}} />
+                                    
+                                    <div className="grid grid-cols-2 gap-4">
+                                        <div>
+                                            <label className="block text-xs font-bold text-slate-700 uppercase mb-1 ml-1">First Name</label>
+                                            <input required type="text" name="name" className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-slate-900 focus:border-brand-orange focus:bg-white outline-none transition-all focus:ring-2 focus:ring-brand-orange/20" placeholder="John" />
+                                        </div>
+                                        <div>
+                                            <label className="block text-xs font-bold text-slate-700 uppercase mb-1 ml-1">Phone</label>
+                                            <input required type="tel" name="phone" className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-slate-900 focus:border-brand-orange focus:bg-white outline-none transition-all focus:ring-2 focus:ring-brand-orange/20" placeholder="(555) 000-0000" />
+                                        </div>
+                                    </div>
 
-                             <div>
-                                <label className="block text-xs font-bold text-slate-700 uppercase mb-1 ml-1">Project Details</label>
-                                <textarea name="message" className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-slate-900 focus:border-brand-orange focus:bg-white outline-none transition-all focus:ring-2 focus:ring-brand-orange/20 h-32 resize-none" placeholder="I'm interested in quartz countertops for my kitchen..."></textarea>
-                             </div>
+                                    <div>
+                                        <label className="block text-xs font-bold text-slate-700 uppercase mb-1 ml-1">Email Address</label>
+                                        <input required type="email" name="email" className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-slate-900 focus:border-brand-orange focus:bg-white outline-none transition-all focus:ring-2 focus:ring-brand-orange/20" placeholder="john@example.com" />
+                                    </div>
 
-                             <Button 
-                                variant="primary" 
-                                fullWidth 
-                                type="submit"
-                                className="mt-2 py-4 text-base shadow-xl shadow-brand-orange/30 hover:shadow-brand-orange/50"
-                             >
-                                Check Availability & Price
-                             </Button>
+                                    <div>
+                                        <label className="block text-xs font-bold text-slate-700 uppercase mb-1 ml-1">Project Details</label>
+                                        <textarea name="message" className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-slate-900 focus:border-brand-orange focus:bg-white outline-none transition-all focus:ring-2 focus:ring-brand-orange/20 h-32 resize-none" placeholder="I'm interested in quartz countertops for my kitchen..."></textarea>
+                                    </div>
 
-                             <p className="text-center text-[10px] text-slate-400 mt-4 flex items-center justify-center gap-1">
-                                <ShieldCheck size={12} /> Your privacy is our priority. No spam.
-                             </p>
-                         </form>
+                                    <Button 
+                                        variant="primary" 
+                                        fullWidth 
+                                        type="submit"
+                                        disabled={formStatus === 'submitting'}
+                                        className="mt-2 py-4 text-base shadow-xl shadow-brand-orange/30 hover:shadow-brand-orange/50 flex items-center justify-center gap-2"
+                                    >
+                                        {formStatus === 'submitting' ? (
+                                            <><Loader2 className="animate-spin" size={20} /> Processing...</>
+                                        ) : (
+                                            "Check Availability & Price"
+                                        )}
+                                    </Button>
+                                    
+                                    {formStatus === 'error' && (
+                                        <p className="text-red-500 text-xs text-center mt-2">Error sending message. Please try again.</p>
+                                    )}
+
+                                    <p className="text-center text-[10px] text-slate-400 mt-4 flex items-center justify-center gap-1">
+                                        <ShieldCheck size={12} /> Your privacy is our priority. No spam.
+                                    </p>
+                                </form>
+                             </>
+                         )}
                     </div>
                 </div>
 
