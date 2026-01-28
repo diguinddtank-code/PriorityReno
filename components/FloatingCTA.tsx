@@ -53,7 +53,7 @@ const FloatingCTA: React.FC = () => {
   };
 
   return (
-    <div className="fixed bottom-20 right-4 md:bottom-8 md:right-8 z-[60] flex flex-col items-end pointer-events-auto">
+    <div className="fixed bottom-24 right-3 md:bottom-8 md:right-8 z-[60] flex flex-col items-end pointer-events-auto">
       
       {/* SMALL TYPING BUBBLE (Attached to Head) */}
       <div 
@@ -66,21 +66,21 @@ const FloatingCTA: React.FC = () => {
          <span className="w-1.5 h-1.5 bg-slate-400 rounded-full animate-bounce"></span>
       </div>
 
-      {/* Main Floating Button */}
+      {/* Main Floating Button - Reduced Size on Mobile (w-12 h-12) */}
       <button 
          onClick={handleOpenChat}
-         className="relative w-14 h-14 md:w-16 md:h-16 rounded-full bg-white shadow-2xl border-2 border-white flex items-center justify-center hover:scale-105 transition-transform duration-300 group z-20"
+         className="relative w-12 h-12 md:w-16 md:h-16 rounded-full bg-white shadow-2xl border-2 border-white flex items-center justify-center hover:scale-105 transition-transform duration-300 group z-20"
       >
          <div className="w-full h-full rounded-full overflow-hidden">
             <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=200&auto=format&fit=crop" alt="Ashley" className="w-full h-full object-cover" />
          </div>
          {/* Online Dot (Green) */}
-         <div className="absolute bottom-0 right-0 w-4 h-4 bg-green-500 border-2 border-white rounded-full animate-pulse"></div>
+         <div className="absolute bottom-0 right-0 w-3 h-3 md:w-4 md:h-4 bg-green-500 border-2 border-white rounded-full animate-pulse"></div>
          
          {/* NOTIFICATION DOT (Red) - Shows when closed AND not typing */}
          {hasUnreadMessage && !showTypingBubble && !isChatOpen && (
-            <div className="absolute -top-1 -right-1 w-5 h-5 bg-red-600 border-2 border-white rounded-full flex items-center justify-center animate-bounce">
-                <span className="text-[10px] font-bold text-white leading-none">1</span>
+            <div className="absolute -top-1 -right-1 w-4 h-4 md:w-5 md:h-5 bg-red-600 border-2 border-white rounded-full flex items-center justify-center animate-bounce">
+                <span className="text-[9px] md:text-[10px] font-bold text-white leading-none">1</span>
             </div>
          )}
          
@@ -94,7 +94,7 @@ const FloatingCTA: React.FC = () => {
 
       {/* Expanded Chat Card */}
       {/* Reduced width to w-[280px] on mobile to prevent overflow/cutting */}
-      <div className={`absolute bottom-20 right-0 bg-white rounded-2xl shadow-2xl w-[280px] md:w-[340px] overflow-hidden transition-all duration-300 origin-bottom-right transform ${isChatOpen ? 'opacity-100 scale-100 translate-y-0' : 'opacity-0 scale-90 translate-y-10 pointer-events-none'}`}>
+      <div className={`absolute bottom-16 right-0 bg-white rounded-2xl shadow-2xl w-[280px] md:w-[340px] overflow-hidden transition-all duration-300 origin-bottom-right transform ${isChatOpen ? 'opacity-100 scale-100 translate-y-0' : 'opacity-0 scale-90 translate-y-10 pointer-events-none'}`}>
          
          {/* Header */}
          <div className="bg-slate-900 p-4 flex justify-between items-center">

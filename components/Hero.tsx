@@ -83,7 +83,7 @@ const Hero: React.FC = () => {
   };
 
   return (
-    <section className="relative min-h-[100dvh] flex items-center justify-center overflow-hidden bg-slate-900 pt-24 pb-20 md:pt-0 md:pb-0">
+    <section className="relative min-h-[100dvh] flex items-center justify-center overflow-hidden bg-slate-900 pt-20 pb-16 md:pt-0 md:pb-0">
       
       {/* Background Video */}
       <div className="absolute inset-0 z-0 bg-black">
@@ -106,19 +106,19 @@ const Hero: React.FC = () => {
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full h-full flex flex-col justify-center" ref={contentRef}>
         
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-16 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-16 items-center">
             
             {/* LEFT COLUMN: Copywriting & Mobile Layout */}
             <div className="lg:col-span-7 flex flex-col items-center text-center lg:text-left lg:items-start">
             
-                {/* Top Badge (Static) */}
-                <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md text-white px-3 py-1 rounded-full text-[10px] md:text-sm font-bold uppercase tracking-widest mb-4 border border-white/20 shadow-lg">
+                {/* Top Badge (Static) - Reduced margin on mobile */}
+                <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md text-white px-3 py-1 rounded-full text-[10px] md:text-sm font-bold uppercase tracking-widest mb-3 md:mb-4 border border-white/20 shadow-lg">
                     <Star size={12} className="text-brand-orange fill-brand-orange" />
                     #1 Stone & Cabinet Installers
                 </div>
                 
-                {/* Main Headline (Static - High Contrast Shadow) */}
-                <h1 className="text-4xl sm:text-5xl lg:text-7xl font-serif font-medium text-white leading-[1.1] tracking-tight mb-4 drop-shadow-[0_5px_5px_rgba(0,0,0,0.8)]">
+                {/* Main Headline (Static) - Adjusted leading for mobile */}
+                <h1 className="text-4xl sm:text-5xl lg:text-7xl font-serif font-medium text-white leading-[1.1] tracking-tight mb-3 md:mb-4 drop-shadow-[0_5px_5px_rgba(0,0,0,0.8)]">
                     <span className="block">
                         Countertops & Cabinets
                     </span>
@@ -132,69 +132,73 @@ const Hero: React.FC = () => {
                     </span>
                 </h1>
 
-                {/* PRICING PILL (Static) */}
-                <div className="inline-flex items-center gap-3 bg-black/40 border border-white/20 rounded-full pl-2 pr-4 py-1.5 mb-6 backdrop-blur-md shadow-lg">
+                {/* PRICING PILL (Static) - More compact padding */}
+                <div className="inline-flex items-center gap-2 md:gap-3 bg-black/40 border border-white/20 rounded-full pl-1.5 pr-3 py-1 md:pl-2 md:pr-4 md:py-1.5 mb-5 md:mb-6 backdrop-blur-md shadow-lg">
                     <div className="bg-brand-orange rounded-full p-1">
-                        <Tag size={12} className="text-white" />
+                        <Tag size={10} className="text-white md:w-3 md:h-3" />
                     </div>
-                    <span className="text-xs md:text-sm text-slate-100 font-medium tracking-wide">
-                        Save 30% <span className="text-white/30 mx-2">|</span> <span className="text-brand-orange font-bold uppercase">Direct Importer Pricing</span>
+                    <span className="text-[10px] md:text-sm text-slate-100 font-medium tracking-wide">
+                        Save 30% <span className="text-white/30 mx-1 md:mx-2">|</span> <span className="text-brand-orange font-bold uppercase">Direct Importer Pricing</span>
                     </span>
                 </div>
                 
-                {/* Subheadline (Static - High Contrast) */}
-                <p className="text-sm sm:text-lg text-slate-100 max-w-xl font-light leading-relaxed mb-8 mx-auto lg:mx-0 drop-shadow-md">
-                    Stop searching for "installers near me" and go direct. We are Atlanta's premier granite, quartz, and cabinet refacing specialists. Installation in as little as 3 days.
+                {/* Subheadline (Static) */}
+                <p className="text-sm sm:text-lg text-slate-100 max-w-xl font-light leading-relaxed mb-6 md:mb-8 mx-auto lg:mx-0 drop-shadow-md">
+                    Stop searching for "installers near me" and go direct. We are Atlanta's premier granite, quartz, and cabinet specialists.
                 </p>
 
-                {/* Mobile STACKED CTA Buttons - IMPROVED VISUALS */}
-                <div className="flex flex-col gap-3 w-full lg:hidden mb-8">
+                {/* Mobile STACKED CTA Buttons - REDUCED SIZE & CLUTTER */}
+                <div className="flex flex-col gap-2 w-full lg:hidden mb-6">
                     <Button 
                         variant="primary" 
                         fullWidth
-                        className="h-14 text-base font-bold rounded-xl shadow-lg shadow-orange-900/40 bg-brand-orange border-none active:scale-[0.98] transition-transform flex items-center justify-center gap-2" 
+                        className="h-12 text-sm font-bold rounded-lg shadow-lg shadow-orange-900/40 bg-brand-orange border-none active:scale-[0.98] transition-transform flex items-center justify-center gap-2" 
                         onClick={() => document.getElementById('quote-form')?.scrollIntoView({behavior: 'smooth'})}
                     >
-                        Get Free Installation Quote <ArrowRight size={18} className="text-white/80" />
+                        Get Free Installation Quote <ArrowRight size={16} className="text-white/80" />
                     </Button>
                     <a 
                         href="tel:4703804785"
                         onClick={handlePhoneClick}
-                        className="w-full bg-slate-900/60 backdrop-blur-md border border-white/20 text-white h-14 rounded-xl flex items-center justify-center gap-2 font-bold uppercase tracking-wider text-sm hover:bg-slate-900/80 transition-all shadow-lg active:scale-[0.98]"
+                        className="w-full bg-slate-900/40 backdrop-blur-md border border-white/20 text-white h-12 rounded-lg flex items-center justify-center gap-2 font-bold uppercase tracking-wider text-xs hover:bg-slate-900/80 transition-all shadow-lg active:scale-[0.98]"
                     >
-                        <Phone size={18} className="text-brand-orange" /> Call Installers Now
+                        <Phone size={16} className="text-brand-orange" /> Call Installers Now
                     </a>
                 </div>
 
-                {/* --- TRUST BADGES (Fixed & Premium) --- */}
+                {/* --- TRUST BADGES (Compacted for Mobile) --- */}
                 <div className="w-full flex flex-col items-center lg:items-start gap-3">
                     
-                    {/* Primary Trust Badge (Google) */}
-                    <div className="flex items-center gap-4 bg-black/60 backdrop-blur-xl py-3 px-6 rounded-2xl border border-white/15 shadow-2xl w-full md:w-auto justify-center md:justify-start">
-                         <div className="bg-white p-1.5 rounded-full flex-shrink-0 shadow-sm">
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" className="w-5 h-5" alt="G" />
-                         </div>
-                         <div className="flex flex-col text-left">
-                             <div className="flex text-[#FBBC05] space-x-1 mb-0.5">
-                                <Star size={12} fill="currentColor"/>
-                                <Star size={12} fill="currentColor"/>
-                                <Star size={12} fill="currentColor"/>
-                                <Star size={12} fill="currentColor"/>
-                                <Star size={12} fill="currentColor"/>
+                    {/* Compacted Trust Layout for Mobile */}
+                    <div className="flex flex-wrap items-center justify-center lg:justify-start gap-2 md:gap-4">
+                        
+                        {/* Google - More compact vertical padding */}
+                        <div className="flex items-center gap-3 bg-black/60 backdrop-blur-xl py-2 px-4 rounded-xl border border-white/15 shadow-xl">
+                             <div className="bg-white p-1 rounded-full flex-shrink-0 shadow-sm">
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" className="w-3.5 h-3.5" alt="G" />
                              </div>
-                             <span className="text-[11px] text-white font-bold uppercase tracking-wide opacity-90">5.0 Rating • Top Local Contractor</span>
-                         </div>
-                    </div>
-
-                    {/* Secondary Badges Row */}
-                    <div className="grid grid-cols-2 gap-3 w-full md:w-auto">
-                        <div className="flex items-center justify-center gap-2 bg-black/40 border border-white/10 rounded-xl py-2 px-3 backdrop-blur-sm">
-                            <ShieldCheck size={16} className="text-green-500" />
-                            <span className="text-[10px] text-slate-200 font-bold uppercase tracking-wide">Licensed & Insured</span>
+                             <div className="flex flex-col text-left">
+                                 <div className="flex text-[#FBBC05] space-x-0.5">
+                                    <Star size={10} fill="currentColor"/>
+                                    <Star size={10} fill="currentColor"/>
+                                    <Star size={10} fill="currentColor"/>
+                                    <Star size={10} fill="currentColor"/>
+                                    <Star size={10} fill="currentColor"/>
+                                 </div>
+                                 <span className="text-[9px] text-white font-bold uppercase tracking-wide opacity-90">5.0 Rating</span>
+                             </div>
                         </div>
-                        <div className="flex items-center justify-center gap-2 bg-black/40 border border-white/10 rounded-xl py-2 px-3 backdrop-blur-sm">
-                            <Users size={16} className="text-brand-orange" />
-                            <span className="text-[10px] text-slate-200 font-bold uppercase tracking-wide">Family Owned</span>
+
+                        {/* Badges - Side by side on mobile now */}
+                        <div className="flex gap-2">
+                            <div className="flex items-center gap-1.5 bg-black/40 border border-white/10 rounded-lg py-1.5 px-2.5 backdrop-blur-sm">
+                                <ShieldCheck size={14} className="text-green-500" />
+                                <span className="text-[9px] text-slate-200 font-bold uppercase tracking-wide">Licensed</span>
+                            </div>
+                            <div className="flex items-center gap-1.5 bg-black/40 border border-white/10 rounded-lg py-1.5 px-2.5 backdrop-blur-sm">
+                                <Users size={14} className="text-brand-orange" />
+                                <span className="text-[9px] text-slate-200 font-bold uppercase tracking-wide">Family Owned</span>
+                            </div>
                         </div>
                     </div>
 
