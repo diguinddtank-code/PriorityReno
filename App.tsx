@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Navbar from './components/Navbar';
 import MobileNav from './components/MobileNav';
 import Hero from './components/Hero';
@@ -13,14 +13,18 @@ import FloatingCTA from './components/FloatingCTA';
 import Transformation from './components/Transformation';
 import ExitPopup from './components/ExitPopup';
 import { Reveal } from './components/Reveal';
+import AnnouncementBar from './components/AnnouncementBar';
 
 function App() {
+  const [isBannerVisible, setIsBannerVisible] = useState(true);
+
   return (
     // Simplified wrapper to allow native scroll behavior
     <div className="relative w-full">
         {/* Increased pb-20 to pb-32 to account for floating nav + margin */}
         <div className="min-h-screen bg-slate-50 font-sans pb-32 md:pb-0">
-          <Navbar />
+          {isBannerVisible && <AnnouncementBar onClose={() => setIsBannerVisible(false)} />}
+          <Navbar isBannerVisible={isBannerVisible} />
           <main className="w-full">
             {/* Hero Section */}
             <Hero />

@@ -83,7 +83,7 @@ const Hero: React.FC = () => {
   };
 
   return (
-    <section className="relative min-h-[100dvh] flex items-center justify-center overflow-hidden bg-slate-900 pt-20 pb-16 md:pt-0 md:pb-0">
+    <section className="relative min-h-[100dvh] flex items-center justify-center overflow-hidden bg-slate-900 pt-32 pb-16 md:pt-0 md:pb-0">
       
       {/* Background Video */}
       <div className="absolute inset-0 z-0 bg-black">
