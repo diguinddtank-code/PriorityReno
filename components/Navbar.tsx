@@ -9,14 +9,21 @@ interface NavbarProps {
 const Navbar: React.FC<NavbarProps> = ({ isBannerVisible = false }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [scrollPos, setScrollPos] = useState(0);
 
   useEffect(() => {
     const handleScroll = () => {
+      setScrollPos(window.scrollY);
       setIsScrolled(window.scrollY > 20);
     };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  // Calculate dynamic top position:
+  // If banner is visible, Navbar starts at 32px and scrolls up to 0px.
+  // If banner is closed, Navbar stays at 0px.
+  const navbarTop = isBannerVisible ? Math.max(0, 32 - scrollPos) : 0;
 
   // Prevent body scroll when mobile menu is open
   useEffect(() => {
@@ -54,12 +61,12 @@ const Navbar: React.FC<NavbarProps> = ({ isBannerVisible = false }) => {
   return (
     <>
       <nav 
-        className={`fixed left-0 right-0 z-50 transition-all duration-500 ease-in-out ${
+        className={`fixed left-0 right-0 z-50 transition-[background-color,padding,box-shadow] duration-300 ease-in-out ${
           isScrolled 
             ? 'bg-white/90 backdrop-blur-xl shadow-lg py-3 border-b border-slate-100' 
             : 'bg-transparent py-4 md:py-6'
         }`}
-        style={{ top: isBannerVisible ? '40px' : '0' }}
+        style={{ top: `${navbarTop}px` }}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between">
@@ -72,11 +79,11 @@ const Navbar: React.FC<NavbarProps> = ({ isBannerVisible = false }) => {
                   className="h-8 md:h-12 w-auto object-contain drop-shadow-md"
               />
               
-              <div className={`hidden md:flex flex-col ${isScrolled ? 'opacity-100' : 'opacity-100'} transition-opacity duration-300 ${!isScrolled && 'drop-shadow-md'}`}>
-                <span className={`text-xl md:text-2xl font-serif font-bold tracking-tight leading-none ${isScrolled ? 'text-slate-900' : 'text-white'}`}>
+              <div className={`flex flex-col ${isScrolled ? 'opacity-100' : 'opacity-100'} transition-opacity duration-300 ${!isScrolled && 'drop-shadow-md'}`}>
+                <span className={`text-sm md:text-2xl font-serif font-bold tracking-tight leading-none ${isScrolled ? 'text-slate-900' : 'text-white'}`}>
                   PRIORITY
                 </span>
-                <span className={`text-[10px] md:text-xs font-bold tracking-[0.2em] uppercase ${isScrolled ? 'text-brand-orange' : 'text-slate-100'}`}>
+                <span className={`text-[8px] md:text-xs font-bold tracking-[0.2em] uppercase ${isScrolled ? 'text-brand-orange' : 'text-slate-100'}`}>
                   RENOVATIONS
                 </span>
               </div>

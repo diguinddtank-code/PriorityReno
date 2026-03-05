@@ -21,7 +21,7 @@ const AnnouncementBar: React.FC<AnnouncementBarProps> = ({ onClose }) => {
   }, []);
 
   return (
-    <div className="fixed top-0 left-0 right-0 z-[60] bg-gradient-to-r from-orange-600 via-red-600 to-orange-600 text-white h-auto min-h-[32px] py-1.5 flex items-center justify-center px-8 shadow-lg border-b border-white/10 relative overflow-hidden">
+    <div className="relative z-[60] bg-gradient-to-r from-orange-600 via-red-600 to-orange-600 text-white h-auto min-h-[32px] py-1.5 flex items-center justify-center px-8 shadow-lg border-b border-white/10 overflow-hidden">
       
       {/* Subtle Shine Effect */}
       <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent translate-x-[-100%] animate-shimmer"></div>
