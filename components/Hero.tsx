@@ -114,7 +114,7 @@ const Hero: React.FC = () => {
                 {/* Top Badge (Static) - Reduced margin on mobile */}
                 <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md text-white px-3 py-1 rounded-full text-[10px] md:text-sm font-bold uppercase tracking-widest mb-3 md:mb-4 border border-white/20 shadow-lg">
                     <Star size={12} className="text-brand-orange fill-brand-orange" />
-                    #1 Stone & Cabinet Installers
+                    #1 Stone & Cabinet Experts
                 </div>
                 
                 {/* Main Headline (Static) - Adjusted leading for mobile */}
@@ -148,21 +148,21 @@ const Hero: React.FC = () => {
                 </p>
 
                 {/* Mobile STACKED CTA Buttons - REDUCED SIZE & CLUTTER */}
-                <div className="flex flex-col gap-2 w-full lg:hidden mb-6">
+                <div className="flex flex-col gap-3 w-full lg:hidden mb-8">
                     <Button 
                         variant="primary" 
                         fullWidth
-                        className="h-12 text-sm font-bold rounded-lg shadow-lg shadow-orange-900/40 bg-brand-orange border-none active:scale-[0.98] transition-transform flex items-center justify-center gap-2" 
+                        className="h-14 text-base font-bold rounded-xl shadow-xl shadow-orange-500/20 bg-brand-orange border-none active:scale-[0.98] transition-transform flex items-center justify-center gap-2" 
                         onClick={() => document.getElementById('quote-form')?.scrollIntoView({behavior: 'smooth'})}
                     >
-                        Get Free Installation Quote <ArrowRight size={16} className="text-white/80" />
+                        Get My Free Quote <ArrowRight size={18} className="text-white/90" />
                     </Button>
                     <a 
                         href="tel:4703804785"
                         onClick={handlePhoneClick}
-                        className="w-full bg-slate-900/40 backdrop-blur-md border border-white/20 text-white h-12 rounded-lg flex items-center justify-center gap-2 font-bold uppercase tracking-wider text-xs hover:bg-slate-900/80 transition-all shadow-lg active:scale-[0.98]"
+                        className="w-full bg-white/5 backdrop-blur-md border border-white/10 text-white h-12 rounded-xl flex items-center justify-center gap-2 font-semibold tracking-wide text-sm hover:bg-white/10 transition-all shadow-lg active:scale-[0.98]"
                     >
-                        <Phone size={16} className="text-brand-orange" /> Call Installers Now
+                        <Phone size={16} className="text-brand-orange" /> (470) 380-4785
                     </a>
                 </div>
 
@@ -275,8 +275,8 @@ const Hero: React.FC = () => {
                                             <input required type="email" name="email" placeholder="Email Address" className="w-full bg-slate-950 border border-slate-700 rounded-lg px-4 py-3.5 text-white placeholder-slate-500 focus:border-brand-orange outline-none text-sm transition-all focus:ring-1 focus:ring-brand-orange" />
                                         </div>
                                         <div className="relative">
-                                            <select required name="projectType" className="w-full bg-slate-950 border border-slate-700 rounded-lg px-4 py-3.5 text-white focus:border-brand-orange outline-none text-sm transition-all focus:ring-1 focus:ring-brand-orange appearance-none cursor-pointer">
-                                                <option value="" disabled selected className="text-slate-500">Select Project Type</option>
+                                            <select required name="projectType" defaultValue="" className="w-full bg-slate-950 border border-slate-700 rounded-lg px-4 py-3.5 text-white focus:border-brand-orange outline-none text-sm transition-all focus:ring-1 focus:ring-brand-orange appearance-none cursor-pointer">
+                                                <option value="" disabled className="text-slate-500">Select Project Type</option>
                                                 <option value="countertops">Countertops Installation</option>
                                                 <option value="cabinets">Cabinet Refacing</option>
                                                 <option value="kitchen">Full Kitchen Remodel</option>
