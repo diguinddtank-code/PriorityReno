@@ -59,7 +59,7 @@ const Navbar: React.FC<NavbarProps> = ({ isBannerVisible = false }) => {
             ? 'bg-white/90 backdrop-blur-xl shadow-lg py-3 border-b border-slate-100' 
             : 'bg-transparent py-4 md:py-6'
         }`}
-        style={{ top: isBannerVisible ? '34px' : '0' }}
+        style={{ top: isBannerVisible ? '40px' : '0' }}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between">

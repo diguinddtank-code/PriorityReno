@@ -83,7 +83,7 @@ const Hero: React.FC = () => {
   };
 
   return (
-    <section className="relative min-h-[100dvh] flex items-center justify-center overflow-hidden bg-slate-900 pt-32 pb-16 md:pt-0 md:pb-0">
+    <section className="relative min-h-[100dvh] flex items-center justify-center overflow-hidden bg-slate-900 pt-32 pb-16 md:pt-24 md:pb-0">
       
       {/* Background Video */}
       <div className="absolute inset-0 z-0 bg-black">
@@ -230,20 +230,20 @@ const Hero: React.FC = () => {
                      </div>
 
                      {/* SOLID FORM CONTAINER */}
-                     <div className="bg-slate-900 p-8 rounded-2xl border border-slate-700 shadow-2xl relative overflow-hidden group min-h-[460px] flex flex-col justify-center">
+                     <div className="bg-slate-900 p-5 lg:p-6 rounded-2xl border border-slate-700 shadow-2xl relative overflow-hidden group flex flex-col justify-center">
                         
                         {formStatus === 'success' ? (
-                            <div className="text-center animate-fade-in py-10">
-                                <div className="inline-flex items-center justify-center w-20 h-20 bg-green-500 rounded-full text-slate-900 mb-6 shadow-lg shadow-green-500/30">
-                                    <CheckCircle2 size={40} />
+                            <div className="text-center animate-fade-in py-8">
+                                <div className="inline-flex items-center justify-center w-16 h-16 bg-green-500 rounded-full text-slate-900 mb-4 shadow-lg shadow-green-500/30">
+                                    <CheckCircle2 size={32} />
                                 </div>
-                                <h3 className="text-3xl font-serif text-white mb-4">Request Received!</h3>
-                                <p className="text-slate-400 mb-6 max-w-xs mx-auto">
+                                <h3 className="text-2xl font-serif text-white mb-3">Request Received!</h3>
+                                <p className="text-slate-400 mb-4 max-w-xs mx-auto text-sm">
                                     Thank you. One of our specialists will call you shortly to discuss your project.
                                 </p>
                                 <Button 
                                     variant="outline" 
-                                    className="!border-slate-700 !text-slate-300 hover:!bg-slate-800 hover:!border-slate-600"
+                                    className="!border-slate-700 !text-slate-300 hover:!bg-slate-800 hover:!border-slate-600 text-sm py-2"
                                     onClick={() => setFormStatus('idle')}
                                 >
                                     Send Another Request
@@ -251,11 +251,11 @@ const Hero: React.FC = () => {
                             </div>
                         ) : (
                             <>
-                                <h3 className="text-2xl font-serif text-white mb-2">Get Your Free Estimate</h3>
-                                <p className="text-slate-400 text-sm mb-6">Lock in special pricing. No obligation.</p>
+                                <h3 className="text-xl lg:text-2xl font-serif text-white mb-1">Get Your Free Estimate</h3>
+                                <p className="text-slate-400 text-xs lg:text-sm mb-4">Lock in special pricing. No obligation.</p>
 
                                 <form 
-                                    className="space-y-4 relative z-10" 
+                                    className="space-y-3 relative z-10" 
                                     onSubmit={handleSubmit}
                                 >
                                     {/* FormSubmit Configuration Hidden Fields */}
@@ -264,25 +264,25 @@ const Hero: React.FC = () => {
                                     <input type="hidden" name="_template" value="table" />
                                     <input type="text" name="_honey" style={{display: 'none'}} />
                                     
-                                    <div className="space-y-4">
+                                    <div className="space-y-3">
                                         <div>
-                                            <input required type="text" name="name" placeholder="Name" className="w-full bg-slate-950 border border-slate-700 rounded-lg px-4 py-3.5 text-white placeholder-slate-500 focus:border-brand-orange outline-none text-sm transition-all focus:ring-1 focus:ring-brand-orange" />
+                                            <input required type="text" name="name" placeholder="Name" className="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2.5 text-white placeholder-slate-500 focus:border-brand-orange outline-none text-sm transition-all focus:ring-1 focus:ring-brand-orange" />
                                         </div>
                                         <div>
-                                            <input required type="tel" name="phone" placeholder="Phone Number" className="w-full bg-slate-950 border border-slate-700 rounded-lg px-4 py-3.5 text-white placeholder-slate-500 focus:border-brand-orange outline-none text-sm transition-all focus:ring-1 focus:ring-brand-orange" />
+                                            <input required type="tel" name="phone" placeholder="Phone Number" className="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2.5 text-white placeholder-slate-500 focus:border-brand-orange outline-none text-sm transition-all focus:ring-1 focus:ring-brand-orange" />
                                         </div>
                                         <div>
-                                            <input required type="email" name="email" placeholder="Email Address" className="w-full bg-slate-950 border border-slate-700 rounded-lg px-4 py-3.5 text-white placeholder-slate-500 focus:border-brand-orange outline-none text-sm transition-all focus:ring-1 focus:ring-brand-orange" />
+                                            <input required type="email" name="email" placeholder="Email Address" className="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2.5 text-white placeholder-slate-500 focus:border-brand-orange outline-none text-sm transition-all focus:ring-1 focus:ring-brand-orange" />
                                         </div>
                                         <div className="relative">
-                                            <select required name="projectType" defaultValue="" className="w-full bg-slate-950 border border-slate-700 rounded-lg px-4 py-3.5 text-white focus:border-brand-orange outline-none text-sm transition-all focus:ring-1 focus:ring-brand-orange appearance-none cursor-pointer">
+                                            <select required name="projectType" defaultValue="" className="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2.5 text-white focus:border-brand-orange outline-none text-sm transition-all focus:ring-1 focus:ring-brand-orange appearance-none cursor-pointer">
                                                 <option value="" disabled className="text-slate-500">Select Project Type</option>
                                                 <option value="countertops">Countertops Installation</option>
                                                 <option value="cabinets">Cabinet Refacing</option>
                                                 <option value="kitchen">Full Kitchen Remodel</option>
                                                 <option value="bathroom">Bathroom Vanity Install</option>
                                             </select>
-                                            <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-500 pointer-events-none" size={16} />
+                                            <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 pointer-events-none" size={14} />
                                         </div>
                                     </div>
                                     
@@ -291,20 +291,20 @@ const Hero: React.FC = () => {
                                         fullWidth 
                                         type="submit"
                                         disabled={formStatus === 'submitting'}
-                                        className="font-bold tracking-wide shadow-lg shadow-orange-500/20 mt-2 py-4 text-base flex items-center justify-center gap-2"
+                                        className="font-bold tracking-wide shadow-lg shadow-orange-500/20 mt-1 py-3 text-sm lg:text-base flex items-center justify-center gap-2"
                                     >
                                         {formStatus === 'submitting' ? (
-                                            <><Loader2 className="animate-spin" size={20} /> Sending...</>
+                                            <><Loader2 className="animate-spin" size={18} /> Sending...</>
                                         ) : (
                                             "Check Availability Near Me"
                                         )}
                                     </Button>
                                     
                                     {formStatus === 'error' && (
-                                        <p className="text-red-400 text-xs text-center mt-2">Something went wrong. Please try again or call us.</p>
+                                        <p className="text-red-400 text-[10px] text-center mt-1">Something went wrong. Please try again or call us.</p>
                                     )}
 
-                                    <p className="text-center text-[10px] text-slate-500 flex items-center justify-center gap-1">
+                                    <p className="text-center text-[10px] text-slate-500 flex items-center justify-center gap-1 mt-1">
                                         <ShieldCheck size={10} /> Your privacy is our priority.
                                     </p>
                                 </form>

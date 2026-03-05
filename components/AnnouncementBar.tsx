@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { X, ArrowRight, MapPin } from 'lucide-react';
+import { X, ArrowRight, Tag } from 'lucide-react';
 
 interface AnnouncementBarProps {
   onClose: () => void;
@@ -21,30 +21,35 @@ const AnnouncementBar: React.FC<AnnouncementBarProps> = ({ onClose }) => {
   }, []);
 
   return (
-    <div className="fixed top-0 left-0 right-0 z-[60] bg-slate-900 text-white h-auto min-h-[40px] py-2 md:py-0 flex items-center justify-center px-4 shadow-md border-b border-white/10">
-      <div className="flex flex-col md:flex-row items-center justify-center gap-2 md:gap-3 text-[10px] md:text-sm font-medium tracking-wide w-full text-center md:text-left">
+    <div className="fixed top-0 left-0 right-0 z-[60] bg-gradient-to-r from-orange-600 via-red-600 to-orange-600 text-white h-auto min-h-[32px] py-1.5 flex items-center justify-center px-8 shadow-lg border-b border-white/10 relative overflow-hidden">
+      
+      {/* Subtle Shine Effect */}
+      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent translate-x-[-100%] animate-shimmer"></div>
+
+      <div className="relative z-10 flex flex-row items-center justify-center gap-2 text-[10px] md:text-xs font-bold tracking-wide w-full text-center truncate">
         
-        <div className="flex items-center gap-2 justify-center flex-wrap">
-            <MapPin size={14} className="text-brand-orange shrink-0" />
-            <span>
-              <span className="font-bold text-brand-orange uppercase">Metro Atlanta Special:</span> Direct pricing valid until {deadline}.
+        <div className="flex items-center gap-1.5 justify-center truncate">
+            <Tag size={10} className="text-white shrink-0 hidden sm:block" fill="currentColor" />
+            <span className="truncate">
+              <span className="uppercase text-yellow-200 font-black tracking-wider drop-shadow-md mr-1">Offer:</span>
+              Factory Direct Pricing ends {deadline}
             </span>
         </div>
 
         <button 
           onClick={scrollToQuote}
-          className="hidden md:flex items-center gap-1 hover:text-brand-orange transition-colors underline decoration-brand-orange/50 underline-offset-4 whitespace-nowrap"
+          className="hidden md:flex items-center gap-1 bg-white text-red-600 px-2 py-0.5 rounded-full text-[10px] font-bold hover:bg-yellow-50 transition-colors shadow-sm uppercase tracking-wider transform hover:scale-105 duration-200 shrink-0"
         >
-          Lock in your price <ArrowRight size={12} />
+          Claim <ArrowRight size={10} />
         </button>
       </div>
       
       <button 
         onClick={onClose}
-        className="absolute right-2 top-1/2 -translate-y-1/2 p-1.5 hover:bg-white/10 rounded-full transition-colors text-slate-400 hover:text-white"
+        className="absolute right-1 top-1/2 -translate-y-1/2 p-1.5 hover:bg-black/10 rounded-full transition-colors text-white/90 hover:text-white z-20"
         aria-label="Close announcement"
       >
-        <X size={14} />
+        <X size={12} />
       </button>
     </div>
   );
