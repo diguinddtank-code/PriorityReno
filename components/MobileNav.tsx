@@ -52,7 +52,6 @@ const MobileNav: React.FC = () => {
   const handlePhoneClick = (e: React.MouseEvent) => {
     // @ts-ignore
     if (typeof window.gtag_report_conversion === 'function') {
-        e.preventDefault();
         // @ts-ignore
         window.gtag_report_conversion('tel:4703804785');
     }

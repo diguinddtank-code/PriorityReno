@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { Layers, ArrowRight, LayoutTemplate, X, CheckCircle2, Clock, Utensils, Bath, ChevronRight, ShieldCheck, Sparkles, Hammer, Grid3X3, AlignJustify, BadgeCheck } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import Button from './Button';
 import { Reveal } from './Reveal';
 
 const Features: React.FC = () => {
+  const navigate = useNavigate();
   const services = [
     {
       id: "01",
@@ -142,14 +144,7 @@ const Features: React.FC = () => {
 
   const handleGetQuote = () => {
     setSelectedService(null);
-    setTimeout(() => {
-      const form = document.getElementById('quote-form');
-      if (form) {
-        form.scrollIntoView({ behavior: 'smooth' });
-        const input = form.querySelector('input');
-        if (input) input.focus();
-      }
-    }, 300);
+    navigate('/quote');
   };
 
   return (

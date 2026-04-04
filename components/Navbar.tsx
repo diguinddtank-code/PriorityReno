@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Menu, X, Phone, ArrowRight } from 'lucide-react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import Button from './Button';
 
 interface NavbarProps {
@@ -10,6 +11,8 @@ const Navbar: React.FC<NavbarProps> = ({ isBannerVisible = false }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [scrollPos, setScrollPos] = useState(0);
+  const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -21,9 +24,9 @@ const Navbar: React.FC<NavbarProps> = ({ isBannerVisible = false }) => {
   }, []);
 
   // Calculate dynamic top position:
-  // If banner is visible, Navbar starts at 32px and scrolls up to 0px.
+  // If banner is visible, Navbar stays at 32px.
   // If banner is closed, Navbar stays at 0px.
-  const navbarTop = isBannerVisible ? Math.max(0, 32 - scrollPos) : 0;
+  const navbarTop = isBannerVisible ? 32 : 0;
 
   // Prevent body scroll when mobile menu is open
   useEffect(() => {
@@ -35,24 +38,28 @@ const Navbar: React.FC<NavbarProps> = ({ isBannerVisible = false }) => {
   }, [isMobileMenuOpen]);
 
   const navLinks = [
-    { name: 'Services', href: '#services' },
-    { name: 'Portfolio', href: '#locations' },
-    { name: 'Process', href: '#process' },
-    { name: 'Reviews', href: '#testimonials' },
+    { name: 'Services', href: '/#services' },
+    { name: 'Portfolio', href: '/#locations' },
+    { name: 'Process', href: '/#process' },
+    { name: 'Reviews', href: '/#testimonials' },
   ];
 
-  const scrollToQuote = () => {
-    const quoteForm = document.getElementById('quote-form');
-    if (quoteForm) {
-      quoteForm.scrollIntoView({ behavior: 'smooth' });
-    }
+  const handleQuoteClick = () => {
+    navigate('/quote');
     setIsMobileMenuOpen(false);
+  };
+
+  const handleLogoClick = () => {
+    if (location.pathname === '/') {
+      window.scrollTo(0, 0);
+    } else {
+      navigate('/');
+    }
   };
 
   const handlePhoneClick = (e: React.MouseEvent) => {
     // @ts-ignore
     if (typeof window.gtag_report_conversion === 'function') {
-        e.preventDefault();
         // @ts-ignore
         window.gtag_report_conversion('tel:4703804785');
     }
@@ -61,30 +68,29 @@ const Navbar: React.FC<NavbarProps> = ({ isBannerVisible = false }) => {
   return (
     <>
       <nav 
-        className={`fixed left-0 right-0 z-50 transition-[background-color,padding,box-shadow] duration-300 ease-in-out ${
+        className={`relative z-50 transition-[background-color,padding,box-shadow] duration-300 ease-in-out ${
           isScrolled 
             ? 'bg-white/90 backdrop-blur-xl shadow-lg py-3 border-b border-slate-100' 
             : 'bg-transparent py-4 md:py-6'
         }`}
-        style={{ top: `${navbarTop}px` }}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between">
             
             {/* Logo Area */}
-            <div className="relative z-50 flex items-center gap-2 md:gap-3 cursor-pointer group" onClick={() => window.scrollTo(0, 0)}>
+            <div className="relative z-50 flex items-center gap-2 md:gap-3 cursor-pointer group" onClick={handleLogoClick}>
               <img 
                   src="https://i.imgur.com/VBoJH82.png" 
                   alt="Priority Renovations Logo" 
                   className="h-8 md:h-12 w-auto object-contain drop-shadow-md"
               />
               
-              <div className={`flex flex-col ${isScrolled ? 'opacity-100' : 'opacity-100'} transition-opacity duration-300 ${!isScrolled && 'drop-shadow-md'}`}>
-                <span className={`text-sm md:text-2xl font-serif font-bold tracking-tight leading-none ${isScrolled ? 'text-slate-900' : 'text-white'}`}>
-                  PRIORITY
+              <div className={`flex items-center gap-1.5 ${isScrolled ? 'opacity-100' : 'opacity-100'} transition-opacity duration-300 ${!isScrolled && 'drop-shadow-md'}`}>
+                <span className={`text-sm md:text-xl font-serif font-bold tracking-tight leading-none ${isScrolled ? 'text-slate-900' : 'text-white'}`}>
+                  Priority
                 </span>
-                <span className={`text-[8px] md:text-xs font-bold tracking-[0.2em] uppercase ${isScrolled ? 'text-brand-orange' : 'text-slate-100'}`}>
-                  RENOVATIONS
+                <span className={`text-sm md:text-xl font-serif font-bold tracking-tight leading-none ${isScrolled ? 'text-brand-orange' : 'text-slate-100'}`}>
+                  Renovations
                 </span>
               </div>
             </div>
@@ -115,7 +121,7 @@ const Navbar: React.FC<NavbarProps> = ({ isBannerVisible = false }) => {
                 +1 (470) 380-4785
               </a>
 
-              <Button variant="primary" className="ml-2 !py-2.5 !px-6 text-sm shadow-xl hover:shadow-orange-500/40" onClick={scrollToQuote}>
+              <Button variant="primary" className="ml-2 !py-2.5 !px-6 text-sm shadow-xl hover:shadow-orange-500/40" onClick={handleQuoteClick}>
                 Free Estimate
               </Button>
             </div>
@@ -124,7 +130,7 @@ const Navbar: React.FC<NavbarProps> = ({ isBannerVisible = false }) => {
             <div className="md:hidden flex items-center gap-2 relative z-50">
               {/* New Mobile Quote Button */}
               <button 
-                onClick={scrollToQuote}
+                onClick={handleQuoteClick}
                 className={`px-3 py-1.5 rounded-lg text-[10px] font-bold uppercase tracking-wide shadow-lg transition-all ${
                     isScrolled 
                     ? 'bg-brand-orange text-white shadow-orange-500/20' 
@@ -177,7 +183,7 @@ const Navbar: React.FC<NavbarProps> = ({ isBannerVisible = false }) => {
               className={`pt-8 space-y-4 transform ${isMobileMenuOpen ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0'}`}
               style={{ transitionDelay: '400ms', transitionDuration: '500ms' }}
             >
-              <Button fullWidth onClick={scrollToQuote} className="justify-between text-lg py-4">
+              <Button fullWidth onClick={handleQuoteClick} className="justify-between text-lg py-4">
                 Get Free Quote <ArrowRight />
               </Button>
               <p className="text-slate-400 text-center text-sm tracking-widest uppercase mt-8">

@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { X, ArrowRight, MapPin, Layers, Box, Maximize2 } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import Button from './Button';
 
 const Gallery: React.FC = () => {
   const [selectedImage, setSelectedImage] = useState<any | null>(null);
+  const navigate = useNavigate();
 
   // Lock body scroll when modal is open
   useEffect(() => {
@@ -94,10 +96,7 @@ const Gallery: React.FC = () => {
   const handleScrollToQuote = (e: React.MouseEvent) => {
     e.stopPropagation(); // Prevent card click
     setSelectedImage(null);
-    setTimeout(() => {
-        const form = document.getElementById('quote-form');
-        if (form) form.scrollIntoView({ behavior: 'smooth' });
-    }, 300);
+    navigate('/quote');
   };
 
   return (

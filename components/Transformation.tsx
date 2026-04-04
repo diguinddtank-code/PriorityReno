@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { MoveHorizontal, CheckCircle2, TrendingUp, Sparkles } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import { Reveal } from './Reveal';
 import Button from './Button';
 
@@ -7,6 +8,7 @@ const Transformation: React.FC = () => {
   const [sliderPosition, setSliderPosition] = useState(50);
   const [isDragging, setIsDragging] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
+  const navigate = useNavigate();
 
   // Before/After Images - Dramatic Contrast
   const beforeImage = "https://i.imgur.com/EWnnkrO.png"; 
@@ -157,7 +159,7 @@ const Transformation: React.FC = () => {
                 </div>
                 <div className="flex items-center justify-end">
                     <Button 
-                        onClick={() => document.getElementById('quote-form')?.scrollIntoView({behavior: 'smooth'})}
+                        onClick={() => navigate('/quote')}
                         className="w-full md:w-auto shadow-lg shadow-brand-orange/20"
                     >
                         Get This Look

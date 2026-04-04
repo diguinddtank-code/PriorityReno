@@ -1,12 +1,14 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { ArrowRight, Star, ShieldCheck, Hammer, BadgeCheck, Zap, Ruler, CheckCircle2, Phone, Tag, Users, ChevronDown, Loader2 } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import Button from './Button';
 
 const Hero: React.FC = () => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
   const [mounted, setMounted] = useState(false);
+  const navigate = useNavigate();
   
   // Form State
   const [formStatus, setFormStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
@@ -14,13 +16,13 @@ const Hero: React.FC = () => {
   useEffect(() => {
     setMounted(true);
     const handleScroll = () => {
-      const scrolled = window.scrollY;
+      const scrolled = Math.max(0, window.scrollY);
       if (videoRef.current) {
         // Optimized transform update
         videoRef.current.style.transform = `translate3d(0, ${scrolled * 0.5}px, 0) scale(1.1)`;
       }
       if (contentRef.current) {
-        contentRef.current.style.opacity = `${1 - scrolled / 900}`;
+        contentRef.current.style.opacity = `${Math.max(0, 1 - scrolled / 900)}`;
       }
     };
 
@@ -42,7 +44,6 @@ const Hero: React.FC = () => {
   const handlePhoneClick = (e: React.MouseEvent) => {
     // @ts-ignore
     if (typeof window.gtag_report_conversion === 'function') {
-        e.preventDefault();
         // @ts-ignore
         window.gtag_report_conversion('tel:4703804785');
     }
@@ -106,7 +107,7 @@ const Hero: React.FC = () => {
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full h-full flex flex-col justify-center" ref={contentRef}>
         
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-16 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-8 xl:gap-16 items-center">
             
             {/* LEFT COLUMN: Copywriting & Mobile Layout */}
             <div className="lg:col-span-7 flex flex-col items-center text-center lg:text-left lg:items-start">
@@ -118,7 +119,7 @@ const Hero: React.FC = () => {
                 </div>
                 
                 {/* Main Headline (Static) - Adjusted leading for mobile */}
-                <h1 className="text-4xl sm:text-5xl lg:text-7xl font-serif font-medium text-white leading-[1.1] tracking-tight mb-3 md:mb-4 drop-shadow-[0_5px_5px_rgba(0,0,0,0.8)]">
+                <h1 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-serif font-medium text-white leading-[1.1] tracking-tight mb-3 md:mb-4 drop-shadow-[0_5px_5px_rgba(0,0,0,0.8)]">
                     <span className="block">
                         Countertops & Cabinets
                     </span>
@@ -153,7 +154,7 @@ const Hero: React.FC = () => {
                         variant="primary" 
                         fullWidth
                         className="h-14 text-base font-bold rounded-xl shadow-xl shadow-orange-500/20 bg-brand-orange border-none active:scale-[0.98] transition-transform flex items-center justify-center gap-2" 
-                        onClick={() => document.getElementById('quote-form')?.scrollIntoView({behavior: 'smooth'})}
+                        onClick={() => navigate('/quote')}
                     >
                         Get My Free Quote <ArrowRight size={18} className="text-white/90" />
                     </Button>
@@ -208,42 +209,42 @@ const Hero: React.FC = () => {
 
             {/* RIGHT COLUMN: Desktop Form (Solid Color + Premium Badge) */}
             <div className="lg:col-span-5 hidden lg:block">
-                <div className="relative max-w-md mx-auto lg:ml-auto">
+                <div className="relative max-w-sm mx-auto lg:ml-auto">
                      
                      {/* PREMIUM BADGE EFFECT */}
-                     <div className="absolute -top-6 -right-6 z-20">
-                        <div className="relative group">
+                     <div className="absolute -top-5 -right-5 z-20">
+                        <div className="relative group scale-90">
                             {/* Glow behind */}
                             <div className="absolute inset-0 bg-brand-orange blur-lg opacity-40 animate-pulse"></div>
                             
-                            <div className="relative bg-gradient-to-br from-brand-orange to-orange-600 text-white px-5 py-3 rounded-full shadow-2xl border-2 border-brand-gold/50 flex items-center gap-3 overflow-hidden">
+                            <div className="relative bg-gradient-to-br from-brand-orange to-orange-600 text-white px-4 py-2 rounded-full shadow-2xl border-2 border-brand-gold/50 flex items-center gap-2 overflow-hidden">
                                  {/* Shimmer Effect */}
                                  <div className="absolute inset-0 translate-x-[-100%] group-hover:translate-x-[100%] animate-shimmer bg-gradient-to-r from-transparent via-white/30 to-transparent skew-x-12"></div>
                                  
-                                 <div className="bg-white/20 p-1.5 rounded-full"><ShieldCheck size={20} className="text-white" /></div>
+                                 <div className="bg-white/20 p-1 rounded-full"><ShieldCheck size={16} className="text-white" /></div>
                                  <div className="flex flex-col leading-none">
-                                    <span className="text-[9px] uppercase font-bold text-white/90 mb-0.5">Guaranteed</span>
-                                    <span className="text-base font-extrabold tracking-wide text-white drop-shadow-sm">BEST PRICE IN GA</span>
+                                    <span className="text-[8px] uppercase font-bold text-white/90 mb-0.5">Guaranteed</span>
+                                    <span className="text-sm font-extrabold tracking-wide text-white drop-shadow-sm">BEST PRICE IN GA</span>
                                  </div>
                             </div>
                         </div>
                      </div>
 
                      {/* SOLID FORM CONTAINER */}
-                     <div className="bg-slate-900 p-5 lg:p-6 rounded-2xl border border-slate-700 shadow-2xl relative overflow-hidden group flex flex-col justify-center">
+                     <div className="bg-slate-900 p-4 lg:p-5 rounded-2xl border border-slate-700 shadow-2xl relative overflow-hidden group flex flex-col justify-center">
                         
                         {formStatus === 'success' ? (
-                            <div className="text-center animate-fade-in py-8">
-                                <div className="inline-flex items-center justify-center w-16 h-16 bg-green-500 rounded-full text-slate-900 mb-4 shadow-lg shadow-green-500/30">
-                                    <CheckCircle2 size={32} />
+                            <div className="text-center animate-fade-in py-6">
+                                <div className="inline-flex items-center justify-center w-12 h-12 bg-green-500 rounded-full text-slate-900 mb-3 shadow-lg shadow-green-500/30">
+                                    <CheckCircle2 size={24} />
                                 </div>
-                                <h3 className="text-2xl font-serif text-white mb-3">Request Received!</h3>
-                                <p className="text-slate-400 mb-4 max-w-xs mx-auto text-sm">
+                                <h3 className="text-xl font-serif text-white mb-2">Request Received!</h3>
+                                <p className="text-slate-400 mb-3 max-w-xs mx-auto text-xs">
                                     Thank you. One of our specialists will call you shortly to discuss your project.
                                 </p>
                                 <Button 
                                     variant="outline" 
-                                    className="!border-slate-700 !text-slate-300 hover:!bg-slate-800 hover:!border-slate-600 text-sm py-2"
+                                    className="!border-slate-700 !text-slate-300 hover:!bg-slate-800 hover:!border-slate-600 text-xs py-1.5"
                                     onClick={() => setFormStatus('idle')}
                                 >
                                     Send Another Request
@@ -251,11 +252,11 @@ const Hero: React.FC = () => {
                             </div>
                         ) : (
                             <>
-                                <h3 className="text-xl lg:text-2xl font-serif text-white mb-1">Get Your Free Estimate</h3>
-                                <p className="text-slate-400 text-xs lg:text-sm mb-4">Lock in special pricing. No obligation.</p>
+                                <h3 className="text-lg lg:text-xl font-serif text-white mb-1">Get Your Free Estimate</h3>
+                                <p className="text-slate-400 text-[10px] lg:text-xs mb-3">Lock in special pricing. No obligation.</p>
 
                                 <form 
-                                    className="space-y-3 relative z-10" 
+                                    className="space-y-2.5 relative z-10" 
                                     onSubmit={handleSubmit}
                                 >
                                     {/* FormSubmit Configuration Hidden Fields */}
@@ -264,18 +265,18 @@ const Hero: React.FC = () => {
                                     <input type="hidden" name="_template" value="table" />
                                     <input type="text" name="_honey" style={{display: 'none'}} />
                                     
-                                    <div className="space-y-3">
+                                    <div className="space-y-2.5">
                                         <div>
-                                            <input required type="text" name="name" placeholder="Name" className="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2.5 text-white placeholder-slate-500 focus:border-brand-orange outline-none text-sm transition-all focus:ring-1 focus:ring-brand-orange" />
+                                            <input required type="text" name="name" placeholder="Name" className="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white placeholder-slate-500 focus:border-brand-orange outline-none text-xs transition-all focus:ring-1 focus:ring-brand-orange" />
                                         </div>
                                         <div>
-                                            <input required type="tel" name="phone" placeholder="Phone Number" className="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2.5 text-white placeholder-slate-500 focus:border-brand-orange outline-none text-sm transition-all focus:ring-1 focus:ring-brand-orange" />
+                                            <input required type="tel" name="phone" placeholder="Phone Number" className="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white placeholder-slate-500 focus:border-brand-orange outline-none text-xs transition-all focus:ring-1 focus:ring-brand-orange" />
                                         </div>
                                         <div>
-                                            <input required type="email" name="email" placeholder="Email Address" className="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2.5 text-white placeholder-slate-500 focus:border-brand-orange outline-none text-sm transition-all focus:ring-1 focus:ring-brand-orange" />
+                                            <input required type="email" name="email" placeholder="Email Address" className="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white placeholder-slate-500 focus:border-brand-orange outline-none text-xs transition-all focus:ring-1 focus:ring-brand-orange" />
                                         </div>
                                         <div className="relative">
-                                            <select required name="projectType" defaultValue="" className="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2.5 text-white focus:border-brand-orange outline-none text-sm transition-all focus:ring-1 focus:ring-brand-orange appearance-none cursor-pointer">
+                                            <select required name="projectType" defaultValue="" className="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white focus:border-brand-orange outline-none text-xs transition-all focus:ring-1 focus:ring-brand-orange appearance-none cursor-pointer">
                                                 <option value="" disabled className="text-slate-500">Select Project Type</option>
                                                 <option value="countertops">Countertops Installation</option>
                                                 <option value="cabinets">Cabinet Refacing</option>
@@ -291,10 +292,10 @@ const Hero: React.FC = () => {
                                         fullWidth 
                                         type="submit"
                                         disabled={formStatus === 'submitting'}
-                                        className="font-bold tracking-wide shadow-lg shadow-orange-500/20 mt-1 py-3 text-sm lg:text-base flex items-center justify-center gap-2"
+                                        className="font-bold tracking-wide shadow-lg shadow-orange-500/20 mt-1 py-2.5 text-xs lg:text-sm flex items-center justify-center gap-2"
                                     >
                                         {formStatus === 'submitting' ? (
-                                            <><Loader2 className="animate-spin" size={18} /> Sending...</>
+                                            <><Loader2 className="animate-spin" size={16} /> Sending...</>
                                         ) : (
                                             "Check Availability Near Me"
                                         )}
@@ -304,13 +305,13 @@ const Hero: React.FC = () => {
                                         <p className="text-red-400 text-[10px] text-center mt-1">Something went wrong. Please try again or call us.</p>
                                     )}
 
-                                    <p className="text-center text-[10px] text-slate-500 flex items-center justify-center gap-1 mt-1">
+                                    <p className="text-center text-[9px] text-slate-500 flex items-center justify-center gap-1 mt-1">
                                         <ShieldCheck size={10} /> Your privacy is our priority.
                                     </p>
                                 </form>
                             </>
                         )}
-                    </div>
+                     </div>
                 </div>
             </div>
 
