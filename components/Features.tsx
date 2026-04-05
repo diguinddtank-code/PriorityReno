@@ -1,12 +1,13 @@
+"use client";
 import React, { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { Layers, ArrowRight, LayoutTemplate, X, CheckCircle2, Clock, Utensils, Bath, ChevronRight, ShieldCheck, Sparkles, Hammer, Grid3X3, AlignJustify, BadgeCheck } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 import Button from './Button';
 import { Reveal } from './Reveal';
 
 const Features: React.FC = () => {
-  const navigate = useNavigate();
+  const router = useRouter();
   const services = [
     {
       id: "01",
@@ -144,7 +145,7 @@ const Features: React.FC = () => {
 
   const handleGetQuote = () => {
     setSelectedService(null);
-    navigate('/quote');
+    router.push('/quote');
   };
 
   return (

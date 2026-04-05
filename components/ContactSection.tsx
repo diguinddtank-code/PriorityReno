@@ -1,3 +1,4 @@
+"use client";
 import React, { useState } from 'react';
 import { Phone, Mail, MapPin, ShieldCheck, CheckCircle2, Navigation, Loader2 } from 'lucide-react';
 import Button from './Button';

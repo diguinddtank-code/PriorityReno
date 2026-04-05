@@ -279,9 +279,13 @@ const Hero: React.FC = () => {
                                             <select required name="projectType" defaultValue="" className="w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white focus:border-brand-orange outline-none text-xs transition-all focus:ring-1 focus:ring-brand-orange appearance-none cursor-pointer">
                                                 <option value="" disabled className="text-slate-500">Select Project Type</option>
                                                 <option value="countertops">Countertops Installation</option>
-                                                <option value="cabinets">Cabinet Refacing</option>
-                                                <option value="kitchen">Full Kitchen Remodel</option>
-                                                <option value="bathroom">Bathroom Vanity Install</option>
+                                                <option value="cabinet-refacing">Cabinet Refacing</option>
+                                                <option value="custom-cabinets">Custom Cabinets</option>
+                                                <option value="kitchen-remodel">Full Kitchen Remodel</option>
+                                                <option value="bathroom-remodel">Bathroom Remodel</option>
+                                                <option value="outdoor-kitchen">Outdoor Kitchen / BBQ</option>
+                                                <option value="commercial">Commercial Project</option>
+                                                <option value="other">Other</option>
                                             </select>
                                             <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 pointer-events-none" size={14} />
                                         </div>

@@ -1,16 +1,35 @@
-import React, { useState } from 'react';
-import Navbar from '../../components/Navbar';
-import Footer from '../../components/Footer';
-import Testimonials from '../../components/Testimonials';
-import WhyChooseUs from '../../components/WhyChooseUs';
-import Gallery from '../../components/Gallery';
-import AnnouncementBar from '../../components/AnnouncementBar';
+"use client";
+import React, { useState, useEffect } from 'react';
+import { motion, useScroll, useTransform, useSpring } from 'motion/react';
 import { ShieldCheck, Star, Clock, CheckCircle2, Loader2, ArrowRight, ChevronDown } from 'lucide-react';
 import Button from '../../components/Button';
+import WhyChooseUs from '../../components/WhyChooseUs';
+import Testimonials from '../../components/Testimonials';
+import Gallery from '../../components/Gallery';
 
-const FormPage: React.FC = () => {
-  const [isBannerVisible, setIsBannerVisible] = useState(true);
+const QuotePage: React.FC = () => {
   const [formStatus, setFormStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 1024);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  const { scrollY } = useScroll();
+  const smoothScrollY = useSpring(scrollY, { damping: 20, stiffness: 100, mass: 0.2 });
+  
+  // Make the text fade out and move up quickly
+  const textOpacity = useTransform(smoothScrollY, [0, 150], [1, 0]);
+  const textY = useTransform(smoothScrollY, [0, 200], [0, -100]);
+  
+  // Make the form shoot up aggressively to overlap the hero section on mobile
+  const formYMobile = useTransform(smoothScrollY, [0, 300], [20, -400]);
+  const formYDesktop = useTransform(smoothScrollY, [0, 500], [20, -150]);
+  
+  const formY = isMobile ? formYMobile : formYDesktop;
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -44,49 +63,74 @@ const FormPage: React.FC = () => {
 
   return (
     <div className="relative w-full min-h-screen bg-slate-900 font-sans">
-      <div className="fixed top-0 left-0 right-0 z-50 flex flex-col">
-        {isBannerVisible && <AnnouncementBar onClose={() => setIsBannerVisible(false)} />}
-        <Navbar isBannerVisible={isBannerVisible} />
-      </div>
       
-      {/* Background Video */}
-      <div className="fixed inset-0 z-0 h-[100vh] bg-black">
-        <video 
-          autoPlay 
-          loop 
-          muted 
-          playsInline
-          className="w-full h-full object-cover opacity-80"
-          poster="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=2070&auto=format&fit=crop"
-        >
-          <source src="https://videos.pexels.com/video-files/7578552/7578552-uhd_2560_1440_30fps.mp4" type="video/mp4" />
-        </video>
-        
-        {/* Lighter Gradient Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-900/60 to-slate-900/20"></div>
+      {/* Fixed Background Image for the parallax effect */}
+      <div className="fixed inset-0 z-0 pointer-events-none">
+        <img 
+          src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=2070&auto=format&fit=crop" 
+          alt="Luxury Kitchen" 
+          className="w-full h-full object-cover opacity-30"
+          referrerPolicy="no-referrer"
+        />
+        <div className="absolute inset-0 bg-gradient-to-b md:bg-gradient-to-r from-slate-900/70 via-slate-900/30 to-transparent"></div>
       </div>
 
-      <main className="w-full relative z-10 pt-32 pb-16 md:pt-40 md:pb-24">
-        <div className="max-w-xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-          <div className="flex flex-col items-center relative">
-            
-            {/* 1. Hero Text */}
-            <div className="text-center mb-8">
-              <h1 className="text-4xl md:text-5xl font-serif font-bold text-white mb-4 leading-tight drop-shadow-lg">
-                Get Your <span className="text-brand-orange">Free Custom Quote</span>
-              </h1>
-              <p className="text-slate-200 text-base md:text-lg max-w-lg mx-auto drop-shadow-md font-medium">
-                Fill out the form below to tell us about your project and lock in factory-direct pricing.
-              </p>
-            </div>
+      <main className="w-full relative z-10">
+        
+        {/* HERO SECTION */}
+        <section className="pt-32 pb-16 md:pt-40 md:pb-24 min-h-[100dvh] flex items-center">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+              
+              {/* Left: Copywriting */}
+              <motion.div 
+                style={{ opacity: textOpacity, y: textY }}
+                className="lg:col-span-7 text-center lg:text-left pt-8 md:pt-0 relative z-20"
+              >
+                <motion.div
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8, ease: "easeOut" }}
+                >
+                  <div className="inline-flex items-center gap-2 bg-brand-orange/20 text-brand-orange px-3 py-1 rounded-full text-xs font-bold uppercase tracking-widest mb-6 border border-brand-orange/30 shadow-lg">
+                  <Clock size={14} /> Fast 3-5 Day Turnaround
+                </div>
+                <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif font-bold text-white mb-6 leading-tight drop-shadow-lg">
+                  Transform Your Home.<br/>
+                  <span className="text-brand-orange">Direct Factory Prices.</span>
+                </h1>
+                <p className="text-slate-300 text-base md:text-lg mb-8 max-w-lg mx-auto lg:mx-0 drop-shadow-md">
+                  Skip the middleman. Get premium quartz, granite, and custom cabinets installed by Atlanta's top-rated experts.
+                </p>
+                
+                <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 md:gap-8">
+                  <div className="flex items-center gap-2 text-white bg-white/5 backdrop-blur-sm px-4 py-2 rounded-xl border border-white/10">
+                    <ShieldCheck className="text-green-500" size={20} />
+                    <span className="font-medium text-sm">Price Match Guarantee</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-white bg-white/5 backdrop-blur-sm px-4 py-2 rounded-xl border border-white/10">
+                    <Star className="text-[#FBBC05]" size={20} fill="currentColor" />
+                    <span className="font-medium text-sm">5.0 Google Rating</span>
+                  </div>
+                </div>
+                </motion.div>
+              </motion.div>
 
-            {/* 2. The Form */}
-            <div className="w-full">
-              <div className="bg-white rounded-2xl shadow-2xl p-6 md:p-8 relative overflow-hidden border border-slate-100">
-                {/* Top Accent */}
-                <div className="absolute top-0 left-0 right-0 h-2 bg-brand-orange"></div>
+              {/* Right: The Form */}
+              <motion.div 
+                style={{ y: formY }}
+                className="lg:col-span-5 w-full max-w-md mx-auto lg:ml-auto lg:mr-0 relative z-40"
+              >
+                <motion.div 
+                  initial={{ opacity: 0, y: 50 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
+                  className="bg-white rounded-2xl shadow-2xl p-6 md:p-8 relative overflow-hidden border border-slate-100"
+                >
+                  {/* Top Accent */}
+                  <div className="absolute top-0 left-0 right-0 h-2 bg-brand-orange"></div>
 
-                {formStatus === 'success' ? (
+                  {formStatus === 'success' ? (
                       <div className="text-center animate-fade-in py-8">
                           <div className="inline-flex items-center justify-center w-16 h-16 bg-green-100 rounded-full text-green-600 mb-4 shadow-sm">
                               <CheckCircle2 size={32} />
@@ -105,6 +149,11 @@ const FormPage: React.FC = () => {
                       </div>
                   ) : (
                       <>
+                          <div className="mb-6 text-center lg:text-left">
+                              <h3 className="text-2xl font-serif text-slate-900 mb-1">Get Your Free Estimate</h3>
+                              <p className="text-slate-500 text-sm">Lock in special pricing today. No obligation.</p>
+                          </div>
+
                           <form className="space-y-4" onSubmit={handleSubmit}>
                               <input type="hidden" name="_subject" value="New Lead (Quote Page)" />
                               <input type="hidden" name="_captcha" value="false" />
@@ -131,13 +180,14 @@ const FormPage: React.FC = () => {
                                   <select required name="projectType" defaultValue="" className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-slate-900 focus:border-brand-orange focus:bg-white outline-none transition-all focus:ring-2 focus:ring-brand-orange/20 appearance-none cursor-pointer">
                                       <option value="" disabled>Select Project Type</option>
                                       <option value="countertops">Countertops Installation</option>
-                                      <option value="cabinet-refacing">Cabinet Refacing</option>
                                       <option value="custom-cabinets">Custom Cabinets</option>
+                                      <option value="cabinet-refacing">Cabinet Refacing</option>
                                       <option value="kitchen-remodel">Full Kitchen Remodel</option>
-                                      <option value="bathroom-remodel">Bathroom Remodel</option>
-                                      <option value="outdoor-kitchen">Outdoor Kitchen / BBQ</option>
-                                      <option value="commercial">Commercial Project</option>
-                                      <option value="other">Other</option>
+                                      <option value="bathroom-vanity">Bathroom Vanity Install</option>
+                                      <option value="bathroom-remodel">Full Bathroom Remodel</option>
+                                      <option value="backsplash">Backsplash Installation</option>
+                                      <option value="flooring">Flooring Installation</option>
+                                      <option value="other">Other / General Inquiry</option>
                                   </select>
                                   <ChevronDown className="absolute right-4 top-[38px] text-slate-500 pointer-events-none" size={16} />
                               </div>
@@ -166,25 +216,23 @@ const FormPage: React.FC = () => {
                           </form>
                       </>
                   )}
-                </div>
+                </motion.div>
+              </motion.div>
+
             </div>
-
           </div>
+        </section>
+
+        {/* CONVERSION BOOSTERS - Solid background to cover the fixed parallax image */}
+        <div className="relative z-20 bg-slate-50 rounded-t-[2.5rem] shadow-[0_-10px_40px_rgba(0,0,0,0.3)] pt-8">
+          <WhyChooseUs />
+          <Testimonials />
+          <Gallery />
         </div>
+
       </main>
-
-      {/* 3. Conversion Boosters (Full width below the hero/form section) */}
-      <div className="relative z-10 bg-white">
-        <WhyChooseUs />
-        <Testimonials />
-        <Gallery />
-      </div>
-
-      <div className="relative z-10">
-        <Footer />
-      </div>
     </div>
   );
 };
 
-export default FormPage;
+export default QuotePage;

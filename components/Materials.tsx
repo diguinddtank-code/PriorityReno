@@ -1,13 +1,14 @@
+"use client";
 import React, { useState } from 'react';
 import { Check, ChevronRight, Info, MapPin, Phone } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 import { Reveal } from './Reveal';
 
 const Materials: React.FC = () => {
   // Removed "Porcelain" from categories
   const categories = ["Quartz", "Granite", "Marble"];
   const [activeCategory, setActiveCategory] = useState("Quartz");
-  const navigate = useNavigate();
+  const router = useRouter();
 
   const materialsDB: Record<string, any[]> = {
     "Quartz": [
@@ -141,7 +142,7 @@ const Materials: React.FC = () => {
                               Call Showroom
                           </a>
                           <button 
-                              onClick={() => navigate('/quote')} 
+                              onClick={() => router.push('/quote')} 
                               className="flex items-center justify-center gap-2 border border-slate-600 text-slate-300 px-6 py-3 rounded-lg text-sm font-bold uppercase tracking-wide hover:border-white hover:text-white transition-colors w-full sm:w-auto hover:bg-white/5"
                           >
                               <MapPin size={16} />
@@ -185,7 +186,7 @@ const Materials: React.FC = () => {
                               Premium {activeCategory} surface suitable for kitchen islands, vanities, and high-traffic areas.
                           </p>
                           <button 
-                              onClick={() => navigate('/quote')}
+                              onClick={() => router.push('/quote')}
                               className="w-full bg-brand-orange text-white py-2.5 md:py-3 rounded-lg font-bold text-sm md:text-base flex items-center justify-center gap-2 hover:bg-orange-600 transition-colors shadow-lg shadow-orange-500/20"
                           >
                               Get Installation Quote <span className="hidden md:inline">for {selectedMaterial.name}</span> <ChevronRight size={16} />

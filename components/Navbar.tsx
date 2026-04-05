@@ -1,6 +1,8 @@
+"use client";
 import React, { useState, useEffect } from 'react';
 import { Menu, X, Phone, ArrowRight } from 'lucide-react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useRouter, usePathname } from 'next/navigation';
+import Link from 'next/link';
 import Button from './Button';
 
 interface NavbarProps {
@@ -11,8 +13,8 @@ const Navbar: React.FC<NavbarProps> = ({ isBannerVisible = false }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [scrollPos, setScrollPos] = useState(0);
-  const navigate = useNavigate();
-  const location = useLocation();
+  const router = useRouter();
+  const pathname = usePathname();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -23,12 +25,6 @@ const Navbar: React.FC<NavbarProps> = ({ isBannerVisible = false }) => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Calculate dynamic top position:
-  // If banner is visible, Navbar stays at 32px.
-  // If banner is closed, Navbar stays at 0px.
-  const navbarTop = isBannerVisible ? 32 : 0;
-
-  // Prevent body scroll when mobile menu is open
   useEffect(() => {
     if (isMobileMenuOpen) {
       document.body.style.overflow = 'hidden';
@@ -45,15 +41,15 @@ const Navbar: React.FC<NavbarProps> = ({ isBannerVisible = false }) => {
   ];
 
   const handleQuoteClick = () => {
-    navigate('/quote');
+    router.push('/quote');
     setIsMobileMenuOpen(false);
   };
 
   const handleLogoClick = () => {
-    if (location.pathname === '/') {
+    if (pathname === '/') {
       window.scrollTo(0, 0);
     } else {
-      navigate('/');
+      router.push('/');
     }
   };
 
@@ -68,10 +64,10 @@ const Navbar: React.FC<NavbarProps> = ({ isBannerVisible = false }) => {
   return (
     <>
       <nav 
-        className={`relative z-50 transition-[background-color,padding,box-shadow] duration-300 ease-in-out ${
+        className={`fixed w-full z-50 transition-[background-color,padding,box-shadow,top] duration-300 ease-in-out ${
           isScrolled 
-            ? 'bg-white/90 backdrop-blur-xl shadow-lg py-3 border-b border-slate-100' 
-            : 'bg-transparent py-4 md:py-6'
+            ? 'bg-white shadow-lg py-3 border-b border-slate-100 top-0' 
+            : `bg-white/10 backdrop-blur-md py-4 md:py-6 ${isBannerVisible ? 'top-[32px]' : 'top-0'}`
         }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -85,11 +81,11 @@ const Navbar: React.FC<NavbarProps> = ({ isBannerVisible = false }) => {
                   className="h-8 md:h-12 w-auto object-contain drop-shadow-md"
               />
               
-              <div className={`flex items-center gap-1.5 ${isScrolled ? 'opacity-100' : 'opacity-100'} transition-opacity duration-300 ${!isScrolled && 'drop-shadow-md'}`}>
-                <span className={`text-sm md:text-xl font-serif font-bold tracking-tight leading-none ${isScrolled ? 'text-slate-900' : 'text-white'}`}>
+              <div className={`flex flex-col justify-center ${isScrolled ? 'opacity-100' : 'opacity-100'} transition-opacity duration-300 ${!isScrolled && 'drop-shadow-md'}`}>
+                <span className={`text-base md:text-xl font-serif font-bold tracking-tight leading-none ${isScrolled ? 'text-slate-900' : 'text-white'}`}>
                   Priority
                 </span>
-                <span className={`text-sm md:text-xl font-serif font-bold tracking-tight leading-none ${isScrolled ? 'text-brand-orange' : 'text-slate-100'}`}>
+                <span className={`text-xs md:text-sm font-serif font-bold tracking-tight leading-none mt-0.5 ${isScrolled ? 'text-brand-orange' : 'text-slate-100'}`}>
                   Renovations
                 </span>
               </div>
@@ -98,7 +94,7 @@ const Navbar: React.FC<NavbarProps> = ({ isBannerVisible = false }) => {
             {/* Desktop Nav */}
             <div className="hidden md:flex items-center space-x-8">
               {navLinks.map((link) => (
-                <a
+                <Link
                   key={link.name}
                   href={link.href}
                   className={`text-sm font-medium tracking-wide transition-all duration-300 relative group drop-shadow-sm ${
@@ -107,7 +103,7 @@ const Navbar: React.FC<NavbarProps> = ({ isBannerVisible = false }) => {
                 >
                   {link.name}
                   <span className={`absolute -bottom-1 left-0 w-0 h-0.5 transition-all duration-300 group-hover:w-full ${isScrolled ? 'bg-brand-orange' : 'bg-white'}`}></span>
-                </a>
+                </Link>
               ))}
               
               <div className={`h-6 w-px ${isScrolled ? 'bg-slate-200' : 'bg-white/20'}`}></div>

@@ -28,7 +28,7 @@ const WhyChooseUs: React.FC = () => {
       title: "3-5 Day Installation",
       subtitle: "Fast Turnaround",
       desc: "Need countertops installed fast? Once templates are taken, our local fabrication shop cuts your stone in record time. We don't leave you without a kitchen.",
-      image: "https://www.rachtr.com/storage/images/47243e9f-aa7f-47a6-afdd-92a111aa33e0.webp"
+      image: "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?q=80&w=2070&auto=format&fit=crop"
     },
     {
       id: 4,

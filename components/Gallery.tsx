@@ -1,12 +1,13 @@
+"use client";
 import React, { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { X, ArrowRight, MapPin, Layers, Box, Maximize2 } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 import Button from './Button';
 
 const Gallery: React.FC = () => {
   const [selectedImage, setSelectedImage] = useState<any | null>(null);
-  const navigate = useNavigate();
+  const router = useRouter();
 
   // Lock body scroll when modal is open
   useEffect(() => {
@@ -96,7 +97,7 @@ const Gallery: React.FC = () => {
   const handleScrollToQuote = (e: React.MouseEvent) => {
     e.stopPropagation(); // Prevent card click
     setSelectedImage(null);
-    navigate('/quote');
+    router.push('/quote');
   };
 
   return (

@@ -1,4 +1,6 @@
-import React, { useEffect, useRef, useState } from 'react';
+"use client";
+import React, { useEffect, useState } from 'react';
+import { motion } from 'motion/react';
 
 export interface RevealProps {
   children?: React.ReactNode;
@@ -17,10 +19,8 @@ export const Reveal: React.FC<RevealProps> = ({
   delay = 0,
   duration = 1000, 
   variant = "up",
-  threshold = 0.1
+  threshold = 0.05
 }) => {
-  const ref = useRef<HTMLDivElement>(null);
-  const [isVisible, setIsVisible] = useState(false);
   const [shouldAnimate, setShouldAnimate] = useState(true);
 
   useEffect(() => {
@@ -28,75 +28,71 @@ export const Reveal: React.FC<RevealProps> = ({
     const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
     if (mediaQuery.matches) {
       setShouldAnimate(false);
-      setIsVisible(true);
-      return;
     }
+  }, []);
 
-    const element = ref.current;
-    if (!element) return;
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-          observer.disconnect();
-        }
-      },
-      { 
-        threshold,
-        rootMargin: "0px 0px -10% 0px"
-      } 
-    );
-
-    observer.observe(element);
-
-    return () => observer.disconnect();
-  }, [threshold]);
-
-  // --- Safe 3D Transforms ---
-  // Reduced offsets (20px-40px) to preventing overflow on mobile
-  const getTransform = () => {
-    if (!shouldAnimate) return 'none';
-    if (isVisible) return 'perspective(1200px) translate3d(0, 0, 0) scale(1) rotateX(0)';
+  const getVariants = () => {
+    if (!shouldAnimate) {
+      return {
+        hidden: { opacity: 1, x: 0, y: 0, scale: 1 },
+        visible: { opacity: 1, x: 0, y: 0, scale: 1 }
+      };
+    }
 
     switch (variant) {
       case 'up': 
-        return 'perspective(1200px) translate3d(0, 40px, 0) scale(0.98) rotateX(5deg)';
+        return {
+          hidden: { opacity: 0, y: 40, scale: 0.98 },
+          visible: { opacity: 1, y: 0, scale: 1 }
+        };
       case 'down': 
-        return 'perspective(1200px) translate3d(0, -40px, 0) scale(0.98)';
+        return {
+          hidden: { opacity: 0, y: -40, scale: 0.98 },
+          visible: { opacity: 1, y: 0, scale: 1 }
+        };
       case 'left': 
-        // Very subtle side motion to avoid X-overflow
-        return 'perspective(1200px) translate3d(-20px, 0, 0) scale(0.98)';
+        return {
+          hidden: { opacity: 0, x: -20, scale: 0.98 },
+          visible: { opacity: 1, x: 0, scale: 1 }
+        };
       case 'right': 
-        // Very subtle side motion to avoid X-overflow
-        return 'perspective(1200px) translate3d(20px, 0, 0) scale(0.98)';
+        return {
+          hidden: { opacity: 0, x: 20, scale: 0.98 },
+          visible: { opacity: 1, x: 0, scale: 1 }
+        };
       case 'scale':
-        return 'perspective(1200px) scale(0.9)';
+        return {
+          hidden: { opacity: 0, scale: 0.9 },
+          visible: { opacity: 1, scale: 1 }
+        };
       case 'static':
-        return 'perspective(1200px) translate3d(0, 20px, 0)';
+        return {
+          hidden: { opacity: 0, y: 20 },
+          visible: { opacity: 1, y: 0 }
+        };
       default: 
-        return 'perspective(1200px) translate3d(0, 40px, 0) scale(0.98)';
+        return {
+          hidden: { opacity: 0, y: 40, scale: 0.98 },
+          visible: { opacity: 1, y: 0, scale: 1 }
+        };
     }
   };
 
   return (
-    <div
-      ref={ref}
-      className={`${className}`}
-      style={{
-        width,
-        opacity: isVisible || !shouldAnimate ? 1 : 0,
-        transform: getTransform(),
-        transition: shouldAnimate 
-          ? `opacity ${duration}ms cubic-bezier(0.19, 1, 0.22, 1) ${delay}ms, 
-             transform ${duration}ms cubic-bezier(0.19, 1, 0.22, 1) ${delay}ms`
-          : 'none',
-        willChange: 'opacity, transform',
-        transformStyle: 'preserve-3d', 
-        backfaceVisibility: 'hidden' 
+    <motion.div
+      variants={getVariants()}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: threshold, margin: "50px" }}
+      transition={{ 
+        duration: duration / 1000, 
+        delay: delay / 1000, 
+        ease: [0.19, 1, 0.22, 1] 
       }}
+      className={className}
+      style={{ width }}
     >
       {children}
-    </div>
+    </motion.div>
   );
 };

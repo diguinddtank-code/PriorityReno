@@ -1,16 +1,18 @@
-import React, { useMemo } from 'react';
+"use client";
+import React, { useMemo, useState } from 'react';
 import { X, ArrowRight, Tag } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 
 interface AnnouncementBarProps {
+  isVisible: boolean;
   onClose: () => void;
 }
 
-const AnnouncementBar: React.FC<AnnouncementBarProps> = ({ onClose }) => {
-  const navigate = useNavigate();
+const AnnouncementBar: React.FC<AnnouncementBarProps> = ({ isVisible, onClose }) => {
+  const router = useRouter();
   
   const handleQuoteClick = () => {
-    navigate('/quote');
+    router.push('/quote');
   };
 
   // Dynamic date: Always shows 2 days from now to create urgency
@@ -20,8 +22,10 @@ const AnnouncementBar: React.FC<AnnouncementBarProps> = ({ onClose }) => {
     return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
   }, []);
 
+  if (!isVisible) return null;
+
   return (
-    <div className="relative z-[60] bg-gradient-to-r from-orange-600 via-red-600 to-orange-600 text-white h-auto min-h-[32px] py-1.5 flex items-center justify-center px-8 shadow-lg border-b border-white/10 overflow-hidden">
+    <div className="fixed top-0 left-0 right-0 z-[60] bg-gradient-to-r from-orange-600 via-red-600 to-orange-600 text-white h-auto min-h-[32px] py-1.5 flex items-center justify-center px-8 shadow-lg border-b border-white/10 overflow-hidden">
       
       {/* Subtle Shine Effect */}
       <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent translate-x-[-100%] animate-shimmer"></div>

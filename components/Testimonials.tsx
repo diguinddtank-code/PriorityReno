@@ -1,42 +1,30 @@
+"use client";
 import React, { useEffect, useState, useRef } from 'react';
 import { Star, Quote, CheckCircle2 } from 'lucide-react';
 import { Reveal } from './Reveal';
 
-// Easing function for smooth number counting (Ease Out Expo)
-const easeOutExpo = (x: number): number => {
-  return x === 1 ? 1 : 1 - Math.pow(2, -10 * x);
-};
+import { motion, useInView, animate } from 'motion/react';
 
 // Robust Counter Component
-const Counter = ({ end, duration = 2500, suffix = '' }: { end: string, duration?: number, suffix?: string }) => {
+const Counter = ({ end, duration = 2.5, suffix = '' }: { end: string, duration?: number, suffix?: string }) => {
   const [displayValue, setDisplayValue] = useState(0);
-  const nodeRef = useRef<HTMLDivElement>(null);
+  const nodeRef = useRef<HTMLSpanElement>(null);
+  const isInView = useInView(nodeRef, { once: true, amount: 0.1, margin: "50px" });
   const numericEnd = parseFloat(end.replace(/[^0-9.]/g, ''));
   const isFloat = end.includes('.');
   
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting) {
-          let startTime: number | null = null;
-          const animate = (currentTime: number) => {
-            if (!startTime) startTime = currentTime;
-            const progress = Math.min((currentTime - startTime) / duration, 1);
-            const easedProgress = easeOutExpo(progress);
-            const currentCount = easedProgress * numericEnd;
-            setDisplayValue(currentCount);
-            if (progress < 1) requestAnimationFrame(animate);
-            else setDisplayValue(numericEnd);
-          };
-          requestAnimationFrame(animate);
-          observer.disconnect();
+    if (isInView) {
+      const controls = animate(0, numericEnd, {
+        duration: duration,
+        ease: "easeOut",
+        onUpdate(value) {
+          setDisplayValue(value);
         }
-      },
-      { threshold: 0.5 }
-    );
-    if (nodeRef.current) observer.observe(nodeRef.current);
-    return () => observer.disconnect();
-  }, [numericEnd, duration]);
+      });
+      return controls.stop;
+    }
+  }, [isInView, numericEnd, duration]);
 
   return (
     <span ref={nodeRef}>

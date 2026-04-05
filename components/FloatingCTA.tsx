@@ -1,12 +1,13 @@
+"use client";
 import React, { useState, useEffect } from 'react';
 import { X, Phone } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 
 const FloatingCTA: React.FC = () => {
   const [isChatOpen, setIsChatOpen] = useState(false);
   const [hasUnreadMessage, setHasUnreadMessage] = useState(false);
   const [showTypingBubble, setShowTypingBubble] = useState(false);
-  const navigate = useNavigate();
+  const router = useRouter();
 
   useEffect(() => {
     // Sequence:
@@ -128,7 +129,7 @@ const FloatingCTA: React.FC = () => {
             <div className="grid grid-cols-1 gap-2">
                 <button 
                     onClick={() => {
-                        navigate('/quote');
+                        router.push('/quote');
                         handleCloseChat();
                     }}
                     className="w-full bg-brand-orange text-white py-3 rounded-lg text-xs md:text-sm font-bold uppercase tracking-wider hover:bg-orange-600 transition-colors shadow-lg shadow-orange-500/20"
