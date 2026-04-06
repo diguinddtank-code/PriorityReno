@@ -3,10 +3,11 @@ import { X, ArrowRight, Tag } from 'lucide-react';
 import { useRouter } from 'next/router';
 
 interface AnnouncementBarProps {
-  onClose: () => void;
+  isVisible?: boolean;
+  onClose?: () => void;
 }
 
-const AnnouncementBar: React.FC<AnnouncementBarProps> = ({ onClose }) => {
+const AnnouncementBar: React.FC<AnnouncementBarProps> = ({ isVisible = true, onClose }) => {
   const router = useRouter();
   
   const handleQuoteClick = () => {
@@ -22,6 +23,8 @@ const AnnouncementBar: React.FC<AnnouncementBarProps> = ({ onClose }) => {
     date.setDate(date.getDate() + 2);
     setDeadline(date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }));
   }, []);
+
+  if (!isVisible) return null;
 
   return (
     <div className="relative z-[60] bg-gradient-to-r from-orange-600 via-red-600 to-orange-600 text-white h-auto min-h-[32px] py-1.5 flex items-center justify-center px-8 shadow-lg border-b border-white/10 overflow-hidden">
