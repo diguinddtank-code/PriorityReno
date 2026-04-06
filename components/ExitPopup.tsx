@@ -1,4 +1,3 @@
-"use client";
 import React, { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { X, CheckCircle2, ShieldCheck, Loader2, Lock, ArrowRight } from 'lucide-react';
@@ -9,7 +8,10 @@ const ExitPopup: React.FC = () => {
   const [hasShown, setHasShown] = useState(false);
   const [formStatus, setFormStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
 
+  const [mounted, setMounted] = useState(false);
+
   useEffect(() => {
+    setMounted(true);
     // Check if already shown in this session
     const sessionShown = sessionStorage.getItem('priority_exit_shown');
     if (sessionShown) {
@@ -69,7 +71,7 @@ const ExitPopup: React.FC = () => {
     }
   };
 
-  if (!isVisible) return null;
+  if (!isVisible || !mounted) return null;
 
   return createPortal(
     <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">

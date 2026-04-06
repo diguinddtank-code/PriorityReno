@@ -1,31 +1,30 @@
-"use client";
-import React, { useMemo, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { X, ArrowRight, Tag } from 'lucide-react';
-import { useRouter } from 'next/navigation';
+import { useRouter } from 'next/router';
 
 interface AnnouncementBarProps {
-  isVisible: boolean;
   onClose: () => void;
 }
 
-const AnnouncementBar: React.FC<AnnouncementBarProps> = ({ isVisible, onClose }) => {
+const AnnouncementBar: React.FC<AnnouncementBarProps> = ({ onClose }) => {
   const router = useRouter();
   
   const handleQuoteClick = () => {
     router.push('/quote');
   };
 
-  // Dynamic date: Always shows 2 days from now to create urgency
-  const deadline = useMemo(() => {
+  const [mounted, setMounted] = useState(false);
+  const [deadline, setDeadline] = useState<string>('');
+
+  useEffect(() => {
+    setMounted(true);
     const date = new Date();
     date.setDate(date.getDate() + 2);
-    return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+    setDeadline(date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }));
   }, []);
 
-  if (!isVisible) return null;
-
   return (
-    <div className="fixed top-0 left-0 right-0 z-[60] bg-gradient-to-r from-orange-600 via-red-600 to-orange-600 text-white h-auto min-h-[32px] py-1.5 flex items-center justify-center px-8 shadow-lg border-b border-white/10 overflow-hidden">
+    <div className="relative z-[60] bg-gradient-to-r from-orange-600 via-red-600 to-orange-600 text-white h-auto min-h-[32px] py-1.5 flex items-center justify-center px-8 shadow-lg border-b border-white/10 overflow-hidden">
       
       {/* Subtle Shine Effect */}
       <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent translate-x-[-100%] animate-shimmer"></div>
@@ -38,7 +37,7 @@ const AnnouncementBar: React.FC<AnnouncementBarProps> = ({ isVisible, onClose })
             </div>
             <span className="truncate">
               <span className="font-extrabold text-white mr-1">30% OFF</span>
-              Countertops & Cabinets — Ends {deadline}
+              Countertops & Cabinets {mounted ? `— Ends ${deadline}` : ''}
             </span>
         </div>
 

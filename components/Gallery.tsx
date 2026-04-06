@@ -1,8 +1,7 @@
-"use client";
 import React, { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { X, ArrowRight, MapPin, Layers, Box, Maximize2 } from 'lucide-react';
-import { useRouter } from 'next/navigation';
+import { useRouter } from 'next/router';
 import Button from './Button';
 
 const Gallery: React.FC = () => {

@@ -1,8 +1,7 @@
-"use client";
 import React, { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { Layers, ArrowRight, LayoutTemplate, X, CheckCircle2, Clock, Utensils, Bath, ChevronRight, ShieldCheck, Sparkles, Hammer, Grid3X3, AlignJustify, BadgeCheck } from 'lucide-react';
-import { useRouter } from 'next/navigation';
+import { useRouter } from 'next/router';
 import Button from './Button';
 import { Reveal } from './Reveal';
 

@@ -1,4 +1,3 @@
-"use client";
 import React, { useState, useEffect } from 'react';
 import { Home, Image, Star, Phone, Layers } from 'lucide-react';
 
@@ -23,7 +22,7 @@ const MobileNav: React.FC = () => {
     }, observerOptions);
 
     sections.forEach((id) => {
-      const element = document.getElementById(id === 'home' ? 'root' : id);
+      const element = document.getElementById(id === 'home' ? '__next' : id);
       if (element) observer.observe(element);
     });
 
@@ -67,7 +66,7 @@ const MobileNav: React.FC = () => {
         {/* Navigation Tabs */}
         <div className="flex items-center gap-1 flex-1 justify-around">
           {navItems.map((item) => {
-            const isActive = activeId === (item.id === 'home' ? 'root' : item.id) || activeId === item.id;
+            const isActive = activeId === (item.id === 'home' ? '__next' : item.id) || activeId === item.id;
             return (
               <button
                 key={item.id}

@@ -1,7 +1,6 @@
-"use client";
 import React, { useState, useEffect } from 'react';
 import { X, Phone } from 'lucide-react';
-import { useRouter } from 'next/navigation';
+import { useRouter } from 'next/router';
 
 const FloatingCTA: React.FC = () => {
   const [isChatOpen, setIsChatOpen] = useState(false);

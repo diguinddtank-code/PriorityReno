@@ -1,7 +1,6 @@
-"use client";
 import React, { useState, useRef, useEffect } from 'react';
 import { MoveHorizontal, CheckCircle2, TrendingUp, Sparkles } from 'lucide-react';
-import { useRouter } from 'next/navigation';
+import { useRouter } from 'next/router';
 import { Reveal } from './Reveal';
 import Button from './Button';
 

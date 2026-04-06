@@ -1,14 +1,14 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { ArrowRight, Star, ShieldCheck, Hammer, BadgeCheck, Zap, Ruler, CheckCircle2, Phone, Tag, Users, ChevronDown, Loader2 } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/router';
 import Button from './Button';
 
 const Hero: React.FC = () => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
   const [mounted, setMounted] = useState(false);
-  const navigate = useNavigate();
+  const router = useRouter();
   
   // Form State
   const [formStatus, setFormStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
@@ -154,7 +154,7 @@ const Hero: React.FC = () => {
                         variant="primary" 
                         fullWidth
                         className="h-14 text-base font-bold rounded-xl shadow-xl shadow-orange-500/20 bg-brand-orange border-none active:scale-[0.98] transition-transform flex items-center justify-center gap-2" 
-                        onClick={() => navigate('/quote')}
+                        onClick={() => router.push('/quote')}
                     >
                         Get My Free Quote <ArrowRight size={18} className="text-white/90" />
                     </Button>

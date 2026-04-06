@@ -1,7 +1,6 @@
-"use client";
 import React, { useState } from 'react';
 import { Check, ChevronRight, Info, MapPin, Phone } from 'lucide-react';
-import { useRouter } from 'next/navigation';
+import { useRouter } from 'next/router';
 import { Reveal } from './Reveal';
 
 const Materials: React.FC = () => {
