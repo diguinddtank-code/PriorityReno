@@ -59,6 +59,13 @@ const ExitPopup: React.FC = () => {
                  // @ts-ignore
                  window.gtag_report_conversion();
             }
+
+            // Meta Pixel Lead Event
+            // @ts-ignore
+            if (typeof window.fbq === 'function') {
+                // @ts-ignore
+                window.fbq('track', 'Lead');
+            }
             // Auto close after success
             setTimeout(() => {
                 setIsVisible(false);

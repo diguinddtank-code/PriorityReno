@@ -1,4 +1,3 @@
-"use client";
 import React, { useState } from 'react';
 import { Phone, Mail, MapPin, ShieldCheck, CheckCircle2, Navigation, Loader2 } from 'lucide-react';
 import Button from './Button';
@@ -38,6 +37,14 @@ const ContactSection: React.FC = () => {
                  // @ts-ignore
                  window.gtag_report_conversion();
                  console.log("Conversion Event Fired: Form Submit (Contact Section)");
+            }
+
+            // Meta Pixel Lead Event
+            // @ts-ignore
+            if (typeof window.fbq === 'function') {
+                // @ts-ignore
+                window.fbq('track', 'Lead');
+                console.log("Meta Pixel Lead Event Fired");
             }
         } else {
             setFormStatus('error');
