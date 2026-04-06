@@ -42,6 +42,14 @@ const ContactSection: React.FC = () => {
     setFormStatus('submitting');
 
     const formData = new FormData(e.currentTarget);
+    const formJson = Object.fromEntries(formData.entries());
+
+    // Trigger n8n Webhook
+    fetch("https://webhook.infra-remakingautomacoes.cloud/webhook/prform", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formJson)
+    }).catch(err => console.error("Webhook error:", err));
     
     try {
         const response = await fetch("https://formsubmit.co/ajax/priorityrenovationsatl@gmail.com", {
