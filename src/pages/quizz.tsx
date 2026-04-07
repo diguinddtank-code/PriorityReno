@@ -32,6 +32,7 @@ const QuizzPage: React.FC = () => {
   const [formStatus, setFormStatus] = useState<
     "idle" | "submitting" | "success" | "error"
   >("idle");
+  const [isAnalyzing, setIsAnalyzing] = useState(false);
 
   const [answers, setAnswers] = useState({
     isHomeowner: "",
@@ -122,6 +123,10 @@ const QuizzPage: React.FC = () => {
       if (response.ok) {
         setFormStatus("success");
         setStep(6); // Success Step
+        setIsAnalyzing(true);
+        setTimeout(() => {
+          setIsAnalyzing(false);
+        }, 2500); // 2.5 seconds of fake analyzing
 
         // @ts-ignore
         if (typeof window.gtag_report_conversion === "function") {
@@ -197,16 +202,14 @@ const QuizzPage: React.FC = () => {
       </div>
 
       {/* Main Content Area */}
-      <div className="w-full max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 mt-8 sm:mt-12 relative z-20 flex-grow flex flex-col items-center text-center">
+      <div className="w-full max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 mt-4 sm:mt-6 relative z-20 flex-grow flex flex-col items-center text-center">
         
         {/* Hero Text (Centered) */}
-        <h1 className="text-3xl md:text-5xl font-serif font-bold text-white mb-4 leading-tight drop-shadow-lg">
-          Get Your Free{" "}
-          <span className="text-brand-orange">Custom Estimate</span>
+        <h1 className="text-2xl md:text-4xl font-serif font-bold text-white mb-2 leading-tight drop-shadow-lg">
+          Check If You <span className="text-brand-orange">Qualify</span>
         </h1>
-        <p className="text-slate-200 text-sm md:text-base max-w-xl mx-auto mb-8 drop-shadow-md">
-          Answer a few quick questions about your project to see if you
-          qualify for our factory-direct pricing.
+        <p className="text-slate-200 text-xs md:text-sm max-w-xl mx-auto mb-4 md:mb-6 drop-shadow-md">
+          Take this 30-second quiz to see if your project qualifies for our exclusive factory-direct pricing and priority installation.
         </p>
 
         {/* Quiz Container */}
@@ -242,34 +245,34 @@ const QuizzPage: React.FC = () => {
               </div>
             )}
 
-            <div className="p-6 sm:p-8">
+            <div className="p-4 sm:p-6">
               {/* STEP 1: Homeowner */}
               {step === 1 && (
                 <div className="animate-fade-in">
-                  <div className="text-center mb-6">
-                    <h2 className="text-2xl sm:text-3xl font-serif font-bold text-slate-900 mb-2">
+                  <div className="text-center mb-4">
+                    <h2 className="text-xl sm:text-2xl font-serif font-bold text-slate-900 mb-1">
                       Are you a homeowner?
                     </h2>
-                    <p className="text-slate-500 text-sm">
+                    <p className="text-slate-500 text-xs">
                       Select an option below to begin.
                     </p>
                   </div>
-                  <div className="grid grid-cols-2 gap-4">
+                  <div className="grid grid-cols-2 gap-3">
                     <button
                       onClick={() => handleAnswer("isHomeowner", "Yes")}
-                      className="flex flex-col items-center justify-center p-4 sm:p-5 border-2 border-slate-200 rounded-xl hover:border-emerald-500 hover:bg-emerald-50 hover:shadow-lg hover:-translate-y-1 active:translate-y-0 transition-all group bg-white"
+                      className="flex items-center justify-center gap-2 p-3 sm:p-4 border-2 border-slate-200 rounded-xl hover:border-emerald-500 hover:bg-emerald-50/50 hover:shadow-md hover:-translate-y-0.5 active:translate-y-0 transition-all group bg-white"
                     >
-                      <CheckCircle2 className="text-emerald-500 mb-2 w-10 h-10 group-hover:scale-110 transition-transform" />
-                      <span className="text-base sm:text-lg font-bold text-slate-800">
+                      <CheckCircle2 className="text-emerald-500 w-6 h-6 group-hover:scale-110 transition-transform" />
+                      <span className="text-base font-bold text-slate-800">
                         Yes
                       </span>
                     </button>
                     <button
                       onClick={() => handleAnswer("isHomeowner", "No")}
-                      className="flex flex-col items-center justify-center p-4 sm:p-5 border-2 border-slate-200 rounded-xl hover:border-red-500 hover:bg-red-50 hover:shadow-lg hover:-translate-y-1 active:translate-y-0 transition-all group bg-white"
+                      className="flex items-center justify-center gap-2 p-3 sm:p-4 border-2 border-slate-200 rounded-xl hover:border-red-500 hover:bg-red-50/50 hover:shadow-md hover:-translate-y-0.5 active:translate-y-0 transition-all group bg-white"
                     >
-                      <XCircle className="text-red-500 mb-2 w-10 h-10 group-hover:scale-110 transition-transform" />
-                      <span className="text-base sm:text-lg font-bold text-slate-800">
+                      <XCircle className="text-red-500 w-6 h-6 group-hover:scale-110 transition-transform" />
+                      <span className="text-base font-bold text-slate-800">
                         No
                       </span>
                     </button>
@@ -280,11 +283,11 @@ const QuizzPage: React.FC = () => {
               {/* STEP 2: Project Scope */}
               {step === 2 && (
                 <div className="animate-fade-in">
-                  <div className="text-center mb-6">
-                    <h2 className="text-2xl sm:text-3xl font-serif font-bold text-slate-900 mb-2">
+                  <div className="text-center mb-4">
+                    <h2 className="text-xl sm:text-2xl font-serif font-bold text-slate-900 mb-1">
                       What is the scope of your project?
                     </h2>
-                    <p className="text-slate-500 text-sm">
+                    <p className="text-slate-500 text-xs">
                       Select the option that best describes your needs.
                     </p>
                   </div>
@@ -294,17 +297,13 @@ const QuizzPage: React.FC = () => {
                       { id: "Bathroom Remodel", icon: Droplets },
                       { id: "Countertops Only", icon: LayoutTemplate },
                       { id: "Cabinet Refacing", icon: Hammer },
-                      { id: "Custom Cabinets", icon: LayoutTemplate },
-                      { id: "Outdoor Kitchen", icon: Home },
-                      { id: "Commercial Project", icon: Award },
-                      { id: "Other", icon: Sparkles },
                     ].map((item) => (
                       <button
                         key={item.id}
                         onClick={() => handleAnswer("projectScope", item.id)}
-                        className="flex items-center gap-3 p-2.5 sm:p-3 border-2 border-slate-200 rounded-xl hover:border-brand-orange hover:bg-brand-orange/5 hover:shadow-md hover:-translate-y-0.5 active:translate-y-0 transition-all text-left group bg-white"
+                        className="flex items-center gap-3 p-3 border-2 border-slate-200 rounded-xl hover:border-brand-orange hover:bg-orange-50/50 hover:shadow-md hover:-translate-y-0.5 active:translate-y-0 transition-all text-left group bg-white"
                       >
-                        <div className="bg-slate-100 p-2 rounded-full group-hover:bg-brand-orange group-hover:text-white transition-colors text-slate-600">
+                        <div className="bg-slate-50 p-2 rounded-lg group-hover:bg-brand-orange group-hover:text-white transition-colors text-slate-600 shadow-sm">
                           <item.icon size={18} />
                         </div>
                         <span className="text-sm font-bold text-slate-800">
@@ -319,15 +318,15 @@ const QuizzPage: React.FC = () => {
               {/* STEP 3: Timeline */}
               {step === 3 && (
                 <div className="animate-fade-in">
-                  <div className="text-center mb-6">
-                    <h2 className="text-2xl sm:text-3xl font-serif font-bold text-slate-900 mb-2">
+                  <div className="text-center mb-4">
+                    <h2 className="text-xl sm:text-2xl font-serif font-bold text-slate-900 mb-1">
                       When do you want to start?
                     </h2>
-                    <p className="text-slate-500 text-sm">
+                    <p className="text-slate-500 text-xs">
                       This helps us check our installation schedule.
                     </p>
                   </div>
-                  <div className="space-y-2 sm:space-y-3">
+                  <div className="space-y-2">
                     {[
                       { id: "As soon as possible", icon: Clock },
                       { id: "1-2 Months", icon: Calendar },
@@ -337,19 +336,18 @@ const QuizzPage: React.FC = () => {
                       <button
                         key={item.id}
                         onClick={() => handleAnswer("timeline", item.id)}
-                        className="w-full flex items-center justify-between p-3 sm:p-4 border-2 border-slate-200 rounded-xl hover:border-brand-orange hover:bg-brand-orange/5 hover:shadow-md hover:-translate-y-0.5 active:translate-y-0 transition-all text-left group bg-white"
+                        className="w-full flex items-center justify-between p-3 border-2 border-slate-200 rounded-xl hover:border-brand-orange hover:bg-orange-50/50 hover:shadow-md hover:-translate-y-0.5 active:translate-y-0 transition-all text-left group bg-white"
                       >
                         <div className="flex items-center gap-3">
-                          <item.icon
-                            className="text-slate-400 group-hover:text-brand-orange transition-colors"
-                            size={18}
-                          />
-                          <span className="text-sm sm:text-base font-bold text-slate-800">
+                          <div className="bg-slate-50 p-2 rounded-lg group-hover:bg-brand-orange group-hover:text-white transition-colors text-slate-500 shadow-sm">
+                            <item.icon size={18} />
+                          </div>
+                          <span className="text-sm font-bold text-slate-800 group-hover:text-brand-orange transition-colors">
                             {item.id}
                           </span>
                         </div>
                         <ChevronRight
-                          className="text-slate-300 group-hover:text-brand-orange transition-colors"
+                          className="text-slate-400 group-hover:text-brand-orange transition-colors"
                           size={18}
                         />
                       </button>
@@ -361,11 +359,11 @@ const QuizzPage: React.FC = () => {
               {/* STEP 4: Zip Code */}
               {step === 4 && (
                 <div className="animate-fade-in">
-                  <div className="text-center mb-6">
-                    <h2 className="text-2xl sm:text-3xl font-serif font-bold text-slate-900 mb-2">
+                  <div className="text-center mb-4">
+                    <h2 className="text-xl sm:text-2xl font-serif font-bold text-slate-900 mb-1">
                       Where is your project located?
                     </h2>
-                    <p className="text-slate-500 text-sm">
+                    <p className="text-slate-500 text-xs">
                       Enter your zip code to see if we service your area.
                     </p>
                   </div>
@@ -421,13 +419,12 @@ const QuizzPage: React.FC = () => {
               {/* STEP 5: Contact Info */}
               {step === 5 && (
                 <div className="animate-fade-in">
-                  <div className="text-center mb-6">
-                    <h2 className="text-2xl sm:text-3xl font-serif font-bold text-slate-900 mb-2">
-                      Final Step!
+                  <div className="text-center mb-4">
+                    <h2 className="text-xl sm:text-2xl font-serif font-bold text-slate-900 mb-1">
+                      Check Eligibility
                     </h2>
-                    <p className="text-slate-500 text-sm">
-                      Enter your details to see if you qualify for our current
-                      promotions.
+                    <p className="text-slate-500 text-xs">
+                      Enter your details below to run your qualification check.
                     </p>
                   </div>
 
@@ -496,30 +493,59 @@ const QuizzPage: React.FC = () => {
                 </div>
               )}
 
-              {/* STEP 6: Success (Compact) */}
+              {/* STEP 6: Success (Flashy Reveal) */}
               {step === 6 && (
-                <div className="animate-scale-in text-center py-4">
-                  <div className="inline-flex items-center justify-center w-16 h-16 bg-emerald-100 rounded-full text-emerald-600 mb-4 shadow-inner">
-                    <Award size={32} />
-                  </div>
-                  <h2 className="text-2xl sm:text-3xl font-serif font-extrabold text-slate-900 mb-2">
-                    You are Qualified!
-                  </h2>
-                  <p className="text-slate-600 text-sm mb-6">
-                    Your project in{" "}
-                    <strong>{cityInfo?.name || answers.zipCode}</strong> is
-                    eligible for our factory-direct pricing.
-                  </p>
-                  <div className="bg-slate-50 border border-slate-200 rounded-xl p-4 mb-6 text-sm text-slate-700">
-                    Expect a call at <strong>{answers.phone}</strong> shortly to
-                    provide your free estimate.
-                  </div>
-                  <button
-                    onClick={() => (window.location.href = "/")}
-                    className="w-full bg-slate-900 text-white font-bold py-3.5 rounded-xl hover:bg-slate-800 transition-colors shadow-md"
-                  >
-                    Return to Homepage
-                  </button>
+                <div className="py-2 sm:py-4">
+                  {isAnalyzing ? (
+                    <div className="animate-fade-in flex flex-col items-center justify-center text-center space-y-4 py-8">
+                      <div className="relative w-20 h-20 mb-2">
+                        <div className="absolute inset-0 border-4 border-slate-100 rounded-full"></div>
+                        <div className="absolute inset-0 border-4 border-brand-orange rounded-full border-t-transparent animate-spin"></div>
+                        <div className="absolute inset-0 flex items-center justify-center">
+                          <Search className="text-brand-orange animate-pulse" size={24} />
+                        </div>
+                      </div>
+                      <h2 className="text-xl font-bold text-slate-800 animate-pulse">Analyzing your responses...</h2>
+                      <div className="text-xs text-slate-500 space-y-2 text-left mt-4 bg-slate-50 p-4 rounded-xl border border-slate-100 w-full max-w-xs mx-auto">
+                        <p className="flex items-center gap-2"><CheckCircle2 size={14} className="text-emerald-500"/> Checking service area...</p>
+                        <p className="flex items-center gap-2"><CheckCircle2 size={14} className="text-emerald-500"/> Verifying project scope...</p>
+                        <p className="flex items-center gap-2 animate-pulse"><Loader2 size={14} className="animate-spin text-brand-orange"/> Calculating eligibility...</p>
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="animate-scale-in text-center flex flex-col items-center">
+                      <div className="relative mb-4">
+                        <div className="absolute inset-0 bg-emerald-400 blur-xl opacity-40 animate-pulse rounded-full"></div>
+                        <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-emerald-400 to-emerald-600 rounded-full text-white shadow-2xl transform hover:scale-105 transition-transform relative z-10">
+                          <Award size={40} className="animate-bounce" />
+                        </div>
+                      </div>
+                      <h2 className="text-3xl sm:text-4xl font-serif font-extrabold text-slate-900 mb-2 uppercase tracking-tight">
+                        Congratulations!
+                      </h2>
+                      <div className="bg-emerald-50 border border-emerald-200 text-emerald-800 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest mb-4 shadow-sm inline-block">
+                        You Are Qualified
+                      </div>
+                      <p className="text-slate-600 text-sm mb-6">
+                        Your project in <strong>{cityInfo?.name || answers.zipCode}</strong> has been approved for our <span className="font-bold text-brand-orange">Factory-Direct Pricing</span>!
+                      </p>
+                      <div className="bg-slate-900 rounded-2xl p-5 mb-6 text-sm text-white shadow-xl w-full relative overflow-hidden">
+                        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-brand-orange to-orange-400"></div>
+                        <p className="font-medium mb-2 text-emerald-400 flex items-center justify-center gap-2">
+                          <CheckCircle2 size={18} /> Priority Status Activated
+                        </p>
+                        <p className="text-slate-300 text-xs leading-relaxed">
+                          Our team is reviewing your details. Expect a call at <br/><strong className="text-white text-lg tracking-wider block mt-1 mb-1">{answers.phone}</strong> shortly to schedule your free estimate.
+                        </p>
+                      </div>
+                      <button
+                        onClick={() => (window.location.href = "/")}
+                        className="w-full bg-slate-100 text-slate-800 font-bold py-3.5 rounded-xl hover:bg-slate-200 transition-colors shadow-sm border border-slate-200"
+                      >
+                        Return to Homepage
+                      </button>
+                    </div>
+                  )}
                 </div>
               )}
             </div>
@@ -528,7 +554,7 @@ const QuizzPage: React.FC = () => {
 
         {/* Trust Badges Below Quiz */}
         {step < 6 && (
-          <div className="mt-6 sm:mt-8 w-full max-w-xl mx-auto relative z-20">
+          <div className="mt-4 w-full max-w-xl mx-auto relative z-20">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-2 sm:gap-3">
               <div className="bg-slate-800/60 backdrop-blur-sm border border-slate-700/50 rounded-xl p-3 flex flex-col items-center justify-center text-center gap-1.5 shadow-lg">
                 <div className="bg-white p-1 rounded-full">
