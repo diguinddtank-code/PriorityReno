@@ -23,6 +23,7 @@ import {
   ChevronRight,
   ThumbsUp,
   BadgeCheck,
+  Star,
 } from "lucide-react";
 
 const QuizzPage: React.FC = () => {
@@ -524,6 +525,42 @@ const QuizzPage: React.FC = () => {
             </div>
           </div>
         </div>
+
+        {/* Trust Badges Below Quiz */}
+        {step < 6 && (
+          <div className="mt-6 sm:mt-8 w-full max-w-xl mx-auto relative z-20">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-2 sm:gap-3">
+              <div className="bg-slate-800/60 backdrop-blur-sm border border-slate-700/50 rounded-xl p-3 flex flex-col items-center justify-center text-center gap-1.5 shadow-lg">
+                <div className="bg-white p-1 rounded-full">
+                  <Image src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" width={16} height={16} alt="Google" />
+                </div>
+                <div className="flex text-[#FBBC05] space-x-0.5">
+                  <Star size={10} fill="currentColor"/>
+                  <Star size={10} fill="currentColor"/>
+                  <Star size={10} fill="currentColor"/>
+                  <Star size={10} fill="currentColor"/>
+                  <Star size={10} fill="currentColor"/>
+                </div>
+                <span className="text-[10px] text-white font-bold uppercase tracking-wide">5.0 Rating</span>
+              </div>
+              
+              <div className="bg-slate-800/60 backdrop-blur-sm border border-slate-700/50 rounded-xl p-3 flex flex-col items-center justify-center text-center gap-1.5 shadow-lg">
+                <ShieldCheck size={20} className="text-green-500" />
+                <span className="text-[10px] text-white font-bold uppercase tracking-wide">Licensed & Insured</span>
+              </div>
+              
+              <div className="bg-slate-800/60 backdrop-blur-sm border border-slate-700/50 rounded-xl p-3 flex flex-col items-center justify-center text-center gap-1.5 shadow-lg">
+                <BadgeCheck size={20} className="text-brand-orange" />
+                <span className="text-[10px] text-white font-bold uppercase tracking-wide">Factory Direct</span>
+              </div>
+              
+              <div className="bg-slate-800/60 backdrop-blur-sm border border-slate-700/50 rounded-xl p-3 flex flex-col items-center justify-center text-center gap-1.5 shadow-lg">
+                <ThumbsUp size={20} className="text-blue-400" />
+                <span className="text-[10px] text-white font-bold uppercase tracking-wide">100% Guaranteed</span>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
 
     </div>
