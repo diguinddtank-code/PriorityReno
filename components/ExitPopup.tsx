@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
+import Image from 'next/image';
 import { X, CheckCircle2, ShieldCheck, Loader2, Lock, ArrowRight } from 'lucide-react';
 import Button from './Button';
 
@@ -111,10 +112,12 @@ const ExitPopup: React.FC = () => {
         <div className="w-full md:w-2/5 bg-slate-900 relative hidden md:flex flex-col justify-between p-8 text-white">
              {/* Background Image */}
              <div className="absolute inset-0 opacity-40">
-                <img 
+                <Image 
                     src="https://images.unsplash.com/photo-1600607686527-6fb886090705?q=80&w=2000&auto=format&fit=crop" 
                     alt="Luxury Kitchen" 
-                    className="w-full h-full object-cover"
+                    fill
+                    sizes="(max-width: 768px) 100vw, 40vw"
+                    className="object-cover"
                 />
              </div>
              <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/40 to-transparent"></div>

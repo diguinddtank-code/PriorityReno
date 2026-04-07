@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import Image from 'next/image';
 import { Menu, X, Phone, ArrowRight } from 'lucide-react';
 import { useRouter } from 'next/router';
 import Button from './Button';
@@ -78,11 +79,15 @@ const Navbar: React.FC<NavbarProps> = ({ isBannerVisible = false }) => {
             
             {/* Logo Area */}
             <div className="relative z-50 flex items-center gap-2 md:gap-3 cursor-pointer group" onClick={handleLogoClick}>
-              <img 
-                  src="https://i.imgur.com/VBoJH82.png" 
-                  alt="Priority Renovations Logo" 
-                  className="h-8 md:h-12 w-auto object-contain drop-shadow-md"
-              />
+              <div className="relative h-8 md:h-12 w-8 md:w-12">
+                <Image 
+                    src="https://i.imgur.com/VBoJH82.png" 
+                    alt="Priority Renovations Logo" 
+                    fill
+                    sizes="(max-width: 768px) 32px, 48px"
+                    className="object-contain drop-shadow-md"
+                />
+              </div>
               
               <div className={`flex items-center gap-1.5 ${isScrolled ? 'opacity-100' : 'opacity-100'} transition-opacity duration-300 ${!isScrolled && 'drop-shadow-md'}`}>
                 <span className={`text-sm md:text-xl font-serif font-bold tracking-tight leading-none ${isScrolled ? 'text-slate-900' : 'text-white'}`}>

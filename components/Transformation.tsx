@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import Image from 'next/image';
 import { MoveHorizontal, CheckCircle2, TrendingUp, Sparkles } from 'lucide-react';
 import { useRouter } from 'next/router';
 import { Reveal } from './Reveal';
@@ -87,12 +88,12 @@ const Transformation: React.FC = () => {
             >
               
               {/* Image 2 (AFTER) - Background Layer */}
-              <img 
+              <Image 
                 src={afterImage} 
                 alt="After Renovation" 
-                loading="lazy"
-                decoding="async"
-                className="absolute inset-0 w-full h-full object-cover"
+                fill
+                sizes="(max-width: 1200px) 100vw, 1200px"
+                className="object-cover"
                 draggable="false"
               />
               <div className="absolute top-6 right-6 bg-brand-orange text-white px-4 py-1.5 rounded-full font-bold text-xs uppercase tracking-widest shadow-lg z-10">
@@ -116,12 +117,12 @@ const Transformation: React.FC = () => {
                 className="absolute inset-0 overflow-hidden w-full h-full bg-slate-800"
                 style={{ clipPath: `polygon(0 0, ${sliderPosition}% 0, ${sliderPosition}% 100%, 0 100%)` }}
               >
-                <img 
+                <Image 
                   src={beforeImage} 
                   alt="Before Renovation" 
-                  loading="lazy"
-                  decoding="async"
-                  className="absolute inset-0 w-full h-full object-cover filter sepia-[.3] brightness-75 grayscale-[.3]" 
+                  fill
+                  sizes="(max-width: 1200px) 100vw, 1200px"
+                  className="object-cover filter sepia-[.3] brightness-75 grayscale-[.3]" 
                   draggable="false"
                 />
                 <div className="absolute top-6 left-6 bg-black/60 backdrop-blur-md text-white px-4 py-1.5 rounded-full font-bold text-xs uppercase tracking-widest border border-white/10">

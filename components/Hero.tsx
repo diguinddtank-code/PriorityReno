@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
+import Image from 'next/image';
 import { ArrowRight, Star, ShieldCheck, Hammer, BadgeCheck, Zap, Ruler, CheckCircle2, Phone, Tag, Users, ChevronDown, Loader2 } from 'lucide-react';
 import { useRouter } from 'next/router';
 import Button from './Button';
@@ -86,16 +87,25 @@ const Hero: React.FC = () => {
   return (
     <section className="relative min-h-[100dvh] flex items-center justify-center overflow-hidden bg-slate-900 pt-32 pb-16 md:pt-24 md:pb-0">
       
-      {/* Background Video */}
+      {/* Background Video & LCP Image */}
       <div className="absolute inset-0 z-0 bg-black">
+        {/* LCP Optimized Image using next/image */}
+        <Image
+          src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=2070&auto=format&fit=crop"
+          alt="Luxury Kitchen Remodel"
+          fill
+          priority
+          quality={80}
+          className="object-cover opacity-80 transition-transform duration-75 ease-out scale-110 will-change-transform"
+          style={{ transform: videoRef.current ? videoRef.current.style.transform : 'none' }}
+        />
         <video 
           ref={videoRef}
           autoPlay 
           loop 
           muted 
           playsInline
-          className="w-full h-full object-cover opacity-80 transition-transform duration-75 ease-out scale-110 will-change-transform"
-          poster="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=2070&auto=format&fit=crop"
+          className="absolute inset-0 w-full h-full object-cover opacity-80 transition-transform duration-75 ease-out scale-110 will-change-transform"
         >
           <source src="https://videos.pexels.com/video-files/7578552/7578552-uhd_2560_1440_30fps.mp4" type="video/mp4" />
         </video>
@@ -176,7 +186,7 @@ const Hero: React.FC = () => {
                         {/* Google - More compact vertical padding */}
                         <div className="flex items-center gap-3 bg-black/60 backdrop-blur-xl py-2 px-4 rounded-xl border border-white/15 shadow-xl">
                              <div className="bg-white p-1 rounded-full flex-shrink-0 shadow-sm">
-                                <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" className="w-3.5 h-3.5" alt="G" />
+                                <Image src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" width={14} height={14} className="w-3.5 h-3.5" alt="G" />
                              </div>
                              <div className="flex flex-col text-left">
                                  <div className="flex text-[#FBBC05] space-x-0.5">

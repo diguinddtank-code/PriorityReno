@@ -1,5 +1,6 @@
 "use client";
 import React from 'react';
+import Image from 'next/image';
 import { Phone, Mail, MapPin, Instagram, Facebook, Linkedin, ArrowUp } from 'lucide-react';
 
 const Footer: React.FC = () => {
@@ -20,14 +21,13 @@ const Footer: React.FC = () => {
           {/* Brand Column */}
           <div className="space-y-6">
             <div className="flex items-center gap-3">
-              <div className="bg-white/5 p-1 rounded-md border border-white/10">
-                 <img 
+              <div className="bg-white/5 p-1 rounded-md border border-white/10 relative w-10 h-10">
+                 <Image 
                   src="https://i.imgur.com/VBoJH82.png" 
                   alt="Priority Renovations Logo" 
-                  loading="lazy"
-                  width="40"
-                  height="40"
-                  className="h-8 md:h-10 w-auto object-contain"
+                  fill
+                  sizes="40px"
+                  className="object-contain"
                 />
               </div>
               <div className="flex flex-col">

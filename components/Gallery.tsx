@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
+import Image from 'next/image';
 import { X, ArrowRight, MapPin, Layers, Box, Maximize2 } from 'lucide-react';
 import { useRouter } from 'next/router';
 import Button from './Button';
@@ -122,12 +123,12 @@ const Gallery: React.FC = () => {
                  
                  {/* Image Container with Placeholder BG */}
                  <div className="relative h-64 overflow-hidden cursor-pointer bg-slate-800" onClick={() => setSelectedImage(item)}>
-                    <img 
+                    <Image 
                       src={item.src} 
                       alt={item.title} 
-                      loading="lazy"
-                      decoding="async"
-                      className="w-full h-full object-cover transition-transform duration-700 ease-out-expo group-hover:scale-110 opacity-90 group-hover:opacity-100"
+                      fill
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                      className="object-cover transition-transform duration-700 ease-out-expo group-hover:scale-110 opacity-90 group-hover:opacity-100"
                     />
                     
                     {/* Location Badge */}
@@ -203,10 +204,12 @@ const Gallery: React.FC = () => {
 
                 {/* Left: Image (Top on mobile) */}
                 <div className="w-full md:w-3/5 h-64 md:h-auto md:min-h-full relative bg-black shrink-0">
-                    <img 
+                    <Image 
                         src={selectedImage.src} 
                         alt={selectedImage.title} 
-                        className="w-full h-full object-cover" 
+                        fill
+                        sizes="(max-width: 768px) 100vw, 60vw"
+                        className="object-cover" 
                     />
                     {/* Gradient Overlay */}
                     <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent md:hidden opacity-90 pointer-events-none"></div>

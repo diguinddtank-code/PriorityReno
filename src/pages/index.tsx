@@ -1,19 +1,22 @@
 import React, { useState } from 'react';
+import dynamic from 'next/dynamic';
 import Navbar from '../../components/Navbar';
-import MobileNav from '../../components/MobileNav';
 import Hero from '../../components/Hero';
 import Features from '../../components/Features';
-import Testimonials from '../../components/Testimonials';
-import Materials from '../../components/Materials'; 
-import WhyChooseUs from '../../components/WhyChooseUs';
-import Gallery from '../../components/Gallery';
-import ContactSection from '../../components/ContactSection';
-import Footer from '../../components/Footer';
-import FloatingCTA from '../../components/FloatingCTA';
-import Transformation from '../../components/Transformation';
-import ExitPopup from '../../components/ExitPopup';
-import { Reveal } from '../../components/Reveal';
 import AnnouncementBar from '../../components/AnnouncementBar';
+
+// Dynamic imports for below-the-fold components to reduce initial JS payload
+const Testimonials = dynamic(() => import('../../components/Testimonials'), { ssr: true });
+const Materials = dynamic(() => import('../../components/Materials'), { ssr: true });
+const WhyChooseUs = dynamic(() => import('../../components/WhyChooseUs'), { ssr: true });
+const Gallery = dynamic(() => import('../../components/Gallery'), { ssr: true });
+const ContactSection = dynamic(() => import('../../components/ContactSection'), { ssr: true });
+const Footer = dynamic(() => import('../../components/Footer'), { ssr: true });
+const FloatingCTA = dynamic(() => import('../../components/FloatingCTA'), { ssr: false });
+const Transformation = dynamic(() => import('../../components/Transformation'), { ssr: true });
+const ExitPopup = dynamic(() => import('../../components/ExitPopup'), { ssr: false });
+const MobileNav = dynamic(() => import('../../components/MobileNav'), { ssr: false });
+const Reveal = dynamic(() => import('../../components/Reveal').then(mod => mod.Reveal), { ssr: true });
 
 // Main landing page for Priority Renovations
 function Home() {

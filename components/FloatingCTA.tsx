@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import Image from 'next/image';
 import { X, Phone } from 'lucide-react';
 import { useRouter } from 'next/router';
 
@@ -72,8 +73,8 @@ const FloatingCTA: React.FC = () => {
          onClick={handleOpenChat}
          className="relative w-12 h-12 md:w-16 md:h-16 rounded-full bg-white shadow-2xl border-2 border-white flex items-center justify-center hover:scale-105 transition-transform duration-300 group z-20"
       >
-         <div className="w-full h-full rounded-full overflow-hidden">
-            <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=200&auto=format&fit=crop" alt="Ashley" className="w-full h-full object-cover" />
+         <div className="w-full h-full rounded-full overflow-hidden relative">
+            <Image src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=200&auto=format&fit=crop" alt="Ashley" fill sizes="64px" className="object-cover" />
          </div>
          {/* Online Dot (Green) */}
          <div className="absolute bottom-0 right-0 w-3 h-3 md:w-4 md:h-4 bg-green-500 border-2 border-white rounded-full animate-pulse"></div>
@@ -101,8 +102,8 @@ const FloatingCTA: React.FC = () => {
          <div className="bg-slate-900 p-4 flex justify-between items-center">
              <div className="flex items-center gap-3">
                  <div className="relative">
-                     <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-white/20">
-                         <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=200&auto=format&fit=crop" alt="Ashley" className="w-full h-full object-cover" />
+                     <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-white/20 relative">
+                         <Image src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=200&auto=format&fit=crop" alt="Ashley" fill sizes="40px" className="object-cover" />
                      </div>
                      <div className="absolute bottom-0 right-0 w-2.5 h-2.5 bg-green-500 border border-slate-900 rounded-full"></div>
                  </div>

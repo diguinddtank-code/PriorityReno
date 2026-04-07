@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import Image from 'next/image';
 import AnnouncementBar from '../../components/AnnouncementBar';
 import { 
   CheckCircle2, XCircle, Home, Hammer, Droplets, 
@@ -131,10 +132,12 @@ const QuizzPage: React.FC = () => {
       <div className={`relative w-full h-64 sm:h-72 bg-slate-900 rounded-b-[2rem] sm:rounded-b-[3rem] shadow-xl flex flex-col items-center justify-start ${isBannerVisible ? 'pt-16 sm:pt-20' : 'pt-8'} overflow-hidden shrink-0 transition-all duration-300`}>
           {/* Background Image */}
           <div className="absolute inset-0 opacity-30">
-              <img 
+              <Image 
                   src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=2070&auto=format&fit=crop" 
                   alt="Luxury Kitchen Remodel" 
-                  className="w-full h-full object-cover"
+                  fill
+                  sizes="100vw"
+                  className="object-cover"
               />
           </div>
           {/* Gradient Overlay */}
@@ -142,11 +145,15 @@ const QuizzPage: React.FC = () => {
           
           {/* Logo & Branding */}
           <div className="relative z-10 flex items-center gap-3 cursor-pointer group" onClick={() => window.location.href = '/'}>
-              <img 
-                  src="https://i.imgur.com/VBoJH82.png" 
-                  alt="Priority Renovations Logo" 
-                  className="h-10 sm:h-12 w-auto object-contain drop-shadow-lg"
-              />
+              <div className="relative h-10 sm:h-12 w-10 sm:w-12">
+                <Image 
+                    src="https://i.imgur.com/VBoJH82.png" 
+                    alt="Priority Renovations Logo" 
+                    fill
+                    sizes="(max-width: 640px) 40px, 48px"
+                    className="object-contain drop-shadow-lg"
+                />
+              </div>
               <div className="flex items-center gap-1.5 drop-shadow-lg">
                 <span className="text-xl sm:text-2xl font-serif font-bold tracking-tight leading-none text-white">
                   Priority

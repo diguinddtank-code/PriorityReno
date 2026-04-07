@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
+import Image from 'next/image';
 import { Layers, ArrowRight, LayoutTemplate, X, CheckCircle2, Clock, Utensils, Bath, ChevronRight, ShieldCheck, Sparkles, Hammer, Grid3X3, AlignJustify, BadgeCheck } from 'lucide-react';
 import { useRouter } from 'next/router';
 import Button from './Button';
@@ -214,11 +215,13 @@ const Features: React.FC = () => {
             <div className="col-span-8 relative rounded-3xl overflow-hidden shadow-2xl bg-slate-900 ring-1 ring-slate-900/5 group">
                 
                 {/* Main Image - Full Brightness */}
-                <img 
+                <Image 
                     key={activeDesktopService.img}
                     src={activeDesktopService.img} 
                     alt={activeDesktopService.title}
-                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 animate-scale-in"
+                    fill
+                    sizes="(max-width: 1024px) 100vw, 66vw"
+                    className="object-cover transition-transform duration-1000 animate-scale-in"
                 />
                 
                 {/* Subtle Gradient ONLY at bottom for contrast */}
@@ -290,12 +293,12 @@ const Features: React.FC = () => {
                 className="group relative h-[340px] rounded-2xl overflow-hidden cursor-pointer shadow-lg hover:shadow-2xl transition-all duration-500 ease-out-expo border border-slate-100"
                 onClick={() => setSelectedService(service)}
               >
-                <img 
+                <Image 
                   src={service.img} 
                   alt={service.title} 
-                  loading="lazy"
-                  decoding="async"
-                  className="w-full h-full object-cover transition-transform duration-700 ease-out-expo group-hover:scale-110"
+                  fill
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                  className="object-cover transition-transform duration-700 ease-out-expo group-hover:scale-110"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-900/95 via-slate-900/40 to-transparent opacity-90 transition-opacity duration-500"></div>
                 <div className={`absolute top-4 right-4 ${service.badgeColor} text-[10px] font-bold px-3 py-1.5 rounded-full uppercase tracking-widest shadow-lg z-20`}>
@@ -345,7 +348,7 @@ const Features: React.FC = () => {
 
                 {/* Image Side */}
                 <div className="w-full md:w-2/5 h-56 md:h-auto relative shrink-0">
-                    <img src={selectedService.img} alt={selectedService.title} className="w-full h-full object-cover" />
+                    <Image src={selectedService.img} alt={selectedService.title} fill sizes="(max-width: 768px) 100vw, 40vw" className="object-cover" />
                     <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent md:hidden opacity-90"></div>
                 </div>
                 

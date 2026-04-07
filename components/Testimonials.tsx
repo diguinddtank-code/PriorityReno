@@ -1,5 +1,6 @@
 "use client";
 import React, { useEffect, useState, useRef } from 'react';
+import Image from 'next/image';
 import { Star, Quote, CheckCircle2 } from 'lucide-react';
 import { Reveal } from './Reveal';
 
@@ -96,7 +97,7 @@ const Testimonials: React.FC = () => {
                 <div className="max-w-2xl">
                     {/* Google Badge */}
                     <div className="inline-flex items-center gap-3 bg-white border border-slate-200 shadow-sm px-4 py-1.5 rounded-full mb-4 hover:shadow-md transition-shadow cursor-default">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" className="w-4 h-4" alt="Google" />
+                        <Image src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" width={16} height={16} className="w-4 h-4" alt="Google" />
                         <div className="flex gap-0.5">
                             {[1,2,3,4,5].map(i => <Star key={i} size={14} className="text-[#FBBC05] fill-current" />)}
                         </div>
@@ -143,7 +144,7 @@ const Testimonials: React.FC = () => {
                         {/* Quote Icon & Google Logo Header */}
                         <div className="flex justify-between items-start mb-4">
                             <Quote className="text-brand-orange w-6 h-6 opacity-40 group-hover:opacity-100 transition-opacity" />
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" className="w-4 h-4 opacity-50 grayscale group-hover:grayscale-0 transition-all" alt="Google" />
+                            <Image src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" width={16} height={16} className="w-4 h-4 opacity-50 grayscale group-hover:grayscale-0 transition-all" alt="Google" />
                         </div>
 
                         <p className="text-slate-700 text-sm leading-relaxed font-medium mb-6 line-clamp-4">

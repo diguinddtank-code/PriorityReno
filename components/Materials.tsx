@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Image from 'next/image';
 import { Check, ChevronRight, Info, MapPin, Phone } from 'lucide-react';
 import { useRouter } from 'next/router';
 import { Reveal } from './Reveal';
@@ -101,12 +102,12 @@ const Materials: React.FC = () => {
                                   : 'border-transparent hover:border-slate-700 hover:scale-105'
                               }`}
                           >
-                              <img 
+                              <Image 
                                 src={mat.img} 
                                 alt={mat.name} 
-                                loading="lazy" 
-                                decoding="async"
-                                className="w-full h-full object-cover" 
+                                fill
+                                sizes="(max-width: 768px) 33vw, 20vw"
+                                className="object-cover" 
                               />
                               <div className="absolute inset-0 bg-black/40 flex flex-col justify-end p-2 md:p-3">
                                   <span className="text-white text-[10px] md:text-xs font-bold leading-tight line-clamp-2 drop-shadow-md">{mat.name}</span>
@@ -156,12 +157,12 @@ const Materials: React.FC = () => {
             <div className="w-full lg:w-1/2 order-first lg:order-last">
                 <Reveal width="100%" delay={200} variant="right">
                   <div className="bg-slate-900 rounded-2xl p-2 shadow-2xl border border-slate-800 h-64 md:h-full md:min-h-[400px] relative overflow-hidden group">
-                      <img 
+                      <Image 
                           src={selectedMaterial.img} 
                           alt={selectedMaterial.name} 
-                          loading="lazy"
-                          decoding="async"
-                          className="w-full h-full object-cover rounded-xl transition-transform duration-700 ease-out-expo group-hover:scale-105"
+                          fill
+                          sizes="(max-width: 1024px) 100vw, 50vw"
+                          className="object-cover rounded-xl transition-transform duration-700 ease-out-expo group-hover:scale-105"
                           key={selectedMaterial.name} // Key forces re-render for nice fade
                       />
                       

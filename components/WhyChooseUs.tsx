@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Image from 'next/image';
 import { Award, Gem, Clock, Sparkles, CheckCircle2 } from 'lucide-react';
 import { Reveal } from './Reveal';
 
@@ -66,12 +67,12 @@ const WhyChooseUs: React.FC = () => {
                         <div className="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow flex flex-row h-32 items-stretch group">
                             {/* Mobile Image Left */}
                             <div className="w-1/3 relative shrink-0 overflow-hidden">
-                                <img 
+                                <Image 
                                     src={feature.image} 
                                     alt={feature.title} 
-                                    loading="lazy"
-                                    decoding="async"
-                                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
+                                    fill
+                                    sizes="(max-width: 768px) 33vw, 100vw"
+                                    className="object-cover transition-transform duration-700 group-hover:scale-110" 
                                 />
                                 <div className="absolute inset-0 bg-slate-900/10"></div>
                             </div>
@@ -139,12 +140,12 @@ const WhyChooseUs: React.FC = () => {
                             key={idx}
                             className={`absolute inset-0 transition-opacity duration-700 ease-in-out ${activeIndex === idx ? 'opacity-100 z-10' : 'opacity-0 z-0'}`}
                         >
-                            <img 
+                            <Image 
                                 src={feature.image} 
                                 alt={feature.title} 
-                                loading="lazy"
-                                decoding="async"
-                                className="w-full h-full object-cover transform scale-105" 
+                                fill
+                                sizes="(max-width: 1200px) 100vw, 60vw"
+                                className="object-cover transform scale-105" 
                             />
                             
                             {/* Dark gradient ONLY on image to make white text readable */}
