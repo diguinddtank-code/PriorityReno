@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import AnnouncementBar from "../../components/AnnouncementBar";
 import {
+  Check,
   CheckCircle2,
   XCircle,
   Home,
@@ -205,43 +206,77 @@ const QuizzPage: React.FC = () => {
       <div className="w-full max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 mt-4 sm:mt-6 relative z-20 flex-grow flex flex-col items-center text-center">
         
         {/* Hero Text (Centered) */}
+        <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md border border-white/20 rounded-full px-3 py-1 mb-3 shadow-lg">
+          <span className="relative flex h-2 w-2">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+            <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+          </span>
+          <span className="text-[10px] sm:text-xs font-bold text-white uppercase tracking-wider">Checking Local Availability</span>
+        </div>
         <h1 className="text-2xl md:text-4xl font-serif font-bold text-white mb-2 leading-tight drop-shadow-lg">
           Check If You <span className="text-brand-orange">Qualify</span>
         </h1>
-        <p className="text-slate-200 text-xs md:text-sm max-w-xl mx-auto mb-4 md:mb-6 drop-shadow-md">
-          Take this 30-second quiz to see if your project qualifies for our exclusive factory-direct pricing and priority installation.
+        <p className="text-slate-200 text-xs md:text-sm max-w-xl mx-auto mb-4 drop-shadow-md">
+          Take this 30-second quiz to see if your project qualifies for our exclusive factory-direct pricing.
         </p>
 
         {/* Quiz Container */}
         <div className="w-full max-w-xl mx-auto text-left">
           <div className="bg-white rounded-2xl shadow-2xl overflow-hidden relative border border-slate-100">
-            {/* Top Progress Bar */}
+            {/* Stepper Progress Bar */}
             {step < 6 && (
-              <div className="w-full bg-slate-100 h-2.5 relative">
-                <div
-                  className="absolute top-0 left-0 h-full bg-brand-orange transition-all duration-500 ease-out shadow-[0_0_10px_rgba(249,115,22,0.5)]"
-                  style={{ width: `${progressPercentage}%` }}
-                ></div>
-              </div>
-            )}
-
-            {/* Progress Text & Back Button */}
-            {step < 6 && (
-              <div className="flex items-center justify-between px-4 py-3 border-b border-slate-100 bg-slate-50/50">
-                {step > 1 ? (
+              <div className="pt-5 pb-4 px-2 sm:px-8 border-b border-slate-100 bg-slate-50/50 relative">
+                {step > 1 && (
                   <button
                     onClick={handleBack}
-                    className="flex items-center gap-1 text-xs font-bold text-slate-500 hover:text-brand-orange transition-colors"
+                    className="absolute top-3 left-3 sm:top-4 sm:left-4 flex items-center gap-1 text-[10px] sm:text-xs font-bold text-slate-400 hover:text-brand-orange transition-colors z-20"
                   >
-                    <ChevronLeft size={16} /> Back
+                    <ChevronLeft size={14} /> Back
                   </button>
-                ) : (
-                  <div className="w-16"></div>
                 )}
-                <span className="text-xs font-bold text-slate-400 uppercase tracking-widest">
-                  Step {step} of {totalSteps}
-                </span>
-                <div className="w-16"></div>
+                <div className="relative flex justify-between items-start w-full max-w-sm mx-auto mt-4 sm:mt-2">
+                  {/* Connecting Line Background */}
+                  <div className="absolute top-4 left-[16px] right-[16px] h-[2px] bg-slate-200 z-0 -translate-y-1/2">
+                    {/* Connecting Line Active */}
+                    <div
+                      className="absolute top-0 left-0 h-full bg-brand-orange transition-all duration-500"
+                      style={{ width: `${((step - 1) / (totalSteps - 1)) * 100}%` }}
+                    ></div>
+                  </div>
+
+                  {[
+                    { num: 1, label: "START" },
+                    { num: 2, label: "SCOPE" },
+                    { num: 3, label: "TIME" },
+                    { num: 4, label: "AREA" },
+                    { num: 5, label: "DETAILS" },
+                  ].map((s) => {
+                    const isActive = step === s.num;
+                    const isCompleted = step > s.num;
+                    return (
+                      <div key={s.num} className="relative z-10 flex flex-col items-center gap-2 w-12 sm:w-16">
+                        <div
+                          className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold transition-all duration-300 ${
+                            isActive
+                              ? "bg-brand-orange text-white ring-4 ring-brand-orange/20"
+                              : isCompleted
+                              ? "bg-brand-orange text-white"
+                              : "bg-white text-slate-400 border-2 border-slate-200"
+                          }`}
+                        >
+                          {isCompleted ? <Check size={16} strokeWidth={3} /> : s.num}
+                        </div>
+                        <span
+                          className={`text-[8px] sm:text-[10px] font-bold uppercase tracking-wider text-center ${
+                            isActive ? "text-slate-800" : "text-slate-400"
+                          }`}
+                        >
+                          {s.label}
+                        </span>
+                      </div>
+                    );
+                  })}
+                </div>
               </div>
             )}
 
@@ -260,7 +295,7 @@ const QuizzPage: React.FC = () => {
                   <div className="grid grid-cols-2 gap-3">
                     <button
                       onClick={() => handleAnswer("isHomeowner", "Yes")}
-                      className="flex items-center justify-center gap-2 p-3 sm:p-4 border-2 border-slate-200 rounded-xl hover:border-emerald-500 hover:bg-emerald-50/50 hover:shadow-md hover:-translate-y-0.5 active:translate-y-0 transition-all group bg-white"
+                      className="flex items-center justify-center gap-2 p-3 sm:p-4 border-2 border-slate-200 rounded-xl hover:border-emerald-500 hover:bg-emerald-50/50 hover:shadow-md active:scale-95 transition-all group bg-white"
                     >
                       <CheckCircle2 className="text-emerald-500 w-6 h-6 group-hover:scale-110 transition-transform" />
                       <span className="text-base font-bold text-slate-800">
@@ -269,7 +304,7 @@ const QuizzPage: React.FC = () => {
                     </button>
                     <button
                       onClick={() => handleAnswer("isHomeowner", "No")}
-                      className="flex items-center justify-center gap-2 p-3 sm:p-4 border-2 border-slate-200 rounded-xl hover:border-red-500 hover:bg-red-50/50 hover:shadow-md hover:-translate-y-0.5 active:translate-y-0 transition-all group bg-white"
+                      className="flex items-center justify-center gap-2 p-3 sm:p-4 border-2 border-slate-200 rounded-xl hover:border-red-500 hover:bg-red-50/50 hover:shadow-md active:scale-95 transition-all group bg-white"
                     >
                       <XCircle className="text-red-500 w-6 h-6 group-hover:scale-110 transition-transform" />
                       <span className="text-base font-bold text-slate-800">
@@ -301,7 +336,7 @@ const QuizzPage: React.FC = () => {
                       <button
                         key={item.id}
                         onClick={() => handleAnswer("projectScope", item.id)}
-                        className="flex items-center gap-3 p-3 border-2 border-slate-200 rounded-xl hover:border-brand-orange hover:bg-orange-50/50 hover:shadow-md hover:-translate-y-0.5 active:translate-y-0 transition-all text-left group bg-white"
+                        className="flex items-center gap-3 p-3 border-2 border-slate-200 rounded-xl hover:border-brand-orange hover:bg-orange-50/50 hover:shadow-md active:scale-95 transition-all text-left group bg-white"
                       >
                         <div className="bg-slate-50 p-2 rounded-lg group-hover:bg-brand-orange group-hover:text-white transition-colors text-slate-600 shadow-sm">
                           <item.icon size={18} />
@@ -336,7 +371,7 @@ const QuizzPage: React.FC = () => {
                       <button
                         key={item.id}
                         onClick={() => handleAnswer("timeline", item.id)}
-                        className="w-full flex items-center justify-between p-3 border-2 border-slate-200 rounded-xl hover:border-brand-orange hover:bg-orange-50/50 hover:shadow-md hover:-translate-y-0.5 active:translate-y-0 transition-all text-left group bg-white"
+                        className="w-full flex items-center justify-between p-3 border-2 border-slate-200 rounded-xl hover:border-brand-orange hover:bg-orange-50/50 hover:shadow-md active:scale-95 transition-all text-left group bg-white"
                       >
                         <div className="flex items-center gap-3">
                           <div className="bg-slate-50 p-2 rounded-lg group-hover:bg-brand-orange group-hover:text-white transition-colors text-slate-500 shadow-sm">
@@ -408,7 +443,7 @@ const QuizzPage: React.FC = () => {
                     <button
                       onClick={handleNext}
                       disabled={answers.zipCode.length < 5}
-                      className="w-full bg-brand-orange text-white font-bold text-lg py-4 rounded-xl shadow-lg shadow-brand-orange/30 hover:bg-orange-600 hover:shadow-brand-orange/50 hover:-translate-y-0.5 active:translate-y-0 transition-all disabled:opacity-50 disabled:pointer-events-none flex items-center justify-center gap-2"
+                      className="w-full bg-brand-orange text-white font-bold text-lg py-3.5 rounded-xl shadow-lg shadow-brand-orange/30 hover:bg-orange-600 hover:shadow-brand-orange/50 active:scale-95 transition-all disabled:opacity-50 disabled:pointer-events-none flex items-center justify-center gap-2"
                     >
                       Continue <ArrowRight size={20} />
                     </button>
@@ -420,59 +455,68 @@ const QuizzPage: React.FC = () => {
               {step === 5 && (
                 <div className="animate-fade-in">
                   <div className="text-center mb-4">
+                    <div className="inline-flex items-center justify-center w-12 h-12 bg-emerald-100 rounded-full text-emerald-600 mb-2 shadow-inner">
+                      <ShieldCheck size={24} />
+                    </div>
                     <h2 className="text-xl sm:text-2xl font-serif font-bold text-slate-900 mb-1">
-                      Check Eligibility
+                      Where should we send your results?
                     </h2>
                     <p className="text-slate-500 text-xs">
-                      Enter your details below to run your qualification check.
+                      Enter your details to see if you qualify for factory-direct pricing.
                     </p>
                   </div>
 
-                  <form onSubmit={handleSubmit} className="space-y-3">
-                    <input
-                      required
-                      type="text"
-                      value={answers.name}
-                      onChange={(e) =>
-                        setAnswers({ ...answers, name: e.target.value })
-                      }
-                      className="w-full bg-slate-50 border-2 border-slate-200 rounded-lg px-4 py-3 text-slate-900 focus:border-brand-orange focus:bg-white outline-none transition-all"
-                      placeholder="Full Name"
-                    />
-                    <input
-                      required
-                      type="tel"
-                      value={answers.phone}
-                      onChange={(e) =>
-                        setAnswers({ ...answers, phone: e.target.value })
-                      }
-                      className="w-full bg-slate-50 border-2 border-slate-200 rounded-lg px-4 py-3 text-slate-900 focus:border-brand-orange focus:bg-white outline-none transition-all"
-                      placeholder="Phone Number"
-                    />
-                    <input
-                      required
-                      type="email"
-                      value={answers.email}
-                      onChange={(e) =>
-                        setAnswers({ ...answers, email: e.target.value })
-                      }
-                      className="w-full bg-slate-50 border-2 border-slate-200 rounded-lg px-4 py-3 text-slate-900 focus:border-brand-orange focus:bg-white outline-none transition-all"
-                      placeholder="Email Address"
-                    />
+                  <form onSubmit={handleSubmit} className="space-y-2.5">
+                    <div className="relative">
+                      <input
+                        required
+                        type="text"
+                        value={answers.name}
+                        onChange={(e) =>
+                          setAnswers({ ...answers, name: e.target.value })
+                        }
+                        className="w-full bg-slate-50 border-2 border-slate-200 rounded-xl px-4 py-3 text-slate-900 focus:border-brand-orange focus:bg-white outline-none transition-all focus:ring-4 focus:ring-brand-orange/10"
+                        placeholder="Full Name"
+                      />
+                    </div>
+                    <div className="relative">
+                      <input
+                        required
+                        type="tel"
+                        value={answers.phone}
+                        onChange={(e) =>
+                          setAnswers({ ...answers, phone: e.target.value })
+                        }
+                        className="w-full bg-slate-50 border-2 border-slate-200 rounded-xl px-4 py-3 text-slate-900 focus:border-brand-orange focus:bg-white outline-none transition-all focus:ring-4 focus:ring-brand-orange/10"
+                        placeholder="Phone Number"
+                      />
+                    </div>
+                    <div className="relative">
+                      <input
+                        required
+                        type="email"
+                        value={answers.email}
+                        onChange={(e) =>
+                          setAnswers({ ...answers, email: e.target.value })
+                        }
+                        className="w-full bg-slate-50 border-2 border-slate-200 rounded-xl px-4 py-3 text-slate-900 focus:border-brand-orange focus:bg-white outline-none transition-all focus:ring-4 focus:ring-brand-orange/10"
+                        placeholder="Email Address"
+                      />
+                    </div>
 
                     <button
                       type="submit"
                       disabled={formStatus === "submitting"}
-                      className="w-full bg-brand-orange text-white font-bold text-lg py-4 rounded-xl shadow-lg shadow-brand-orange/30 hover:bg-orange-600 hover:shadow-brand-orange/50 hover:-translate-y-0.5 active:translate-y-0 transition-all disabled:opacity-50 flex items-center justify-center gap-2 mt-2"
+                      className="w-full bg-brand-orange text-white font-bold text-lg py-3.5 rounded-xl shadow-lg shadow-brand-orange/30 hover:bg-orange-600 hover:shadow-brand-orange/50 active:scale-95 transition-all disabled:opacity-50 flex items-center justify-center gap-2 mt-2"
                     >
                       {formStatus === "submitting" ? (
                         <>
                           <Loader2 className="animate-spin" size={24} />{" "}
-                          Processing...
+                          Analyzing...
                         </>
                       ) : (
                         <>
-                          See If I Qualify <Sparkles size={20} />
+                          Check My Eligibility <ArrowRight size={20} />
                         </>
                       )}
                     </button>
@@ -483,11 +527,12 @@ const QuizzPage: React.FC = () => {
                       </p>
                     )}
 
-                    <div className="flex items-center justify-center gap-1.5 text-[11px] text-slate-400 mt-4">
-                      <Lock size={12} />
-                      <span>
-                        Your information is 100% secure and encrypted.
-                      </span>
+                    <div className="flex flex-col items-center justify-center gap-1 mt-3">
+                      <div className="flex items-center gap-1 text-[10px] text-slate-400 font-medium">
+                        <Lock size={10} />
+                        <span>256-bit Secure Encryption</span>
+                      </div>
+                      <span className="text-[10px] text-slate-400">We respect your privacy. No spam.</span>
                     </div>
                   </form>
                 </div>
