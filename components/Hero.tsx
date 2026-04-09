@@ -87,24 +87,15 @@ const Hero: React.FC = () => {
   return (
     <section className="relative min-h-[100dvh] flex items-center justify-center overflow-hidden bg-slate-900 pt-32 pb-16 md:pt-24 md:pb-0">
       
-      {/* Background Video & LCP Image */}
+      {/* Background Video */}
       <div className="absolute inset-0 z-0 bg-black">
-        {/* LCP Optimized Image using next/image */}
-        <Image
-          src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=2070&auto=format&fit=crop"
-          alt="Luxury Kitchen Remodel"
-          fill
-          priority
-          quality={80}
-          className="object-cover opacity-80 transition-transform duration-75 ease-out scale-110 will-change-transform"
-          style={{ transform: videoRef.current ? videoRef.current.style.transform : 'none' }}
-        />
         <video 
           ref={videoRef}
           autoPlay 
           loop 
           muted 
           playsInline
+          poster="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=2070&auto=format&fit=crop"
           className="absolute inset-0 w-full h-full object-cover opacity-80 transition-transform duration-75 ease-out scale-110 will-change-transform"
         >
           <source src="https://videos.pexels.com/video-files/7578552/7578552-uhd_2560_1440_30fps.mp4" type="video/mp4" />
