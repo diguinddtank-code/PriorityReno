@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Head from 'next/head';
 import dynamic from 'next/dynamic';
 import Navbar from '../../components/Navbar';
 import Hero from '../../components/Hero';
@@ -24,6 +25,9 @@ function Home() {
 
   return (
     <div className="relative w-full">
+        <Head>
+          <link rel="preload" as="image" href="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=2070&auto=format&fit=crop&fm=webp" />
+        </Head>
         <div className="min-h-screen bg-slate-50 font-sans pb-32 md:pb-0">
           <div className="fixed top-0 left-0 right-0 z-50 flex flex-col">
             {isBannerVisible && <AnnouncementBar onClose={() => setIsBannerVisible(false)} />}

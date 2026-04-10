@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import Head from 'next/head';
 import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
 import Testimonials from '../../components/Testimonials';
@@ -84,6 +85,9 @@ const FormPage: React.FC = () => {
 
   return (
     <div className="relative w-full min-h-screen bg-slate-900 font-sans">
+      <Head>
+        <link rel="preload" as="image" href="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=2070&auto=format&fit=crop&fm=webp" />
+      </Head>
       <div className="fixed top-0 left-0 right-0 z-50 flex flex-col">
         {isBannerVisible && <AnnouncementBar onClose={() => setIsBannerVisible(false)} />}
         <Navbar isBannerVisible={isBannerVisible} />
@@ -97,7 +101,7 @@ const FormPage: React.FC = () => {
           muted 
           playsInline
           className="w-full h-full object-cover opacity-80"
-          poster="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=2070&auto=format&fit=crop"
+          poster="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=2070&auto=format&fit=crop&fm=webp"
         >
           <source src="https://videos.pexels.com/video-files/7578552/7578552-uhd_2560_1440_30fps.mp4" type="video/mp4" />
         </video>

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import Head from "next/head";
 import Image from "next/image";
 import AnnouncementBar from "../../components/AnnouncementBar";
 import {
@@ -154,14 +155,18 @@ const QuizzPage: React.FC = () => {
 
   return (
     <div className="min-h-[100dvh] w-full bg-slate-900 font-sans flex flex-col items-center justify-start pb-12 relative overflow-x-hidden">
+      <Head>
+        <link rel="preload" as="image" href="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=2070&auto=format&fit=crop&fm=webp" />
+      </Head>
       {/* Background Image */}
       <div className="fixed inset-0 z-0 h-[100vh] bg-black">
         <Image
-          src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=2070&auto=format&fit=crop"
+          src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=2070&auto=format&fit=crop&fm=webp"
           alt="Luxury Kitchen Remodel"
           fill
           sizes="100vw"
           priority
+          fetchPriority="high"
           className="object-cover opacity-40"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-slate-950 via-slate-900/80 to-slate-900/40"></div>
@@ -188,6 +193,8 @@ const QuizzPage: React.FC = () => {
               alt="Priority Renovations Logo"
               fill
               sizes="(max-width: 640px) 40px, 48px"
+              priority
+              fetchPriority="high"
               className="object-contain drop-shadow-lg"
             />
           </div>

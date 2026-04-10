@@ -85,6 +85,8 @@ const Navbar: React.FC<NavbarProps> = ({ isBannerVisible = false }) => {
                     alt="Priority Renovations Logo" 
                     fill
                     sizes="(max-width: 768px) 32px, 48px"
+                    priority
+                    fetchPriority="high"
                     className="object-contain drop-shadow-md"
                 />
               </div>

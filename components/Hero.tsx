@@ -95,7 +95,7 @@ const Hero: React.FC = () => {
           loop 
           muted 
           playsInline
-          poster="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=2070&auto=format&fit=crop"
+          poster="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=2070&auto=format&fit=crop&fm=webp"
           className="absolute inset-0 w-full h-full object-cover opacity-80 transition-transform duration-75 ease-out scale-110 will-change-transform"
         >
           <source src="https://videos.pexels.com/video-files/7578552/7578552-uhd_2560_1440_30fps.mp4" type="video/mp4" />
